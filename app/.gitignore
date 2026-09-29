@@ -1,0 +1,7 @@
+.idea
+log/debug.log
+/cli/test/
+/data/sh/security_ip.txt
+/data/sh/work_ip.txt
+/data/sh/windex_upload/sent/
+/data/sh/windex_upload/アップロード_ローカル.bat
