@@ -216,6 +216,7 @@ class App {
                     // 本番ならメンテナンス画面
                     self::maintenance();
                 } else if (config('GUEST_ACCESS_CHECK', false)) {
+
                     header("Location: /guest.php");
                     exit();
                 } else {
