@@ -287,11 +287,17 @@ class App {
 
     static public function checkMigration(): void {
         if (!self::isRelease()) {
+            // キャッシュディレクトリ
+            if (!file_exists(TMP_DIR)) mkdir(TMP_DIR, 0777, true);
+
+            // マイグレーションチェック
             $Migrate = new Migrate();
             $migrations = $Migrate->checkMigration();
             if (!$migrations) {
                 $Migrate->migrate(true);
             }
+
+
         }
     }
 

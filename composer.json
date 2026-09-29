@@ -1,0 +1,28 @@
+{
+  "config": {
+    "platform": {
+      "php": "8.2"
+    }
+  },
+  "require": {
+    "smarty/smarty": "^5.2",
+    "ext-fileinfo": "*",
+    "ext-gd": "*",
+    "ext-pdo": "*",
+    "ext-curl": "*",
+    "ext-zlib": "*",
+    "vlucas/phpdotenv": "^5.5",
+    "aws/aws-sdk-php": "^3.269"
+  },
+  "autoload": {
+    "psr-4": {
+      "classes\\": [
+        "classes/"
+      ],
+      "": [
+        "app/lib/",
+        "app/models/"
+      ]
+    }
+  }
+}
