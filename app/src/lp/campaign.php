@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//キャンペーンLP
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "キャンペーンLP";
+    $title_url = $home_url . "lp/campaign";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("lp/campaign.tpl");
 
 })();

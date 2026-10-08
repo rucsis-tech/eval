@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//サイトマップ
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "サイトマップ";
+    $title_url = $home_url . "pages/sitemap";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("pages/sitemap.tpl");
 
 })();

@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//WIN5的中確率算出
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "WIN5的中確率算出";
+    $title_url = $home_url . "simulation/sim_win5";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("simulation/sim_win5.tpl");
 
 })();

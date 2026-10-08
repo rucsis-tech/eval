@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//アンケート詳細（回答）
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "アンケート詳細（回答）";
+    $title_url = $home_url . "enquete/enquete_detail";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("enquete/enquete_detail.tpl");
 
 })();

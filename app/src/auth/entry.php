@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//会員登録（入力）
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "会員登録（入力）";
+    $title_url = $home_url . "auth/entry";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("auth/entry.tpl");
 
 })();

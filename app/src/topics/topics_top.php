@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//トピックス一覧
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "トピックス一覧";
+    $title_url = $home_url . "topics/topics_top";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("topics/topics_top.tpl");
 
 })();

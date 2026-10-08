@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//運営会社
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "運営会社";
+    $title_url = $home_url . "pages/company";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("pages/company.tpl");
 
 })();

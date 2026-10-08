@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//本日の好走確率ランキング
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "本日の好走確率ランキング";
+    $title_url = $home_url . "ranking/eval_ranking";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("ranking/eval_ranking.tpl");
 
 })();

@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//プライバシーポリシー
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "プライバシーポリシー";
+    $title_url = $home_url . "pages/privacy";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("pages/privacy.tpl");
 
 })();

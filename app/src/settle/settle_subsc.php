@@ -1,5 +1,5 @@
 <?php
-//TOP（確率テーブル）
+//サブスク申込
 
 (function () {
 
@@ -34,10 +34,10 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
-    $title = "TOP（確率テーブル）";
-    $title_url = $home_url;
+    $title = "サブスク申込";
+    $title_url = $home_url . "settle/settle_subsc";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
-    $Smarty->display("index.tpl");
+    $Smarty->display("settle/settle_subsc.tpl");
 
 })();
