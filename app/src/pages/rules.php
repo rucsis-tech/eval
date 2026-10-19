@@ -37,7 +37,6 @@
         'focus_header_type' => 'static',  // header_focus.tpl: auth（P11/P12・右「× 閉じる」）| exit（P13/P19・右✕）| static（S** 静的ページ・左‹戻る）
         // 'close_url' => '/path',        // 任意: 閉じる／戻るの遷移先URL。未指定時は common.js で履歴戻り /
     ]);
-    $Smarty->assign('focus_header_type', 'static'); // 静的ページ
 
     $title = "利用規約";
     $title_url = $home_url . "pages/rules";
