@@ -1,0 +1,94 @@
+/* ---------------------------------------------------------------------
+   S1. 静的ページ共通テンプレ (Static Page Template)
+   --------------------------------------------------------------------- */
+
+  .sp{padding-bottom:60px;}
+
+  /* ===== Header（静的系：戻る＋ロゴのシンプル構成） ===== */
+  header{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 12px;border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:rgba(11,12,16,.96);z-index:50;
+    backdrop-filter:blur(6px);
+  }
+  .h-back{
+    width:28px;height:28px;border-radius:50%;flex:0 0 auto;
+    background:var(--bg-card);border:1px solid var(--line);color:var(--text-sub);
+    display:grid;place-items:center;font-size:14px;font-weight:900;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .logo .mark{font-weight:900;font-size:18px;color:#fff;letter-spacing:.02em;}
+
+  /* ===== モック確認用（実装対象外：ページ切替） ===== */
+  .mock-ctrl{
+    margin:10px 12px 0;padding:8px 10px;border-radius:8px;
+    border:1px dashed #4a5468;background:rgba(255,255,255,.02);
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  }
+  .mock-ctrl .m-lbl{font-size:9px;color:#7c8698;font-weight:800;}
+  .mock-ctrl a{
+    font-size:9.5px;font-weight:800;color:var(--text-sub);
+    border:1px solid var(--line);border-radius:10px;padding:3px 9px;
+    cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent;
+  }
+  .mock-ctrl a.on{color:#fff;background:#2a3142;border-color:#4a5468;}
+
+  /* ===== ページ見出し ===== */
+  .page-head{padding:14px 14px 4px;}
+  .page-head h1{font-size:17px;font-weight:900;letter-spacing:.02em;}
+  .page-head .meta{font-size:9.5px;color:var(--text-sub);margin-top:4px;font-variant-numeric:tabular-nums;}
+
+  /* ===== 本文（記事型：規約・ポリシー） ===== */
+  .doc{padding:6px 14px 0;}
+  .doc h2{
+    font-size:13px;font-weight:800;color:#fff;
+    border-left:3px solid var(--red);padding-left:9px;
+    margin:18px 0 7px;
+  }
+  .doc p{font-size:11px;color:var(--text-sub);line-height:1.9;margin-bottom:8px;}
+  .doc p b{color:var(--text);}
+  .doc ol{margin:0 0 8px 18px;font-size:11px;color:var(--text-sub);line-height:1.9;}
+  .doc a{color:var(--blue-link);text-decoration:none;}
+
+  /* ===== 表型（会社概要・特商法・資金決済法） ===== */
+  .kv{width:100%;border-collapse:collapse;margin-top:10px;font-size:11px;}
+  .kv th,.kv td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.7;}
+  .kv th{background:var(--bg-sunken);color:var(--text-sub);font-weight:800;width:108px;font-size:10px;}
+  .kv td{color:var(--text);}
+  .kv td small{color:var(--text-sub);}
+  .kv-wrap{padding:0 14px;}
+
+  /* ===== お問い合わせ（フォーム型） ===== */
+  .form{padding:8px 14px 0;display:grid;gap:12px;}
+  .form label{font-size:10.5px;font-weight:800;color:var(--text);display:block;margin-bottom:5px;}
+  .form label small{color:var(--sig-soft);font-weight:900;margin-left:4px;}
+  .form input,.form select,.form textarea{
+    width:100%;background:var(--bg-sunken);border:1px solid var(--line);
+    border-radius:8px;padding:11px 12px;color:#fff;font-size:13px;
+    font-family:inherit;outline:none;
+  }
+  .form input:focus,.form select:focus,.form textarea:focus{border-color:var(--red);}
+  .form textarea{min-height:110px;resize:vertical;}
+  .form .send{
+    border:none;border-radius:10px;padding:13px;width:100%;
+    background:linear-gradient(150deg,#0e9a70,#046b4c);color:#fff;
+    font-size:13px;font-weight:900;cursor:pointer;font-family:inherit;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .form-note{font-size:9.5px;color:var(--text-sub);line-height:1.7;}
+
+  .note{font-size:9.5px;color:var(--text-sub);padding:16px 14px;line-height:1.8;}
+  .note b{color:var(--text);}
+
+  /* ===== フッター（静的ページ相互リンク） ===== */
+  .foot-links{
+    margin-top:20px;border-top:1px solid var(--line);background:var(--bg-card);
+    padding:12px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;
+  }
+  .foot-links a{font-size:10px;color:var(--text-sub);text-decoration:none;font-weight:700;}
+  .foot-copy{font-size:9px;color:#4d5666;text-align:center;padding:12px 0 4px;background:var(--bg-card);}
+
+/* 共通CSSにある指定のうち、このページの元スタイルに無かったものを打ち消す */
+header {
+  justify-content: unset;
+}

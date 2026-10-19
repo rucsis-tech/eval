@@ -1,222 +1,270 @@
-﻿/* =====================================================================
-   共通UIインタラクション（ドロワー、タブ、モーダル、ボトムシート、更新制御等）
-   js/common.js
-   ===================================================================== */
+/**
+ * Eval MODE - common.js
+ * モックHTML各ページに散在していた共通UI制御を統合（Smarty 共通パーツ向け）
+ */
+(function () {
+    'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
-  'use strict';
+    function $(id) {
+        return document.getElementById(id);
+    }
 
-  // ==========================================
-  // 1. ハンバーガードロワー制御 (Drawer Menu)
-  // ==========================================
-  const DrawerModule = (() => {
-    const init = () => {
-      document.addEventListener('click', (e) => {
-        // メニュー開くボタン
-        const menuBtn = e.target.closest('.icon-menu');
-        if (menuBtn) {
-          e.preventDefault();
-          toggleDrawer(true);
-          return;
-        }
+    /* ----- ハンバーガードロワー ----- */
+    function initDrawer() {
+        const overlay = $('drawerOverlay');
+        const menuBtn = $('menuBtn');
+        const closeBtn = $('drawerClose');
+        if (!overlay || !menuBtn) return;
 
-        // メニュー閉じるボタンまたはオーバーレイ背景
-        const closeBtn = e.target.closest('.drawer-close, .drawer-ov');
-        if (closeBtn) {
-          e.preventDefault();
-          toggleDrawer(false);
-        }
-      });
-    };
+        const syncDrawerAccount = () => {
+            const st = document.querySelector('.demo-switch button[data-state].on')?.dataset.state;
+            if (!st) return;
+            const accPanels = { guest: 'd-acc-guest', free: 'd-acc-free', subsc: 'd-acc-subsc' };
+            Object.entries(accPanels).forEach(([k, id]) => {
+                const el = document.getElementById(id);
+                if (el) el.hidden = k !== st;
+            });
+        };
+        const open = () => {
+            syncDrawerAccount();
+            overlay.classList.remove('hidden');
+        };
+        const close = () => overlay.classList.add('hidden');
 
-    const toggleDrawer = (open) => {
-      const drawer = document.querySelector('.drawer') || document.querySelector('.drawer-ov');
-      if (!drawer) return;
-
-      if (open) {
-        drawer.classList.add('show', 'open');
-        document.body.style.overflow = 'hidden';
-      } else {
-        drawer.classList.remove('show', 'open');
-        document.body.style.overflow = '';
-      }
-    };
-
-    return { init, toggleDrawer };
-  })();
-
-  // ==========================================
-  // 2. 汎用タブ切り替え制御 (Tab UI)
-  // ==========================================
-  const TabModule = (() => {
-    const init = () => {
-      document.addEventListener('click', (e) => {
-        // タブ要素の判定 (.c-tabs a, .os-tabs a, .cat-chip, .tabs.venue a 等)
-        const tabItem = e.target.closest('.c-tabs a, .os-tabs a, .cat-chip, .tabs.date a, .tabs.venue a, .tabs.race a');
-        if (!tabItem) return;
-
-        // href がアンカーや javascript: でない外部遷移用リンクの場合は除外
-        const href = tabItem.getAttribute('href');
-        if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
-          return;
-        }
-
-        e.preventDefault();
-
-        // 親コンテナ内での表示切り替え
-        const parent = tabItem.parentElement;
-        if (parent) {
-          const siblings = parent.querySelectorAll('a, button, .cat-chip');
-          siblings.forEach(el => el.classList.remove('on', 'active'));
-          tabItem.classList.add('on');
-        }
-
-        // 対象コンテンツパネルの連動制御 (data-target 属性が存在する場合)
-        const targetId = tabItem.getAttribute('data-target') || (href && href.startsWith('#') ? href.substring(1) : null);
-        if (targetId) {
-          switchTabContent(targetId, tabItem);
-        }
-      });
-    };
-
-    const switchTabContent = (targetId, tabItem) => {
-      // グループ単位で切り替える場合は data-tab-group を参照
-      const groupName = tabItem.getAttribute('data-tab-group');
-      let panels;
-
-      if (groupName) {
-        panels = document.querySelectorAll(`[data-tab-group-content="${groupName}"]`);
-      } else {
-        const targetEl = document.getElementById(targetId);
-        if (targetEl && targetEl.parentElement) {
-          panels = Array.from(targetEl.parentElement.children).filter(child => 
-            child.id || child.hasAttribute('data-tab-content')
-          );
-        }
-      }
-
-      if (panels && panels.length > 0) {
-        panels.forEach(panel => {
-          if (panel.id === targetId || panel.getAttribute('data-tab-content') === targetId) {
-            panel.removeAttribute('hidden');
-            panel.classList.add('active');
-          } else {
-            panel.setAttribute('hidden', 'hidden');
-            panel.classList.remove('active');
-          }
+        menuBtn.addEventListener('click', open);
+        menuBtn.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                open();
+            }
         });
-      }
-    };
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) close();
+        });
+    }
 
-    return { init };
-  })();
+    /* ----- フォーカスレイアウト：戻る／閉じる（exit・auth） ----- */
+    function goBackOrTop(fallback) {
+        const top = fallback || '/';
+        let same = false;
+        try {
+            same = !!document.referrer && new URL(document.referrer).origin === location.origin;
+        } catch (e) {}
+        if (location.protocol === 'file:') same = history.length > 1;
+        if (same && history.length > 1) history.back();
+        else location.href = top;
+    }
 
-  // ==========================================
-  // 3. ボトムシート & モーダル制御 (Modal & Sheet)
-  // ==========================================
-  const ModalSheetModule = (() => {
-    const init = () => {
-      document.addEventListener('click', (e) => {
-        // トリガーボタン (data-sheet-target または .race-row 等)
-        const trigger = e.target.closest('[data-sheet-target], .race-row');
-        if (trigger) {
-          // 的中実績ハーフモーダル等の開閉トリガー
-          const targetId = trigger.getAttribute('data-sheet-target') || 'raceSheet';
-          const sheetOverlay = document.getElementById(targetId) || document.querySelector('.sheet-ov');
-          if (sheetOverlay) {
+    function bindFocusDismiss(el) {
+        if (!el) return;
+        const act = e => {
+            if (e) e.preventDefault();
+            goBackOrTop(el.dataset.fallbackTop || '/');
+        };
+        el.addEventListener('click', act);
+        el.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                act(e);
+            }
+        });
+    }
+
+    function initFocusHeader() {
+        bindFocusDismiss($('focusCloseBtn'));
+        bindFocusDismiss($('focusBackBtn'));
+    }
+
+    /* ----- 会員登録追従バナー ----- */
+    function initRegBanner() {
+        const close = $('regClose');
+        const banner = $('regBanner');
+        if (!close || !banner) return;
+        close.addEventListener('click', () => banner.classList.add('hidden'));
+    }
+
+    /* ----- 汎用タブ（.c-tabs / .os-tabs 等） ----- */
+    function initTabs() {
+        document.querySelectorAll('.c-tabs, .os-tabs').forEach(root => {
+            const tabs = root.querySelectorAll('a[data-tab], a[data-scope]');
+            if (!tabs.length) return;
+            tabs.forEach(tab => {
+                tab.addEventListener('click', e => {
+                    e.preventDefault();
+                    tabs.forEach(t => t.classList.remove('on'));
+                    tab.classList.add('on');
+                    const key = tab.dataset.tab;
+                    if (!key) return;
+                    const lists = {
+                        topics: $('list-topics'),
+                        flash: $('list-flash'),
+                        info: $('list-info'),
+                    };
+                    Object.entries(lists).forEach(([k, el]) => {
+                        if (el) el.hidden = k !== key;
+                    });
+                    const readMore = $('readMore');
+                    if (readMore) {
+                        const href = { topics: '/topics/topics_top', flash: '/topics/topics_top', info: '/topics/topics_top' };
+                        readMore.setAttribute('href', href[key] || '/topics/topics_top');
+                    }
+                });
+            });
+        });
+    }
+
+    /* ----- TOP：速報ティッカー ----- */
+    function initTicker() {
+        const items = document.querySelectorAll('#ticker a');
+        if (items.length < 2) return;
+        let ti = 0;
+        setInterval(() => {
+            items[ti].classList.remove('show');
+            ti = (ti + 1) % items.length;
+            items[ti].classList.add('show');
+        }, 4000);
+    }
+
+    function initFlashMore() {
+        const flashMore = $('flashMore');
+        const flashTab = document.querySelector('.c-tabs a[data-tab="flash"]');
+        const module = $('topicsModule');
+        if (!flashMore || !flashTab || !module) return;
+        flashMore.addEventListener('click', e => {
             e.preventDefault();
-            openSheet(sheetOverlay);
-            return;
-          }
+            flashTab.click();
+            module.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    /* ----- ボトムシート／ハーフモーダル（オーバーレイタップで閉じる） ----- */
+    function initSheets() {
+        document.querySelectorAll('.sheet-ov').forEach(ov => {
+            ov.addEventListener('click', e => {
+                if (e.target === ov) ov.classList.remove('show');
+            });
+        });
+    }
+
+    /* ----- ホーム画面追加バナー（PWA / A2HS） ----- */
+    function initA2hs() {
+        const a2hs = $('a2hs');
+        if (!a2hs) return;
+        const SNOOZE_DAYS = 7;
+        const KEY = 'evm_a2hs_dismissed_at';
+        const INSTALLED = 'evm_a2hs_installed';
+        const lsGet = k => {
+            try { return localStorage.getItem(k); } catch (e) { return null; }
+        };
+        const lsSet = (k, v) => {
+            try { localStorage.setItem(k, v); } catch (e) {}
+        };
+        const isStandalone = () =>
+            window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        async function isInstalled() {
+            if (lsGet(INSTALLED)) return true;
+            try {
+                if (navigator.getInstalledRelatedApps) {
+                    const apps = await navigator.getInstalledRelatedApps();
+                    if (apps && apps.length) return true;
+                }
+            } catch (e) {}
+            return false;
         }
-
-        // 閉じるボタン (.sh-close, .modal-close) または 背景オーバーレイタップ
-        const closeBtn = e.target.closest('.sh-close, .modal-close, .sheet-ov, .modal-ov');
-        if (closeBtn) {
-          // コンテンツ本体のタップ時は閉じないようにガード
-          if ((closeBtn.classList.contains('sheet-ov') || closeBtn.classList.contains('modal-ov')) && 
-              e.target !== closeBtn) {
-            return;
-          }
-          e.preventDefault();
-          const overlay = closeBtn.closest('.sheet-ov, .modal-ov');
-          if (overlay) {
-            closeSheet(overlay);
-          }
+        function snoozed() {
+            const t = parseInt(lsGet(KEY) || '0', 10);
+            return t && Date.now() - t < SNOOZE_DAYS * 864e5;
         }
-      });
-    };
-
-    const openSheet = (overlayEl) => {
-      overlayEl.classList.add('show');
-      overlayEl.removeAttribute('hidden');
-      document.body.style.overflow = 'hidden';
-    };
-
-    const closeSheet = (overlayEl) => {
-      overlayEl.classList.remove('show');
-      document.body.style.overflow = '';
-    };
-
-    return { init, openSheet, closeSheet };
-  })();
-
-  // ==========================================
-  // 4. リフレッシュアニメーション制御 (Refresh Button)
-  // ==========================================
-  const RefreshModule = (() => {
-    const init = () => {
-      document.addEventListener('click', (e) => {
-        const rfBtn = e.target.closest('.rf-btn');
-        if (!rfBtn) return;
-
-        e.preventDefault();
-
-        // すでに回転中の場合は連続タップをガード
-        if (rfBtn.classList.contains('spin')) return;
-
-        rfBtn.classList.add('spin');
-
-        // アニメーション完了時間（0.6s）経過後に spin クラスを削除
-        setTimeout(() => {
-          rfBtn.classList.remove('spin');
-        }, 600);
-      });
-    };
-
-    return { init };
-  })();
-
-  // ==========================================
-  // 5. アクション & インタラクション (Likes, etc.)
-  // ==========================================
-  const InteractionModule = (() => {
-    const init = () => {
-      document.addEventListener('click', (e) => {
-        // いいねボタンのトグル切替 (.a-like)
-        const likeBtn = e.target.closest('.a-like');
-        if (likeBtn) {
-          e.preventDefault();
-          likeBtn.classList.toggle('on');
-
-          // カウント数値の増減（表示用モック処理）
-          const countEl = likeBtn.querySelector('.like-count');
-          if (countEl) {
-            let count = parseInt(countEl.textContent, 10) || 0;
-            count = likeBtn.classList.contains('on') ? count + 1 : Math.max(0, count - 1);
-            countEl.textContent = count;
-          }
+        async function run() {
+            if (isStandalone()) return;
+            if (await isInstalled()) return;
+            if (snoozed()) return;
+            a2hs.hidden = false;
         }
-      });
-    };
+        run();
+        window.addEventListener('appinstalled', () => {
+            lsSet(INSTALLED, '1');
+            a2hs.hidden = true;
+        });
+        const close = $('a2hsClose');
+        if (close) {
+            close.addEventListener('click', e => {
+                e.stopPropagation();
+                lsSet(KEY, String(Date.now()));
+                a2hs.hidden = true;
+            });
+        }
+        a2hs.addEventListener('click', () => {
+            location.href = '/pages/home_guide';
+        });
+    }
 
-    return { init };
-  })();
+    /* ----- アプリ用「戻る」ボタン（?app=1 は実装対象外） ----- */
+    function initAppBack() {
+        const btn = $('appBack');
+        if (!btn) return;
+        const isApp =
+            (window.matchMedia && matchMedia('(display-mode: standalone)').matches) ||
+            window.navigator.standalone === true ||
+            /EvalModeApp/i.test(navigator.userAgent);
+        if (!isApp) return;
+        btn.hidden = false;
 
-  // モジュールの初期化実行
-  DrawerModule.init();
-  TabModule.init();
-  ModalSheetModule.init();
-  RefreshModule.init();
-  InteractionModule.init();
-});
+        function place() {
+            let top = window.innerHeight;
+            document.querySelectorAll('.gnav, .sticky-cta').forEach(el => {
+                const s = getComputedStyle(el);
+                if (s.display === 'none' || s.visibility === 'hidden' || (s.position !== 'fixed' && s.position !== 'sticky')) return;
+                const r = el.getBoundingClientRect();
+                if (r.height > 0 && r.bottom >= window.innerHeight - 30) top = Math.min(top, r.top);
+            });
+            const b = top < window.innerHeight ? window.innerHeight - top + 10 : 16;
+            btn.style.setProperty('--app-back-b', b + 'px');
+        }
+        place();
+        window.addEventListener('resize', place);
+        setTimeout(place, 400);
+
+        let lastY = window.scrollY;
+        let ticking = false;
+        function onScroll() {
+            const y = window.scrollY;
+            const dy = y - lastY;
+            const atTop = y < 40;
+            const atBottom = window.innerHeight + y >= document.documentElement.scrollHeight - 4;
+            if (atTop || atBottom || dy < -6) btn.classList.remove('is-hide');
+            else if (dy > 6) btn.classList.add('is-hide');
+            if (Math.abs(dy) > 6) lastY = y;
+            ticking = false;
+        }
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(onScroll);
+            }
+        }, { passive: true });
+
+        btn.addEventListener('click', () => {
+            let same = false;
+            try {
+                same = !!document.referrer && new URL(document.referrer).origin === location.origin;
+            } catch (e) {}
+            if (location.protocol === 'file:') same = history.length > 1;
+            if (same && history.length > 1) history.back();
+            else location.href = '/';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initDrawer();
+        initFocusHeader();
+        initRegBanner();
+        initTabs();
+        initTicker();
+        initFlashMore();
+        initSheets();
+        initA2hs();
+        initAppBack();
+    });
+})();

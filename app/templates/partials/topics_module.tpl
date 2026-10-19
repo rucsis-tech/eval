@@ -1,109 +1,55 @@
-﻿{* ===================================================================
-   templates/partials/topics_module.tpl
-   TOPページ用 トピックス / 速報 / お知らせ モジュール部品
-   =================================================================== *}
-
-{* 1. リアルタイム速報ティッカー *}
-{if !empty($flash_ticker_list)}
-<div class="flash">
-  <span class="lbl">速報</span>
-  <div class="ticker">
-    {foreach from=$flash_ticker_list item=ticker name=ticker_loop}
-
-      <a href="{$ticker.url|default:'/topics/topics_top'|escape}" class="{if $smarty.foreach.ticker_loop.first}show{/if}">
-        <b>{$ticker.category_name|escape}</b>{$ticker.title|escape}
-      </a>
-    {/foreach}
-  </div>
-  <a href="/topics/topics_top" class="more">一覧 &gt;</a>
-</div>
-{/if}
-
-{* 2. トピックス / お知らせ モジュール本体 *}
-<section class="topics-module-sec">
-  <div class="sec-title">
-    <h2>TOPICS &amp; NEWS</h2>
-    <span class="en">最新情報</span>
-  </div>
-
-  {* タブ切り替えヘッダー *}
-  <div class="topics-tabs">
-    <button type="button" class="tab-btn active" data-target="tab-topics">トピックス</button>
-    <button type="button" class="tab-btn" data-target="tab-flash">速報</button>
-    <button type="button" class="tab-btn" data-target="tab-info">お知らせ</button>
-  </div>
-
-  {* タブコンテンツ表示領域 *}
-  <div class="topics-tab-contents">
-
-    {* --- Tab 1: トピックス --- *}
-    <div id="tab-topics" class="tab-content active">
-      {if !empty($topics_list)}
-        <ul class="topic-list">
-          {foreach from=$topics_list item=item}
-            <li class="topic-item">
-              <a href="/topics/topics_detail?id={$item.id|escape}">
-                <span class="t-date">{$item.published_at|date_format:"%Y.%m.%d"}</span>
-                {if $item.is_new}
-                  <span class="t-badge new">NEW</span>
-                {/if}
-                <span class="t-cat">{$item.category_name|default:'トピックス'|escape}</span>
-                <span class="t-title">{$item.title|escape}</span>
-              </a>
-            </li>
-          {/foreach}
-        </ul>
-      {else}
-        <p class="empty-msg">現在表示できるトピックスはありません。</p>
-      {/if}
-      <div class="topics-more-wrap">
-        <a href="/topics/topics_top" class="btn-more">トピックス一覧を見る</a>
-      </div>
+{* TOP内トピックス／速報／お知らせモジュール（P1 モック #topicsModule 準拠） *}
+<section id="topicsModule">
+    <div class="sec-title"><h2>トピックス</h2><span class="en">TOPICS</span></div>
+    <div class="c-tabs" data-evm-tabs="topics">
+        <a class="on" href="#" data-tab="topics">トピックス</a>
+        <a href="#" data-tab="flash">速報</a>
+        <a href="#" data-tab="info">お知らせ</a>
     </div>
+    <ul class="card-list" id="list-topics">
+        <li class="card"><a href="/topics/topics_detail">
+            <div class="thumb th-navy">WIN5<br>確率構成</div>
+            <div class="body">
+                <h3>【WIN5攻略】Eval確率上位×点数最適化で組む今週の構成案 対象5レースの好走確率を全公開</h3>
+                <div class="meta"><span class="badge b-sub">サブスク限定</span>2026-07-13 18:00 <span class="b-new">NEW</span><span class="like">♡ 34</span></div>
+            </div>
+        </a></li>
+        <li class="card"><a href="/topics/topics_detail">
+            <div class="thumb th-red">危険な<br>人気馬</div>
+            <div class="body">
+                <h3>【東京11R／危険な人気馬】想定1人気も複勝率26.7%止まり 確率が示す“過剰人気”の根拠とは</h3>
+                <div class="meta"><span class="badge b-pt">300pt</span>2026-07-13 17:30 <span class="b-new">NEW</span><span class="like">♡ 21</span></div>
+            </div>
+        </a></li>
+        <li class="card"><a href="/topics/topics_detail">
+            <div class="thumb th-green">ラップ<br>推奨</div>
+            <div class="body">
+                <h3>【ラップ推奨／ユリス】前半3F想定から導く展開利 本日の該当馬を開催別に一覧公開</h3>
+                <div class="meta"><span class="badge b-pt">300pt</span>2026-07-13 12:00<span class="like">♡ 18</span></div>
+            </div>
+        </a></li>
+        <li class="card"><a href="/topics/topics_detail">
+            <div class="thumb th-gray">馬具<br>情報</div>
+            <div class="body">
+                <h3>【本日の馬具情報】初ブリンカー・チークピーシズ変更馬まとめ 確率上昇シグナルの見方も解説</h3>
+                <div class="meta"><span class="badge b-free">無料</span>2026-07-12 17:00<span class="like">♡ 45</span></div>
+            </div>
+        </a></li>
+    </ul>
 
-    {* --- Tab 2: 速報 --- *}
-    <div id="tab-flash" class="tab-content">
-      {if !empty($flash_news_list)}
-        <ul class="topic-list">
-          {foreach from=$flash_news_list item=item}
-            <li class="topic-item">
-              <a href="/topics/topics_detail?id={$item.id|escape}">
-                <span class="t-date">{$item.published_at|date_format:"%Y.%m.%d %H:%M"}</span>
-                <span class="t-badge flash">速報</span>
-                <span class="t-title">{$item.title|escape}</span>
-              </a>
-            </li>
-          {/foreach}
-        </ul>
-      {else}
-        <p class="empty-msg">最新の速報はありません。</p>
-      {/if}
-      <div class="topics-more-wrap">
-        <a href="/topics/topics_top" class="btn-more">速報一覧を見る</a>
-      </div>
-    </div>
+    <ul class="info-list" id="list-flash" hidden>
+        <li><a href="/results/results_top"><span class="i-txt">Eval、日・函館11R 3連複72.4倍<b style="color:var(--sig)">【8万6880円】</b>的中！</span><span class="date">7/12 15:42</span></a></li>
+        <li><a href="/results/results_top"><span class="i-txt">【WIN5】Eval確率上位で構成、払戻<b style="color:var(--sig)">【42万7100円】</b>！</span><span class="date">7/12 17:05</span></a></li>
+        <li><a href="/topics/topics_top"><span class="i-txt">好走確率50%超・Sランク馬、東京9Rで1着→単勝460円</span><span class="date">7/12 14:20</span></a></li>
+        <li><a href="/topics/topics_top"><span class="i-txt">【New】本日の馬具情報を公開しました（ポイント）</span><span class="date">7/14 09:00</span></a></li>
+        <li><a href="/results/results_top"><span class="i-txt">Eval、大井最終 馬単38.2倍<b style="color:var(--sig)">【3万8200円】</b>的中！</span><span class="date">7/11 20:48</span></a></li>
+    </ul>
 
-    {* --- Tab 3: お知らせ --- *}
-    <div id="tab-info" class="tab-content">
-      {if !empty($info_list)}
-        <ul class="topic-list">
-          {foreach from=$info_list item=item}
-            <li class="topic-item">
-              <a href="/topics/info_detail?id={$item.id|escape}">
-                <span class="t-date">{$item.published_at|date_format:"%Y.%m.%d"}</span>
-                <span class="t-cat info">お知らせ</span>
-                <span class="t-title">{$item.title|escape}</span>
-              </a>
-            </li>
-          {/foreach}
-        </ul>
-      {else}
-        <p class="empty-msg">現在お知らせはありません。</p>
-      {/if}
-      <div class="topics-more-wrap">
-        <a href="/topics/topics_top" class="btn-more">お知らせ一覧を見る</a>
-      </div>
-    </div>
+    <ul class="info-list" id="list-info" hidden>
+        <li><a href="/topics/info_detail"><span class="i-txt">【News】地方競馬（門別・高知・大井）の確率提供を開始しました</span><span class="date">07/10</span></a></li>
+        <li><a href="/topics/info_detail"><span class="i-txt">【Info】ポイントの有効期限にご注意ください</span><span class="date">07/01</span></a></li>
+        <li><a href="/topics/info_detail"><span class="i-txt">【お知らせ】アプリのプッシュ通知設定について</span><span class="date">06/24</span></a></li>
+    </ul>
 
-  </div>
+    <a class="read-more" href="/topics/topics_top" id="readMore">Read More...</a>
 </section>

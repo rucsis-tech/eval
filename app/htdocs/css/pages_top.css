@@ -1,0 +1,800 @@
+/* ---------------------------------------------------------------------
+   1. TOP (Home)
+   --------------------------------------------------------------------- */
+
+  .icon-mypage .mp-lbl{font-size:7.5px;font-weight:700;letter-spacing:.02em;}
+
+  /* ===== ハンバーガードロワーメニュー（右スライドイン） ===== */
+  .drawer-overlay{
+    position:fixed;inset:0;z-index:260;background:rgba(0,0,0,.55);
+    display:flex;justify-content:flex-end;
+  }
+  .drawer-overlay.hidden{display:none;}
+  .drawer{
+    width:82%;max-width:320px;height:100%;
+    background:var(--bg-card);border-left:1px solid var(--line);
+    overflow-y:auto;padding-bottom:28px;
+  }
+  .d-head{
+    position:sticky;top:0;z-index:1;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 14px;background:var(--bg-card);border-bottom:1px solid var(--line);
+  }
+  .d-title{font-size:14px;font-weight:900;color:#fff;letter-spacing:.04em;}
+  .d-close{
+    width:30px;height:30px;border-radius:50%;
+    background:var(--bg-sunken);border:1px solid var(--line);color:#fff;font-size:15px;
+    display:grid;place-items:center;-webkit-tap-highlight-color:transparent;
+  }
+  .d-sec{padding:8px 0 6px;border-bottom:1px solid var(--line);}
+  .d-sec-t{font-size:9.5px;font-weight:800;color:var(--text-sub);letter-spacing:.1em;padding:4px 14px 2px;}
+  .d-item{
+    display:flex;align-items:center;gap:7px;
+    padding:11px 14px;font-size:12.5px;font-weight:700;color:var(--text);text-decoration:none;
+  }
+  .d-item .chev{margin-left:auto;color:#4a5468;font-size:12px;}
+  .d-item .em{font-size:9px;color:var(--pt);font-weight:800;}
+  .d-item.sub{padding:9px 14px 9px 24px;font-size:12px;color:var(--text-sub);font-weight:600;}
+  .d-item.d-logout{color:var(--text-sub);font-weight:600;}
+  .d-item.d-x{padding:13px 14px;}
+  .d-btn{
+    display:block;margin:6px 14px 8px;text-align:center;
+    font-size:12.5px;font-weight:900;padding:12px 0;border-radius:22px;text-decoration:none;
+  }
+  .d-btn.primary{background:var(--red);color:#fff;box-shadow:0 2px 0 var(--red-deep);}
+  .d-btn.ghost{border:1px solid #4a5468;color:var(--text);}
+  .d-fold{border-bottom:1px solid var(--line);}
+  .d-fold summary{
+    list-style:none;display:flex;align-items:center;
+    padding:12px 14px;font-size:12.5px;font-weight:700;color:var(--text);cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .d-fold summary::-webkit-details-marker{display:none;}
+  .d-fold summary::after{content:"＋";margin-left:auto;color:var(--text-sub);font-size:12px;}
+  .d-fold[open] summary::after{content:"−";}
+  @media (max-width: 1023px){
+    .gnav a{letter-spacing:0;}
+    .gnav a .ico{flex:0 0 auto;transition:background .25s;}
+    .gnav .fab .fab-lbl{letter-spacing:.02em;}
+  }
+  /* ===== キャンペーンモーダル（タイアップ告知用・汎用） ===== */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:200;
+    background:rgba(0,0,0,.72);
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+  }
+  .modal-overlay.hidden{display:none;}
+  .modal{
+    position:relative;width:100%;max-width:340px;
+    border-radius:14px;overflow:hidden;
+    box-shadow:0 12px 40px rgba(0,0,0,.6);
+  }
+  .modal .m-visual{
+    aspect-ratio:4/3;display:grid;place-items:center;text-align:center;
+    background:linear-gradient(135deg,#0d2b52 0%,#163d73 55%,#d7263d 130%);
+    color:#fff;padding:20px;
+  }
+  .modal .m-visual .m-lbl{
+    display:inline-block;background:#c8f31d;color:#000;
+    font-size:10px;font-weight:900;padding:3px 10px;border-radius:12px;letter-spacing:.08em;
+    margin-bottom:10px;
+  }
+  .modal .m-visual h2{font-size:18px;font-weight:900;line-height:1.5;}
+  .modal .m-visual p{font-size:11px;margin-top:8px;opacity:.9;}
+  .modal .m-foot{background:var(--bg-card);padding:14px;text-align:center;}
+  .modal .m-btn{
+    display:block;background:var(--red);color:#fff;text-decoration:none;
+    font-weight:900;font-size:14px;padding:13px 0;border-radius:26px;
+    box-shadow:0 3px 0 var(--red-deep);
+  }
+  .modal .m-skip{
+    display:inline-block;margin-top:10px;font-size:11px;color:var(--text-sub);text-decoration:none;
+  }
+  .modal .m-visual.v-tie{background:linear-gradient(135deg,#0d2b52 0%,#163d73 55%,#d7263d 130%);}
+  .modal .m-visual.v-sub{background:linear-gradient(135deg,#0a231c,#046b4c);}
+  .modal .m-visual.v-pt{background:linear-gradient(135deg,#5a3a06,#b8912a);}
+  .modal .m-visual.v-sys{background:linear-gradient(135deg,#3a1218,#8f1024);}
+  .modal .m-visual.v-reg{background:linear-gradient(135deg,#1d2606,#15171d 70%);}
+  /* 複数枚の連続表示：何枚目かを示すカウンター（2026-09-30追加） */
+  .modal .m-count{
+    position:absolute;top:10px;left:10px;z-index:1;
+    font-size:9.5px;font-weight:900;color:#fff;letter-spacing:.04em;
+    background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:2px 9px;
+  }
+  .modal .m-count[hidden]{display:none;}
+  .modal .m-dots{display:flex;justify-content:center;gap:5px;margin-top:10px;}
+  .modal .m-dots i{width:6px;height:6px;border-radius:50%;background:#3a4150;}
+  .modal .m-dots i.on{background:var(--red);}
+  .modal .m-close{
+    position:absolute;top:8px;right:8px;
+    width:30px;height:30px;border-radius:50%;
+    background:rgba(0,0,0,.55);color:#fff;font-size:16px;
+    display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);
+  }
+
+  /* ===== 速報ティッカー（1行ローテーション型） ===== */
+  .flash{
+    display:flex;align-items:center;gap:8px;
+    height:44px;padding:0 12px;
+    border-bottom:1px solid var(--line);background:#0d0f14; /* お試し②：一段沈めたトーン */
+  }
+  .flash .lbl{
+    flex:0 0 auto;background:transparent;border:1px solid var(--red);color:var(--red);
+    font-size:10px;font-weight:800;
+    padding:1px 8px;border-radius:2px;letter-spacing:.1em;
+  }
+  .flash .ticker{
+    flex:1;min-width:0;position:relative;height:100%;
+  }
+  .flash .ticker a{
+    position:absolute;inset:0;display:flex;align-items:center;
+    font-size:12px;color:#7d93b8;text-decoration:none; /* お試し②：リンク色を減光 */
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    opacity:0;transition:opacity .4s;pointer-events:none;
+  }
+  .flash .ticker a.show{opacity:1;pointer-events:auto;}
+  .flash .ticker a b{color:var(--red);}
+  .flash .more{flex:0 0 auto;font-size:10px;color:var(--text-sub);text-decoration:none;}
+
+  /* ===== Section common ===== */
+  section{margin-top:10px;}
+  .sec-title{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 12px;background:var(--bg-card);
+    border-top:3px solid var(--red);border-bottom:1px solid var(--line);
+  }
+  .sec-title h2{font-size:15px;font-weight:800;color:#fff;letter-spacing:.03em;}
+  .sec-title .en{font-size:9px;color:var(--text-sub);letter-spacing:.16em;font-weight:600;}
+  .sec-title .right{font-size:11px;color:var(--blue-link);text-decoration:none;}
+  .sec-title .guide{
+    margin-left:auto;
+    display:flex;align-items:center;gap:3px;
+    border:1px solid #7ac943;color:#a4e36a;
+    font-size:10px;font-weight:800;
+    padding:2px 9px;border-radius:12px;text-decoration:none;
+  }
+  .sec-title .guide .g-mark{font-size:10px;line-height:1;}
+
+  /* ===== Probability (hero) ===== */
+  .prob{background:var(--bg-card);padding-bottom:12px;}
+  .tabs{display:flex;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tabs.date{border-bottom:1px solid var(--line);}
+  .tabs.date a{
+    flex:1 0 33.3%;text-align:center;font-size:11px;font-weight:700;color:var(--text-sub);
+    padding:12px 0;text-decoration:none;border-right:1px solid var(--line);
+  }
+  .tabs.date a.on{color:var(--red);border-bottom:2px solid var(--red);}
+  .tabs.venue{padding:6px 10px;gap:8px;}
+  .tabs.venue a{
+    flex:0 0 auto;font-size:11.5px;font-weight:700;color:var(--text);
+    border:1px solid #4a5468;border-radius:14px;padding:5px 14px;text-decoration:none;background:transparent;
+    position:relative;
+  }
+  .tabs.venue a::after{content:"";position:absolute;inset:-6px -3px;} /* 見えないタップ領域拡張 */
+  .tabs.venue a.on{background:var(--red);border-color:var(--red);color:#fff;}
+  .tabs.venue a.local{border-color:#3a4150;color:var(--text-sub);}
+  .tabs.race{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:4px;
+    padding:0 10px 6px;overflow:visible;
+  }
+  .tabs.race a{
+    text-align:center;font-size:12px;font-weight:700;
+    border:1px solid var(--line);border-radius:4px;color:var(--text);
+    padding:9px 0;text-decoration:none;background:var(--bg-sunken);
+  }
+  .tabs.race a.on{background:var(--red);border-color:var(--red);color:#fff;}
+  /* 発走済み：グレーアウト（結果閲覧は可能） */
+  .tabs.race a.done{
+    background:transparent;border-color:#232732;color:#4d5666;
+  }
+  .view-switch{display:flex;align-items:stretch;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .view-switch a{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-height:46px;padding:0;text-align:center;
+    font-size:11px;font-weight:700;
+    color:var(--text-sub);text-decoration:none;border-right:1px solid var(--line);background:var(--bg-sunken);
+  }
+  .view-switch a:last-child{border-right:none;}
+  .view-switch a.on{background:var(--bg-card);color:var(--red);border-bottom:2px solid var(--red);}
+  /* 結果・払戻し：結果取得前は無効 */
+  /* 取得前：押せないことを明示（沈み表示＋理由注記） */
+  .view-switch a.disabled{color:#3d4452;background:#0c0e13;} /* 実装時は pointer-events:none を付与（モックでは確認用にタップ可） */
+  .view-switch a .t-note{display:block;font-size:8px;font-weight:600;color:#3d4452;line-height:1.2;margin-top:1px;}
+  .view-switch a .t-note[hidden]{display:none;} /* 結果取得後は注記を完全に消し、1行を縦中央に */
+  .view-switch a.disabled .t-note{color:#333a47;}
+  /* 結果取得後：色付きテキストで有効状態を明示 */
+  .view-switch a.ready{color:#fff;}
+  /* 取得後：有効化フラッシュ（1回のみ）。NEWバッジは不使用（2026-07-23決定：全レース分出ると煩雑） */
+  .view-switch a{position:relative;}
+  @keyframes tabFlash{
+    0%{background:rgba(230,57,79,.45);}
+    100%{background:var(--bg-sunken);}
+  }
+  .view-switch a.flash{animation:tabFlash 1.2s ease-out 1;}
+  /* 勝利確率／複勝確率：ボタン型（出馬表内のみ機能） */
+  .mode-btns{
+    flex:0 0 auto;display:flex;align-items:center;gap:6px;
+    padding:0 10px;background:var(--bg-sunken);
+  }
+  .btn-mode{
+    flex:0 0 auto !important;flex-direction:row !important;min-height:0 !important;
+    font-size:10.5px;font-weight:800;color:var(--text-sub);
+    border:1px solid #4a5468 !important;border-radius:15px;
+    padding:7px 13px !important;text-decoration:none;background:transparent !important;
+  }
+  .btn-mode.on{
+    background:var(--red) !important;border-color:var(--red) !important;color:#fff !important;
+  }
+  /* 結果・払戻し表示中：勝利確率／複勝確率は機能しない（出馬表内のみ）ため減光＋タップ不可。
+     非表示にせず残すことでタブ幅のガタつきを防ぎ、「無効はグレーで示す」本ページの流儀
+     （結果取得前の結果・払戻しタブと同じ）に統一。選択状態は保持され出馬表に戻ると復帰 */
+  .mode-btns.disabled{opacity:.35;pointer-events:none;}
+  /* ソート可能な見出し */
+  .prob-t th.sortable{cursor:pointer;}
+  .prob-t th .sort{font-size:8px;opacity:.85;}
+
+  /* ===== 結果・払戻しビュー ===== */
+  .chaku{
+    display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    font-size:10.5px;font-weight:900;background:#2a2e38;color:var(--text-sub);
+  }
+  .chaku.c1{background:#d4af37;color:#1a1305;}
+  .chaku.c2{background:#98a4b8;color:#111;}
+  .chaku.c3{background:#c07a3e;color:#fff;}
+  .result-t td.name{font-size:12px;}
+  /* 確率順位バッジ：1位=赤／2位=水色／3位=橙／4位=黄緑／5位=黄（塗り＋濃色文字で埋もれ防止） */
+  .prank{
+    display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    font-size:10.5px;font-weight:900;
+  }
+  .prank.p1{background:#e6394f;color:#fff;}
+  .prank.p2{background:#55c1e8;color:#06222e;}
+  .prank.p3{background:#f09a1e;color:#2b1a02;}
+  .prank.p4{background:#97c459;color:#1c2b06;}
+  .prank.p5{background:#f5d327;color:#2b2405;}
+  .payout{margin:10px 12px 12px;border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .payout .p-head{
+    background:#1c2434;color:#fff;font-size:11px;font-weight:800;padding:8px 12px;letter-spacing:.04em;
+  }
+  .payout table{width:100%;border-collapse:collapse;font-size:11.5px;}
+  .payout td{padding:7px 12px;border-top:1px solid var(--line);}
+  .payout td.k{width:64px;color:var(--text-sub);font-weight:700;font-size:10.5px;}
+  .payout td.c{font-weight:800;color:#fff;font-variant-numeric:tabular-nums;}
+  .payout td.y{text-align:right;font-weight:800;color:#ffd25e;font-variant-numeric:tabular-nums;}
+
+  .race-info{
+    display:flex;align-items:center;gap:8px;padding:7px 12px;font-size:11px;color:var(--text-sub);
+  }
+  .race-info b{color:#fff;font-size:13px;}
+  .race-info .time{margin-left:auto;background:var(--bg-sunken);border:1px solid var(--line);
+    font-size:10px;padding:1px 8px;border-radius:2px;}
+  /* 確率（暫定／最終）・期待値（LIVE）ステータス */
+  .status-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .status-badge{
+    display:inline-block;font-size:9.5px;font-weight:900;letter-spacing:.04em;
+    padding:2px 8px;border-radius:3px;cursor:pointer;
+  }
+  .status-badge.prov{background:#3a4150;color:#c3c9d4;}
+  .status-badge.final{background:var(--sig);color:#fff;}
+  .status-badge.live{
+    background:#123047;color:#6ec6ff;border:1px solid #1d5a8a;cursor:default;
+  }
+  .status-badge.closed{background:#3a4150;color:#c3c9d4;border:none;}
+  .status-badge.result{background:#c9a227;color:#1a1305;}
+  .status-note{font-size:9px;color:var(--text-sub);}
+  /* 手動更新ボタン（5-3原則：鮮度表示＋ユーザー主導更新＋新データ時のみ点灯。自動リロード不採用） */
+  .rf-btn{
+    width:28px;height:28px;border-radius:50%;margin-left:auto;
+    background:var(--bg-sunken);border:1px solid #1d5a8a;color:#6ec6ff;
+    cursor:pointer;position:relative;
+    display:grid;place-items:center;-webkit-tap-highlight-color:transparent;font-family:inherit;
+  }
+  .rf-btn svg{
+    width:17px;height:17px;display:block;
+    stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
+  }
+  .rf-btn::after{content:"";position:absolute;inset:-7px;}
+  .rf-btn.spin{animation:rfspin .6s ease-out 1;}
+  @keyframes rfspin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+  .rf-btn.avail{border-color:var(--red);color:#5fe8bd;box-shadow:0 0 8px rgba(0,201,141,.35);}
+  /* 更新で変化した期待値セルのフラッシュ（並び・スクロールは維持） */
+  @keyframes evFlash{0%{background:rgba(0,201,141,.4);}100%{background:transparent;}}
+  #probTable td.rate.flash{animation:evFlash 1.1s ease-out 1;}
+  /* LIVEドット（点滅） */
+  .live-dot{
+    display:inline-block;width:5px;height:5px;border-radius:50%;
+    background:#6ec6ff;margin-right:3px;vertical-align:1px;
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+  /* 期待値列見出しのLIVE表示 */
+  .th-live{display:block;font-size:7px;font-weight:800;color:#6ec6ff;letter-spacing:.08em;line-height:1;margin-top:2px;}
+  /* 発売締切後：LIVE表示を消灯 */
+  .prob-t.closed .th-live{color:#8a94a6;}
+  .prob-t.closed .th-live .live-dot{animation:none;background:#8a94a6;}
+  /* シミュレーションボタンの状態 */
+  .btn-sim.closed{
+    background:#3a4150;color:#9aa3b2;box-shadow:none;pointer-events:none;
+  }
+  .btn-sim.result{
+    background:var(--navy-bright);box-shadow:0 2px 0 #0d2b52;
+  }
+  /* 補正前：バッジなし・減光なし（「暫定」表記は不使用＝加点表現の原則）。変動矢印のみ最終後に表示 */
+  .prob-t.provisional .diff{display:none;}
+  /* 最終時：暫定からの変動矢印 */
+  .diff{font-size:8px;margin-left:1px;vertical-align:1px;}
+  .diff.up{color:var(--sig-soft);}
+  .diff.down{color:#6ea8ff;}
+
+  .race-info .going{
+    display:inline-grid;place-items:center;
+    background:var(--pt);color:#1a1305;font-size:10px;font-weight:900;
+    width:18px;height:18px;border-radius:2px;
+  }
+
+  table.prob-t{width:100%;border-collapse:collapse;font-size:12px;}
+  .prob-t th{
+    background:#1c2434;color:#fff;font-size:10px;font-weight:700;
+    padding:9px 2px;border-right:1px solid rgba(255,255,255,.08);
+  }
+  .prob-t th .sort{font-size:8px;opacity:.8;}
+  .prob-t th .sort.idle{opacity:.3;} /* 非アクティブ列にも薄い▼を常時表示＝ソート可の示唆 */
+  .prob-t td{
+    border-bottom:1px solid var(--line);padding:4px 4px;text-align:center;vertical-align:middle;
+    height:30px;
+  }
+  /* 2026-09-30：出馬表の全行を「妙味チップ付き行」と同じ高さに統一（妙味の有無で行高がガタつかないように）。
+     妙味チップは数値の下に改行表示（display:block）で固定 */
+  #probTable tbody td{height:46px;}
+  .prob-t tbody tr:nth-child(odd){background:rgba(255,255,255,.02);}
+  .prob-t td.name{
+    text-align:left;font-weight:700;font-size:12px;color:#fff;
+    overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:0;
+  }
+  .prob-t td.name small{font-weight:400;font-size:9px;color:var(--text-sub);margin-left:5px;}
+  /* 枠色×馬番の統合バッジ */
+  .waku{
+    display:inline-grid;place-items:center;width:22px;height:22px;font-size:11px;font-weight:900;border-radius:3px;
+  }
+  .w1{background:#fff;border:1px solid #999;color:#222;}
+  .w2{background:#231f20;color:#fff;border:1px solid #555;}
+  .w3{background:#d7263d;color:#fff;}
+  .w4{background:#1a4d9e;color:#fff;}
+  .w5{background:#e8b30c;color:#222;}
+  .w6{background:#0a7f45;color:#fff;}
+  .w7{background:#e8850c;color:#fff;}
+  .w8{background:#e77ba0;color:#fff;}
+  .rate{font-weight:800;font-variant-numeric:tabular-nums;color:var(--text);}
+  .rate.hi{color:var(--sig-soft);}   /* 下限100%超＝期待値プラス圏 */
+  .rate.mid{color:#f0b46a;}  /* 上限のみ100%超＝準注目 */
+  /* お試し①：期待値プラスのセルに「妙味」チップを自動付与（数字の意味を画面内で自己説明） */
+  #probTable td.rate.ev.hi::after{
+    content:"妙味";display:block;width:fit-content;margin-left:auto;margin-right:auto;
+    font-size:9px;font-weight:900;color:#fff;
+    background:var(--sig);
+    line-height:1.3;margin-top:3px;padding:1px 7px;border-radius:8px;letter-spacing:.08em;
+  }
+  /* 準妙味チップは不採用（mid＝橙の数値色のみ残す） */
+  .rate.range{font-size:10.5px;letter-spacing:-.02em;}
+  .rank{
+    display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    font-size:11px;font-weight:900;color:#111;
+  }
+  .rk-s{background:var(--gold);} .rk-a{background:var(--silver);}
+  .rk-b{background:var(--bronze);color:#fff;} .rk-c{background:#3a4150;color:#9aa3b2;}
+  /* ===== 予想印（ユーザー入力：タップ順送り／長押しピッカー） ===== */
+  .prob-t td.mark-td{padding:2px 0;}
+  .mark-btn{
+    width:28px;height:28px;border-radius:6px;
+    display:inline-grid;place-items:center;position:relative;
+    background:var(--bg-sunken);border:1px solid #3a4150;
+    color:var(--text);font-size:14px;font-weight:800;line-height:1;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-touch-callout:none;user-select:none;-webkit-user-select:none;
+  }
+  .mark-btn::after{content:"";position:absolute;inset:-6px -3px;} /* 実効タップ領域40px確保 */
+  .mark-btn:empty::before{content:"";width:8px;height:2px;background:#3a4150;border-radius:1px;} /* 未入力プレースホルダ */
+  .mark-btn[data-mark="消"]{color:#5a6373;background:transparent;border-color:#2a2e38;}
+  /* 消印の行は減光（印セル自体は視認維持） */
+  .prob-t tr.h-del td{opacity:.45;}
+  .prob-t tr.h-del td.mark-td{opacity:1;}
+  /* 結果ビューの印（表示専用・出馬表の入力を同期） */
+  .r-mark{font-size:13px;font-weight:800;color:var(--text);}
+  .r-mark[data-mark=""]{color:#3a4150;font-weight:400;}
+  .r-mark[data-mark="消"]{color:#5a6373;}
+  /* 長押しピッカー（ボトムシート） */
+  .mark-sheet-overlay{
+    position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);
+    display:flex;align-items:flex-end;justify-content:center;
+  }
+  .mark-sheet-overlay.hidden{display:none;}
+  .mark-sheet{
+    width:100%;max-width:414px;background:var(--bg-card);
+    border-radius:16px 16px 0 0;border:1px solid var(--line);border-bottom:none;
+    padding:14px 14px calc(18px + env(safe-area-inset-bottom));
+  }
+  .mark-sheet .ms-title{font-size:11px;font-weight:700;color:var(--text-sub);margin-bottom:10px;}
+  .mark-sheet .ms-title b{font-size:13px;font-weight:800;color:#fff;margin-right:4px;}
+  .mark-sheet .ms-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+  .mark-sheet .ms-grid button{
+    height:44px;border-radius:8px;
+    background:var(--bg-sunken);border:1px solid #3a4150;
+    color:var(--text);font-size:17px;font-weight:800;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mark-sheet .ms-grid button.clear{font-size:11px;font-weight:800;color:var(--text-sub);}
+  .mark-sheet .ms-grid button.on{border-color:var(--red);color:var(--red);}
+  .prob-note{font-size:10px;color:var(--text-sub);padding:8px 12px 0;}
+  .btn-sim{
+    display:block;margin:10px 12px 4px;
+    background:var(--red);color:#fff;text-decoration:none;
+    text-align:center;font-weight:800;font-size:12.5px;
+    padding:9px 0;border-radius:6px;
+    box-shadow:0 2px 0 var(--red-deep);
+  }
+
+  /* ===== 会員登録バナー（下部ナビ上に追従／非ログイン時のみ表示）
+     2026-09-30刷新：サイトのトンマナ（ダークカード＋登録訴求色ライムのアクセント）に統一。
+     ホーム画面追加バナー（.a2hs）と同じ「お知らせカード」文法：アイコン枠／2行テキスト／ボタン／✕ ===== */
+  .reg-banner{
+    position:fixed;left:50%;transform:translateX(-50%);
+    bottom:calc(92px + env(safe-area-inset-bottom));
+    width:calc(100% - 20px);max-width:394px;z-index:90;
+    background:rgba(21,23,29,.96);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(200,243,29,.45);
+    border-radius:14px;
+    padding:10px 8px 10px 10px;
+    display:flex;align-items:center;gap:10px;
+    box-shadow:0 6px 22px rgba(0,0,0,.55);
+  }
+  .reg-banner.hidden{display:none;}
+  .reg-banner .rb-ico{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    border:1.5px solid rgba(200,243,29,.7);color:#c8f31d;
+    display:grid;place-items:center;
+  }
+  .reg-banner .rb-ico svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .reg-banner .rb-text{flex:1;min-width:0;}
+  .reg-banner .rb-main{color:#fff;font-size:12.5px;font-weight:900;line-height:1.35;}
+  .reg-banner .rb-sub{color:var(--text-sub);font-size:9.5px;font-weight:700;margin-top:2px;line-height:1.4;}
+  .reg-banner .rb-sub b{color:#c8f31d;}
+  .reg-banner .rb-btn{
+    flex:0 0 auto;
+    background:#c8f31d;color:#101406;text-decoration:none;
+    font-size:11px;font-weight:900;
+    padding:9px 13px;border-radius:9px;white-space:nowrap;
+  }
+  .reg-banner .close{
+    flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+    color:var(--text-sub);font-size:17px;line-height:1;
+    display:grid;place-items:center;cursor:pointer;position:relative;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .reg-banner .close::after{content:"";position:absolute;inset:-7px;}
+
+  /* ===== ホーム画面追加バナー（PWA／A2HS）2026-09-30追加
+     表示条件：①アプリ（standalone）起動中は非表示 ②追加済みを判定できれば非表示
+     ③判定不能（iOS Safari等）は✕で閉じてから7日間非表示→7日後に再表示。タップで追加ガイドへ ===== */
+  .a2hs{
+    margin:10px 12px 0;
+    display:flex;align-items:center;gap:10px;
+    background:var(--bg-card);border:1px solid rgba(0,201,141,.45);border-radius:14px;
+    padding:10px 8px 10px 10px;text-decoration:none;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .a2hs[hidden]{display:none;}
+  .a2hs .a-ico{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    border:1.5px solid rgba(0,201,141,.75);color:#5fe8bd;
+    display:grid;place-items:center;
+  }
+  .a2hs .a-ico svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;}
+  .a2hs .a-txt{flex:1;min-width:0;}
+  .a2hs .a-t{font-size:12.5px;font-weight:900;color:#fff;line-height:1.35;}
+  .a2hs .a-d{font-size:9.5px;color:var(--text-sub);margin-top:2px;line-height:1.45;}
+  .a2hs .a-d b{color:#5fe8bd;font-weight:800;white-space:nowrap;}
+  .a2hs .a-btn{
+    flex:0 0 auto;background:var(--red);color:#fff;
+    font-size:11px;font-weight:900;padding:9px 12px;border-radius:9px;white-space:nowrap;
+  }
+  .a2hs .a-x{
+    flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+    color:var(--text-sub);font-size:17px;line-height:1;
+    display:grid;place-items:center;position:relative;
+  }
+  .a2hs .a-x::after{content:"";position:absolute;inset:-7px;}
+
+  /* ===== Topics / Ambassador tabs ===== */
+  .c-tabs{display:flex;background:var(--bg-card);border-bottom:2px solid var(--red);}
+  .c-tabs a{
+    flex:1;text-align:center;font-size:13px;font-weight:800;padding:10px 0;text-decoration:none;
+    color:var(--text-sub);background:var(--bg-sunken);
+  }
+  .c-tabs a.on{background:var(--red);color:#fff;}
+  .card-list{list-style:none;background:var(--bg-card);}
+  .card{border-bottom:1px solid var(--line);}
+  .card a{display:flex;gap:10px;padding:12px;text-decoration:none;color:var(--text);}
+  .thumb{
+    flex:0 0 96px;height:64px;border-radius:3px;
+    display:grid;place-items:center;color:#fff;font-size:10px;font-weight:800;text-align:center;line-height:1.3;
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .th-navy{background:linear-gradient(135deg,#12355f,#0d2b52);}
+  .th-red{background:linear-gradient(135deg,#d7263d,#911226);}
+  .th-green{background:linear-gradient(135deg,#0a7f45,#0a5c34);}
+  .th-gray{background:linear-gradient(135deg,#5b6675,#3a4657);}
+  .card .body{flex:1;min-width:0;}
+  .card h3{
+    font-size:13px;font-weight:800;line-height:1.45;color:#fff;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:10px;color:var(--text-sub);flex-wrap:wrap;}
+  .badge{font-size:9px;font-weight:800;color:#fff;padding:1px 7px;border-radius:2px;letter-spacing:.05em;}
+  .b-free{background:var(--free);}
+  .b-sub{background:var(--subsc);}
+  .b-pt{background:var(--pt);color:#1a1305;}
+  .b-new{color:var(--sig);font-weight:900;font-size:9px;}
+  .like{margin-left:auto;color:var(--text-sub);}
+  .read-more{
+    display:block;text-align:center;font-size:12px;color:var(--blue-link);font-weight:700;
+    background:var(--bg-card);padding:12px 0;text-decoration:none;border-bottom:1px solid var(--line);
+  }
+
+  /* ===== 発走時間の近いレース（速報ロール同等のスリムバー） ===== */
+  .nextbar{
+    display:flex;align-items:center;gap:8px;
+    height:46px;padding:0 12px;
+    background:var(--bg-sunken);
+    border-top:1px solid var(--line);
+  }
+  .nextbar .lbl{
+    flex:0 0 auto;background:var(--red);color:#fff;font-size:10px;font-weight:800;
+    padding:2px 8px;border-radius:2px;letter-spacing:.08em;
+  }
+  .nextbar .nb-list{
+    flex:1;min-width:0;display:flex;gap:6px;
+  }
+  .nextbar .nb-list a{
+    flex:1;display:flex;align-items:center;justify-content:center;gap:3px;
+    border:1px solid var(--line);border-radius:5px;
+    background:var(--bg-card);
+    font-size:11px;color:var(--text);text-decoration:none;
+    padding:7px 2px;white-space:nowrap;
+    position:relative;
+  }
+  .nextbar .nb-list a::after{content:"";position:absolute;inset:-7px -2px;} /* タップ領域拡張 */
+  .nextbar .nb-list a b{font-weight:900;color:#fff;}
+  .nextbar .nb-list a .t{font-weight:800;font-variant-numeric:tabular-nums;color:var(--text-sub);}
+  .nextbar .nb-list a.soon{border-color:var(--red);}
+  .nextbar .nb-list a.soon b{color:#ff6b7d;}
+  .nextbar .nb-list a.soon .t{color:#ff6b7d;}
+
+  /* ===== 本日の攻略情報（TOPは圧縮版チップ／詳細は攻略ツールページへ） ===== */
+  .goods{background:var(--bg-card);padding:8px 12px 12px;display:grid;gap:6px;}
+  .goods a{
+    display:flex;align-items:center;gap:8px;
+    border:1px solid var(--line);border-radius:8px;
+    background:var(--bg-sunken);padding:8px 12px;text-decoration:none;
+  }
+  .goods .g-title{
+    flex:1;min-width:0;font-size:12.5px;font-weight:800;color:#fff;
+    overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+  }
+  .goods .g-title .new{color:var(--sig);font-size:9px;font-weight:900;margin-left:4px;}
+  .goods .g-price{
+    flex:0 0 auto;
+    background:var(--pt);color:#1a1305;font-size:11px;font-weight:900;
+    padding:6px 12px;border-radius:15px;white-space:nowrap;
+  }
+
+  /* ===== アンケート（速報と同じスリムバー／タップでアンケートTOPへ） ===== */
+  .surveybar{
+    display:flex;align-items:center;gap:8px;
+    height:44px;padding:0 12px;
+    background:#0d0f14; /* お試し②：一段沈めたトーン */
+    border-bottom:1px solid var(--line);
+  }
+  .surveybar .lbl{
+    flex:0 0 auto;background:transparent;border:1px solid var(--pt);color:var(--pt);
+    font-size:10px;font-weight:800;
+    padding:1px 8px;border-radius:2px;letter-spacing:.08em;
+  }
+  .surveybar .q{
+    flex:1;min-width:0;font-size:12px;color:var(--text-sub);font-weight:700; /* お試し②：減光 */
+    overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+    text-decoration:none;
+  }
+  .surveybar .ans-btn{
+    flex:0 0 auto;display:flex;align-items:center;gap:4px;
+    background:transparent;border:1px solid var(--pt);color:var(--pt); /* お試し②：塗り→枠線 */
+    font-size:11px;font-weight:900;
+    padding:6px 12px;border-radius:16px;text-decoration:none;
+  }
+  .surveybar .ans-btn small{font-size:8.5px;font-weight:800;}
+  .surveybar .more{flex:0 0 auto;font-size:10px;color:var(--text-sub);text-decoration:none;}
+
+  /* ===== お知らせ（トピックス内タブ・コンパクト） ===== */
+  .info-list{list-style:none;background:var(--bg-card);}
+  .info-list li{border-bottom:1px solid var(--line);}
+  .info-list a{
+    display:flex;align-items:center;gap:8px;
+    padding:8px 12px;font-size:12px;color:var(--blue-link);text-decoration:none;
+  }
+  .info-list .i-txt{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+  .info-list .date{flex:0 0 auto;font-size:10px;color:var(--text-sub);font-variant-numeric:tabular-nums;}
+
+  /* ===== 会員状態別CTA（非ログイン／無料会員／サブスク会員で出し分け） ===== */
+  .demo-switch{
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+    padding:10px 12px 0;
+  }
+  .demo-switch button{white-space:nowrap;}
+  .demo-switch .d-lbl{font-size:8.5px;color:#5a6373;font-weight:700;}
+  .demo-switch button{
+    font-size:9px;font-weight:800;color:var(--text-sub);
+    background:var(--bg-sunken);border:1px solid var(--line);border-radius:11px;
+    padding:4px 10px;
+  }
+  .demo-switch button.on{background:var(--red);border-color:var(--red);color:#fff;}
+
+  .member-cta{margin:10px 12px 18px;display:grid;gap:12px;} /* 2026-09-30：上下余白を確保（上のモック切替・下のフッターに密着していた） */
+  .member-cta .panel{
+    border-radius:12px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.08);
+  }
+  /* 非ログイン：無料登録に一本化 */
+  .cta-guest{background:linear-gradient(160deg,#12355f,#081c38);text-align:center;padding:22px 16px 20px;}
+  .cta-guest .lead{font-size:14px;font-weight:800;line-height:1.7;color:#fff;}
+  .cta-guest .lead b{color:#ffd25e;}
+  .cta-guest .sub{font-size:10.5px;color:#bcd0ec;margin-top:5px;}
+  .cta-guest .btn{
+    display:block;margin:14px auto 0;max-width:280px;
+    background:var(--red);color:#fff;font-weight:900;font-size:14px;
+    text-decoration:none;padding:14px 0;border-radius:26px;
+    box-shadow:0 3px 0 var(--red-deep);
+  }
+  .cta-guest .login{display:inline-block;margin-top:12px;font-size:11px;color:#bcd0ec;text-decoration:none;}
+
+  /* 無料会員：サブスク訴求を主役に */
+  .cta-free{background:linear-gradient(160deg,#0a231c,#15171d);padding:20px 16px 18px;text-align:center;position:relative;}
+  .cta-free .offer{
+    display:inline-block;background:var(--lime, #c8f31d);background:#c8f31d;color:#000;
+    font-size:10px;font-weight:900;padding:3px 12px;border-radius:12px;letter-spacing:.06em;
+  }
+  .cta-free .lead{font-size:14px;font-weight:800;line-height:1.7;color:#fff;margin-top:9px;}
+  .cta-free .lead b{color:#5fe8bd;}
+  .cta-free .price{margin-top:6px;font-size:11px;color:var(--text-sub);}
+  .cta-free .price b{font-size:16px;color:#fff;font-variant-numeric:tabular-nums;}
+  .cta-free .btn{
+    display:block;margin:13px auto 0;max-width:290px;
+    background:var(--red);color:#fff;font-weight:900;font-size:14px;
+    text-decoration:none;padding:14px 0;border-radius:26px;
+    box-shadow:0 3px 0 var(--red-deep);
+  }
+  .cta-free .pt-link{display:inline-block;margin-top:12px;font-size:10.5px;color:var(--text-sub);text-decoration:underline;}
+
+  /* サブスク会員：ポイント導線のみ・コンパクト */
+  .cta-subsc{
+    display:flex;align-items:center;gap:10px;
+    background:var(--bg-card);padding:13px 14px;
+  }
+  .cta-subsc .p-coin{
+    width:26px;height:26px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(135deg,#f5c518,#e8850c);
+    color:#1a1305;font-size:12px;font-weight:900;display:grid;place-items:center;
+  }
+  .cta-subsc .txt{flex:1;min-width:0;font-size:11px;color:var(--text-sub);line-height:1.5;}
+  .cta-subsc .txt b{color:#fff;}
+  .cta-subsc .btn{
+    flex:0 0 auto;background:var(--pt);color:#1a1305;
+    font-size:11px;font-weight:900;padding:8px 14px;border-radius:16px;text-decoration:none;white-space:nowrap;
+  }
+
+  /* ===== Footer ===== */
+  footer{background:#06070a;color:var(--text-sub);padding:20px 16px 26px;border-top:1px solid var(--line);}
+  footer .f-logo{font-weight:900;font-size:18px;color:#fff;}
+  footer .f-logo span{color:var(--red);}
+  footer nav{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:14px;font-size:11px;}
+  footer nav a{color:var(--text-sub);text-decoration:none;}
+  footer .copy{margin-top:18px;font-size:10px;text-align:center;color:#5a6373;}
+
+  /* =====================================================================
+     PC版（≥1024px）2026-10-01：同一HTMLのレスポンシブ切替（3カラム案Bを採用）
+     - SP（〜1023px）は従来どおり414px幅の縦積み（変更なし）
+     - 中央寄せ（最大1240px）。左＝レース選択（日付・開催場・R番号・発走間近／追従）／中央＝確率テーブル／右＝サイド
+     - 速報・アンケートはそれぞれ全幅1行
+     - 主要ナビ（的中実績〜ポイント購入）はヘッダーに置かず、速報・アンケート直下の緑の帯に配置し、スクロールでヘッダー下に貼りつく。
+       理由：情報と色が画面の本文側に集中するため最上部は見られにくい。一方で画面下固定はPCでは確率テーブルを隠すため不採用
+     ===================================================================== */
+  @media (min-width:1024px){
+    body{background:var(--bg);}
+    .sp{max-width:none;box-shadow:none;overflow:visible;padding-bottom:48px;}
+    /* ヘッダー：ロゴ＋pt・マイページ・メニューのみ（ナビは下部追従） */
+    header{height:62px;padding:0 max(24px, calc((100% - 1240px) / 2 + 24px));}
+    .logo .mark{font-size:22px;}
+    /* 上部帯：ホーム画面追加・速報・アンケートを各1行（全幅） */
+    .pc-top{
+      max-width:1240px;margin:0 auto;padding:16px 24px 0;
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .pc-top .a2hs{margin:0;}
+    .pc-top .flash, .pc-top .surveybar{border:1px solid var(--line);border-radius:10px;}
+    /* 本文グリッド */
+    .pc-body{
+      max-width:1240px;margin:0 auto;padding:16px 24px 0;
+      display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;align-items:start;
+    }
+    .pc-body > section, .pc-side > section{margin-top:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+    .pc-side{display:flex;flex-direction:column;gap:16px;min-width:0;}
+    .pc-side .demo-switch{padding:0;}
+    .pc-side .member-cta{margin:0;}
+    .sec-title{border-top-width:0;box-shadow:inset 0 3px 0 var(--red);}
+    /* 確率ブロック：左＝レース選択列（追従）／右＝出馬表 */
+    .pc-main{overflow:visible !important;}
+    .pc-main .sec-title{border-radius:12px 12px 0 0;}
+    .prob{display:grid;grid-template-columns:240px minmax(0,1fr);align-items:start;border-radius:0 0 12px 12px;}
+    .prob-nav{padding-bottom:12px;align-self:start;position:sticky;top:130px;} /* ヘッダー62＋ナビ帯56＋余白 */
+    .prob-body{min-width:0;border-left:1px solid var(--line);min-height:100%;}
+    .tabs.venue{flex-wrap:wrap;overflow:visible;padding:10px;}
+    .tabs.race{grid-template-columns:repeat(4,1fr);padding:0 10px 10px;}
+    .nextbar{flex-direction:column;align-items:stretch;height:auto;padding:10px;gap:8px;}
+    .nextbar .lbl{align-self:flex-start;}
+    .nextbar .nb-list{flex-direction:column;}
+    .nextbar .nb-list a{justify-content:space-between;padding:8px 10px;}
+    /* 出馬表：PCは読みやすいサイズに */
+    .prob-t td{font-size:13px;}
+    .prob-t td.name{font-size:13.5px;}
+    .prob-t td.name small{font-size:10.5px;}
+    .prob-t th{font-size:11px;}
+    #th-num{width:56px !important;}
+    #th-mark{width:46px !important;}
+    /* フッター・追従バナー（下部ナビと重ならないよう右下・ナビより上） */
+    footer{margin-top:40px;padding-left:max(24px, calc((100% - 1240px) / 2 + 24px));padding-right:max(24px, calc((100% - 1240px) / 2 + 24px));}
+    .reg-banner{left:auto;right:24px;transform:none;bottom:24px;width:380px;}
+    .modal{max-width:420px;}
+  }
+  @media (min-width:1024px) and (max-width:1199px){
+    .pc-body{grid-template-columns:minmax(0,1fr) 300px;}
+    .prob{grid-template-columns:210px minmax(0,1fr);}
+    .gnav a{padding:0 9px;font-size:12px;}
+  }
+
+  /* ===== TOP：アンバサダー枠（2026-10-01）=====
+     SP：アイコン＋名前を横スクロールで全員表示（末尾に「一覧」タイル）
+     PC：右サイドに縦並びで先頭5名（アイコン＋名前＋属性1つ）＋「他◯名を見る」
+     タップ先：アンバサダーページ（P21）の該当者の位置（#amb-{XのID}） */
+  .amb-top{background:var(--bg-card);}
+  .amb-strip{list-style:none;display:flex;gap:12px;overflow-x:auto;padding:12px 12px 12px;scrollbar-width:none;scroll-snap-type:x proximity;}
+  .amb-strip::-webkit-scrollbar{display:none;}
+  .amb-strip li{flex:0 0 auto;scroll-snap-align:start;}
+  .amb-strip a{display:flex;flex-direction:column;align-items:center;width:62px;text-decoration:none;color:var(--text);-webkit-tap-highlight-color:transparent;}
+  .amb-strip .av{
+    width:54px;height:54px;border-radius:50%;padding:2px;
+    background:conic-gradient(from 200deg,#00c98d,#c8f31d,#00c98d 70%,#0a7a58,#00c98d);
+  }
+  .amb-strip .av img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid var(--bg-card);background:#1d222b;}
+  .amb-strip .nm{margin-top:5px;max-width:100%;font-size:9.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .amb-strip .tg{display:none;}
+  .amb-strip .more .av{background:none;border:1px dashed #3a4150;display:grid;place-items:center;color:var(--red);font-size:20px;font-weight:900;padding:0;}
+  .amb-strip .more .nm{color:var(--red);}
+  .amb-strip a:active .av{transform:scale(.95);}
+  @media (min-width:1024px){
+    .amb-strip{flex-direction:column;gap:0;overflow:visible;padding:4px 0;}
+    .amb-strip li{border-bottom:1px solid var(--line);}
+    .amb-strip li:last-child{border-bottom:none;}
+    .amb-strip li.pc-off{display:none;}
+    .amb-strip a{flex-direction:row;width:auto;gap:10px;padding:8px 14px;}
+    .amb-strip a:hover{background:rgba(0,201,141,.05);}
+    .amb-strip .av{width:36px;height:36px;flex:0 0 auto;}
+    .amb-strip .nm{margin-top:0;flex:1;min-width:0;font-size:12px;font-weight:800;color:#fff;text-align:left;}
+    .amb-strip .tg{
+      display:block;flex:0 0 auto;font-size:9px;font-weight:800;color:#5fe8bd;
+      background:rgba(0,201,141,.08);border:1px solid rgba(0,201,141,.32);border-radius:3px;padding:0 6px;line-height:1.6;
+    }
+    .amb-strip .more a{justify-content:center;}
+    .amb-strip .more .av{display:none;}
+    .amb-strip .more .nm{flex:0 0 auto;font-size:11px;color:var(--red);}
+  }

@@ -33,6 +33,16 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    $Smarty->assign([
+        'show_pc_top' => true,          // true: nav_pc.tpl（ホーム追加バナー・速報ティッカー・アンケート帯）
+        'show_campaign_modal' => true,  // true: partials/modal.tpl（キャンペーン告知モーダル）
+        'show_reg_banner' => true,      // true: 下部ナビ上の無料登録追従バナー（非ログイン向け）
+        'member_type' => 'guest',       // ドロワー内アカウント欄: guest | free | subsc
+        'is_login' => false,            // false: ヘッダー右「ログイン」／true: 「マイページ」＋/mypage へ
+        'user_point' => 7777,           // ヘッダーの保有ポイント表示（未ログイン時は 0 想定）
+        'today_hit_count' => 14,        // 下部ナビ「的中実績」の .hit-badge 件数
+        'mypage_active' => false,       // true: ヘッダー .icon-mypage に is-active（マイページ画面など）
+    ]);
 
     $title = "TOP（確率テーブル）";
     $title_url = $home_url;
