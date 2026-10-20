@@ -4,54 +4,6 @@
 
   .icon-mypage .mp-lbl{font-size:7.5px;font-weight:700;letter-spacing:.02em;}
 
-  /* ===== ハンバーガードロワーメニュー（右スライドイン） ===== */
-  .drawer-overlay{
-    position:fixed;inset:0;z-index:260;background:rgba(0,0,0,.55);
-    display:flex;justify-content:flex-end;
-  }
-  .drawer-overlay.hidden{display:none;}
-  .drawer{
-    width:82%;max-width:320px;height:100%;
-    background:var(--bg-card);border-left:1px solid var(--line);
-    overflow-y:auto;padding-bottom:28px;
-  }
-  .d-head{
-    position:sticky;top:0;z-index:1;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:12px 14px;background:var(--bg-card);border-bottom:1px solid var(--line);
-  }
-  .d-title{font-size:14px;font-weight:900;color:#fff;letter-spacing:.04em;}
-  .d-close{
-    width:30px;height:30px;border-radius:50%;
-    background:var(--bg-sunken);border:1px solid var(--line);color:#fff;font-size:15px;
-    display:grid;place-items:center;-webkit-tap-highlight-color:transparent;
-  }
-  .d-sec{padding:8px 0 6px;border-bottom:1px solid var(--line);}
-  .d-sec-t{font-size:9.5px;font-weight:800;color:var(--text-sub);letter-spacing:.1em;padding:4px 14px 2px;}
-  .d-item{
-    display:flex;align-items:center;gap:7px;
-    padding:11px 14px;font-size:12.5px;font-weight:700;color:var(--text);text-decoration:none;
-  }
-  .d-item .chev{margin-left:auto;color:#4a5468;font-size:12px;}
-  .d-item .em{font-size:9px;color:var(--pt);font-weight:800;}
-  .d-item.sub{padding:9px 14px 9px 24px;font-size:12px;color:var(--text-sub);font-weight:600;}
-  .d-item.d-logout{color:var(--text-sub);font-weight:600;}
-  .d-item.d-x{padding:13px 14px;}
-  .d-btn{
-    display:block;margin:6px 14px 8px;text-align:center;
-    font-size:12.5px;font-weight:900;padding:12px 0;border-radius:22px;text-decoration:none;
-  }
-  .d-btn.primary{background:var(--red);color:#fff;box-shadow:0 2px 0 var(--red-deep);}
-  .d-btn.ghost{border:1px solid #4a5468;color:var(--text);}
-  .d-fold{border-bottom:1px solid var(--line);}
-  .d-fold summary{
-    list-style:none;display:flex;align-items:center;
-    padding:12px 14px;font-size:12.5px;font-weight:700;color:var(--text);cursor:pointer;
-    -webkit-tap-highlight-color:transparent;
-  }
-  .d-fold summary::-webkit-details-marker{display:none;}
-  .d-fold summary::after{content:"＋";margin-left:auto;color:var(--text-sub);font-size:12px;}
-  .d-fold[open] summary::after{content:"−";}
   @media (max-width: 1023px){
     .gnav a{letter-spacing:0;}
     .gnav a .ico{flex:0 0 auto;transition:background .25s;}
@@ -693,14 +645,6 @@
     font-size:11px;font-weight:900;padding:8px 14px;border-radius:16px;text-decoration:none;white-space:nowrap;
   }
 
-  /* ===== Footer ===== */
-  footer{background:#06070a;color:var(--text-sub);padding:20px 16px 26px;border-top:1px solid var(--line);}
-  footer .f-logo{font-weight:900;font-size:18px;color:#fff;}
-  footer .f-logo span{color:var(--red);}
-  footer nav{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:14px;font-size:11px;}
-  footer nav a{color:var(--text-sub);text-decoration:none;}
-  footer .copy{margin-top:18px;font-size:10px;text-align:center;color:#5a6373;}
-
   /* =====================================================================
      PC版（≥1024px）2026-10-01：同一HTMLのレスポンシブ切替（3カラム案Bを採用）
      - SP（〜1023px）は従来どおり414px幅の縦積み（変更なし）
@@ -752,7 +696,7 @@
     #th-num{width:56px !important;}
     #th-mark{width:46px !important;}
     /* フッター・追従バナー（下部ナビと重ならないよう右下・ナビより上） */
-    footer{margin-top:40px;padding-left:max(24px, calc((100% - 1240px) / 2 + 24px));padding-right:max(24px, calc((100% - 1240px) / 2 + 24px));}
+    footer.footer-site{margin-top:40px;padding-left:max(24px, calc((100% - 1240px) / 2 + 24px));padding-right:max(24px, calc((100% - 1240px) / 2 + 24px));}
     .reg-banner{left:auto;right:24px;transform:none;bottom:24px;width:380px;}
     .modal{max-width:420px;}
   }

@@ -33,6 +33,22 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    // ※商品ID
+    $id = isset($_GET['id']) ? trim((string) $_GET['id']) : '';
+    // ※表示確認用
+    if ($id === '') {
+        $id = 't303';
+    }
+
+    $Smarty->assign([
+        'tool_id' => $id,
+        'gnav_active' => 'tools',
+        'member_type' => 'free',
+        'is_login' => true,
+        'user_point' => 7777,
+        'today_hit_count' => 14,
+        'mypage_active' => false,
+    ]);
 
     $title = "商品詳細";
     $title_url = $home_url . "tools/tools_detail";

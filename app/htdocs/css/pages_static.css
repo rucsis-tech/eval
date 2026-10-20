@@ -80,13 +80,16 @@
   .note{font-size:9.5px;color:var(--text-sub);padding:16px 14px;line-height:1.8;}
   .note b{color:var(--text);}
 
-  /* ===== フッター（静的ページ相互リンク） ===== */
-  .foot-links{
-    margin-top:20px;border-top:1px solid var(--line);background:var(--bg-card);
+  /* ===== フッター（S1 モック：リンク帯＋コピー。ナビ URL は footer_nav 共通） ===== */
+  footer.footer-static{
+    margin-top:20px;background:transparent;padding:0;border:none;
+  }
+  footer.footer-static .foot-links{
+    border-top:1px solid var(--line);background:var(--bg-card);
     padding:12px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;
   }
-  .foot-links a{font-size:10px;color:var(--text-sub);text-decoration:none;font-weight:700;}
-  .foot-copy{font-size:9px;color:#4d5666;text-align:center;padding:12px 0 4px;background:var(--bg-card);}
+  footer.footer-static .foot-links a{font-size:10px;color:var(--text-sub);text-decoration:none;font-weight:700;}
+  footer.footer-static .foot-copy{font-size:9px;color:#4d5666;text-align:center;padding:12px 0 4px;background:var(--bg-card);}
 
 /* 共通CSSにある指定のうち、このページの元スタイルに無かったものを打ち消す */
 header {

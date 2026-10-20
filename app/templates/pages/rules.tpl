@@ -6,8 +6,6 @@
 {/block}
 
 {block name="content"}
-    <div class="pc-wrap pc-static w-narrow">
-
         <div class="page-head">
             <h1>利用規約</h1>
             <p class="meta">制定：2026年◯月◯日／最終改定：2026年◯月◯日</p>
@@ -27,12 +25,4 @@
             <p>提供情報の無断転載・再配布、不正アクセス、その他運営者が不適切と判断する行為を禁止します。</p>
             <p><small>※以下、条文はダミーです。正式な規約文面は法務確認後に差し替えます。</small></p>
         </div>
-
-        <div class="foot-links">
-            <a href="/pages/rules">利用規約</a><a href="/pages/privacy">プライバシーポリシー</a><a href="/pages/payment_rules">資金決済法に基づく表示</a>
-            <a href="/pages/commercial_law">特定商取引法に基づく表示</a><a href="/pages/company">運営会社</a><a href="/inquiry/form">お問い合わせ</a><a href="/pages/requirements">推奨環境</a>
-        </div>
-        <p class="foot-copy">© 2026 Eval MODE</p>
-
-    </div>
 {/block}

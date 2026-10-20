@@ -16,11 +16,27 @@
         {include file="layout/header_focus.tpl"}
         {/block}
 
+        {* 静的ページ用の div *}
+        {if $static_page_layout|default:false}
+        <div class="pc-wrap pc-static w-narrow">
+        {/if}
+
         {* メインコンテンツ *}
         {block name="content"}{/block}
 
-        {* 共通フッター *}
-        {block name="footer"}{/block}
+        {* 静的ページ用の div 閉じ *}
+        {if $static_page_layout|default:false}
+            {if $show_footer|default:false}
+            {include file="layout/footer.tpl" footer_variant='static'}
+            {/if}
+        </div>
+        {else}
+            {block name="footer"}
+            {if $show_footer|default:false}
+            {include file="layout/footer.tpl" footer_variant='static'}
+            {/if}
+            {/block}
+        {/if}
 
     </div>
     <script src="/js/common.js"></script>

@@ -1,0 +1,246 @@
+/* ---------------------------------------------------------------------
+   3. 商品詳細 (Product Detail)
+   --------------------------------------------------------------------- */
+
+  /* ===== 戻る導線 ===== */
+  .back-bar{
+    display:flex;align-items:center;gap:6px;padding:10px 14px 0;
+  }
+  .back-bar a{
+    font-size:11px;font-weight:800;color:var(--text-sub);text-decoration:none;cursor:pointer;
+    display:flex;align-items:center;gap:4px;-webkit-tap-highlight-color:transparent;
+    padding:4px 0;
+  }
+  .back-bar .ar{font-size:13px;font-weight:900;}
+
+  /* ===== モック確認用（実装対象外） ===== */
+  .mock-ctrl{
+    margin:10px 12px 0;padding:8px 10px;border-radius:8px;
+    border:1px dashed #4a5468;background:rgba(255,255,255,.02);
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  }
+  .mock-ctrl .m-lbl{font-size:9px;color:#7c8698;font-weight:800;flex:0 0 auto;}
+  .mock-ctrl a{
+    font-size:9.5px;font-weight:800;color:var(--text-sub);
+    border:1px solid var(--line);border-radius:10px;padding:3px 9px;
+    cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent;
+  }
+  .mock-ctrl a.on{color:#fff;background:#2a3142;border-color:#4a5468;}
+  .mock-ctrl .sep{width:100%;height:0;}
+
+  /* ===== 商品ヘッダー ===== */
+  .prod-head{padding:12px 14px 0;}
+  .prod-head .p-cat{
+    display:inline-block;font-size:9px;font-weight:900;color:#5fe8bd;
+    background:rgba(0,201,141,.1);border:1px solid rgba(0,201,141,.4);
+    border-radius:9px;padding:2px 9px;letter-spacing:.04em;
+  }
+  .prod-head .p-new{
+    display:inline-block;font-size:9px;font-weight:900;color:#fff;background:var(--sig);
+    border-radius:5px;padding:2px 7px;margin-left:5px;letter-spacing:.04em;
+  }
+  .prod-head h1{font-size:18px;font-weight:900;letter-spacing:.02em;margin-top:7px;line-height:1.5;}
+  .prod-head .p-meta{
+    display:flex;align-items:center;gap:12px;margin-top:6px;
+    font-size:10px;color:var(--text-sub);font-variant-numeric:tabular-nums;flex-wrap:wrap;
+  }
+  .prod-head .p-meta b{color:var(--text);}
+
+  /* 価格・状態バンド */
+  .price-band{
+    margin:12px 14px 0;border-radius:12px;padding:13px 14px;
+    background:var(--bg-card);border:1px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  .price-band .pb-label{font-size:10px;color:var(--text-sub);font-weight:800;}
+  .price-band .pb-price{font-size:20px;font-weight:900;color:var(--pt-soft);font-variant-numeric:tabular-nums;line-height:1.2;}
+  .price-band .pb-price small{font-size:10px;color:var(--text-sub);font-weight:700;}
+  .price-band .pb-price.free{color:#5fe8bd;font-size:16px;}
+  .price-band .pb-sub{
+    font-size:10.5px;font-weight:900;color:#8db4ff;
+    border:1px solid rgba(110,168,255,.5);border-radius:9px;padding:3px 10px;
+  }
+  .price-band .pb-owned{
+    margin-left:auto;font-size:10px;font-weight:900;color:var(--red);
+    border:1px solid rgba(0,201,141,.5);border-radius:10px;padding:3px 10px;flex:0 0 auto;
+  }
+  .price-band .pb-bal{margin-left:auto;text-align:right;font-size:9.5px;color:var(--text-sub);font-variant-numeric:tabular-nums;line-height:1.7;flex:0 0 auto;}
+  .price-band .pb-bal b{color:var(--pt-soft);}
+  .price-band .pb-bal .short{color:var(--sig-soft);font-weight:900;}
+
+  /* ===== 説明 ===== */
+  .desc{padding:14px 14px 0;font-size:11.5px;color:var(--text-sub);line-height:1.9;}
+  .desc b{color:var(--text);}
+  .desc-points{
+    margin:10px 14px 0;border-radius:10px;padding:11px 14px;
+    background:var(--bg-sunken);border:1px solid var(--line);
+  }
+  .desc-points .dp-t{font-size:10px;font-weight:900;color:#5fe8bd;letter-spacing:.06em;margin-bottom:6px;}
+  .desc-points ul{list-style:none;}
+  .desc-points li{
+    font-size:11px;color:var(--text);padding:3px 0 3px 16px;position:relative;line-height:1.7;
+  }
+  .desc-points li::before{
+    content:"✓";position:absolute;left:0;color:var(--red);font-weight:900;font-size:11px;
+  }
+
+  /* ===== セクション見出し ===== */
+  .sec-title{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 12px;background:var(--bg-card);
+    border-top:3px solid var(--red);border-bottom:1px solid var(--line);
+    margin-top:16px;
+  }
+  .sec-title h2{font-size:14px;font-weight:800;color:#fff;}
+  .sec-title .en{font-size:9px;color:var(--text-sub);letter-spacing:.14em;font-weight:600;}
+  .sec-title .fresh{margin-left:auto;font-size:9.5px;color:var(--text-sub);font-variant-numeric:tabular-nums;}
+
+  /* ===== コンテンツ（推奨馬リスト） ===== */
+  .rec-list{list-style:none;background:var(--bg-card);position:relative;}
+  .rec-row{
+    display:flex;align-items:center;gap:9px;padding:11px 14px;
+    border-bottom:1px solid var(--line);
+  }
+  .rec-row .r-race{flex:0 0 64px;font-size:10px;color:var(--text-sub);font-variant-numeric:tabular-nums;line-height:1.5;}
+  .rec-row .r-race b{display:block;color:#fff;font-size:12px;font-weight:900;}
+  .umaban{
+    flex:0 0 auto;width:24px;height:24px;border-radius:5px;
+    display:grid;place-items:center;font-size:12px;font-weight:900;
+    font-variant-numeric:tabular-nums;
+  }
+  .f1{background:#fff;color:#111;}
+  .f3{background:#d33;color:#fff;}
+  .f4{background:#1a5dd6;color:#fff;}
+  .f5{background:#e8c31e;color:#111;}
+  .f7{background:#e8850c;color:#fff;}
+  .rec-row .r-name{font-size:12.5px;font-weight:800;color:#fff;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .rec-row .r-prob{margin-left:auto;flex:0 0 auto;text-align:right;font-variant-numeric:tabular-nums;}
+  .rec-row .r-prob .v{font-size:13px;font-weight:900;color:var(--text);}
+  .rec-row .r-prob .v.hi{color:var(--sig-soft);}
+  .rec-row .r-prob small{display:block;font-size:8.5px;color:var(--text-sub);font-weight:700;}
+  .rec-note{padding:9px 14px;font-size:10px;color:var(--text-sub);line-height:1.8;background:var(--bg-card);border-bottom:1px solid var(--line);}
+  .rec-note b{color:var(--text);}
+  /* ロック（未購入プレビュー） */
+  .lock-wrap{position:relative;}
+  .lock-wrap .rec-list{filter:blur(5px);pointer-events:none;user-select:none;}
+  .lock-ov{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;background:rgba(11,12,16,.55);z-index:5;padding:20px;
+  }
+  .lock-ov .l-ico{
+    width:38px;height:38px;border-radius:50%;
+    background:var(--bg-card);border:1px solid var(--line);
+    display:grid;place-items:center;color:var(--text-sub);
+  }
+  .lock-ov .l-ico svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .lock-ov .l-msg{font-size:11.5px;font-weight:800;color:#fff;text-align:center;line-height:1.7;}
+
+  /* ===== 購入CTAエリア（状態別） ===== */
+  .cta-wrap{padding:14px;}
+  .cta-main{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    padding:14px;border-radius:10px;border:none;width:100%;
+    font-size:13.5px;font-weight:900;text-decoration:none;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;font-family:inherit;text-align:center;
+  }
+  .cta-main.pt{background:linear-gradient(150deg,#f5a623,#e8850c);color:#1a1305;}
+  .cta-main.green{background:linear-gradient(150deg,#0e9a70,#046b4c);color:#fff;}
+  .cta-main.lime{background:var(--lime);color:#1a2005;}
+  .cta-main.subsc{background:linear-gradient(150deg,#3468c4,#1a4d9e);color:#fff;}
+  .cta-sub{
+    display:block;text-align:center;margin-top:10px;
+    font-size:10.5px;font-weight:800;color:var(--text-sub);text-decoration:none;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .cta-sub b{color:var(--blue-link);}
+  .cta-note{font-size:9.5px;color:var(--text-sub);text-align:center;margin-top:10px;line-height:1.7;}
+
+  /* ===== 関連商品 ===== */
+  .rel-list{padding:10px 12px 0;display:grid;gap:8px;}
+  .rel-card{
+    display:flex;align-items:center;gap:10px;padding:11px 13px;
+    background:var(--bg-card);border:1px solid var(--line);border-radius:10px;
+    text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .rel-card .t-ico{
+    width:30px;height:30px;border-radius:8px;flex:0 0 auto;
+    background:rgba(0,201,141,.12);border:1px solid rgba(0,201,141,.35);
+    display:grid;place-items:center;
+  }
+  .rel-card .t-ico svg{width:16px;height:16px;stroke:#5fe8bd;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .rel-card .r-name{font-size:12px;font-weight:800;color:#fff;}
+  .rel-card .r-cat{font-size:9px;color:var(--text-sub);}
+  .rel-card .r-price{margin-left:auto;flex:0 0 auto;font-size:11.5px;font-weight:900;color:var(--pt-soft);font-variant-numeric:tabular-nums;}
+  .rel-card .r-chev{color:#3d4658;font-size:13px;font-weight:800;flex:0 0 auto;}
+  .note{font-size:9.5px;color:var(--text-sub);padding:12px 14px;line-height:1.8;}
+  .note b{color:var(--text);}
+
+  /* ===== 購入確認・完了ボトムシート（P7と同文法） ===== */
+  .sheet-ov{
+    position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.55);
+    display:none;align-items:flex-end;justify-content:center;
+    backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+  }
+  .sheet-ov.show{display:flex;}
+  .sheet{
+    width:100%;max-width:414px;background:var(--bg-card);
+    border-radius:16px 16px 0 0;border:1px solid var(--line);border-bottom:none;
+    padding:10px 16px 28px;animation:sheetUp .22s ease-out;
+    max-height:80vh;overflow-y:auto;
+  }
+  @keyframes sheetUp{from{transform:translateY(40px);opacity:.4;}to{transform:translateY(0);opacity:1;}}
+  .sheet .grip{width:36px;height:4px;border-radius:2px;background:#3a4150;margin:0 auto 10px;}
+  .sh-head{display:flex;align-items:center;gap:8px;}
+  .sh-title{font-size:14px;font-weight:900;color:#fff;}
+  .sh-close{
+    margin-left:auto;width:26px;height:26px;border-radius:50%;
+    background:var(--bg-sunken);border:1px solid var(--line);color:var(--text-sub);
+    display:grid;place-items:center;font-size:13px;font-weight:800;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .sh-item{
+    margin-top:12px;border-radius:10px;padding:12px 14px;
+    background:var(--bg-sunken);border:1px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  .sh-item .si-name{font-size:12.5px;font-weight:800;color:#fff;line-height:1.5;}
+  .sh-item .si-cat{font-size:9px;color:var(--text-sub);}
+  .sh-item .si-price{margin-left:auto;flex:0 0 auto;font-size:15px;font-weight:900;color:var(--pt-soft);font-variant-numeric:tabular-nums;}
+  .sh-bal{
+    display:flex;justify-content:space-between;margin-top:11px;padding:9px 14px;
+    border-radius:9px;background:var(--bg-sunken);border:1px solid var(--line);
+    font-size:10.5px;color:var(--text-sub);font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .sh-bal b{color:var(--pt-soft);}
+  .sh-terms{font-size:9.5px;color:var(--text-sub);margin-top:11px;line-height:1.8;}
+  .sh-cta{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    margin-top:14px;padding:14px;border-radius:10px;border:none;width:100%;
+    background:linear-gradient(150deg,#f5a623,#e8850c);
+    color:#1a1305;font-size:13.5px;font-weight:900;text-decoration:none;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;font-family:inherit;
+  }
+  .sh-cancel{
+    display:block;text-align:center;margin-top:10px;padding:8px;
+    font-size:11px;font-weight:800;color:var(--text-sub);cursor:pointer;
+    text-decoration:none;-webkit-tap-highlight-color:transparent;
+  }
+  .done-view{text-align:center;padding:6px 0 2px;}
+  .done-view .d-mark{
+    width:52px;height:52px;border-radius:50%;margin:6px auto 10px;
+    background:rgba(0,201,141,.12);border:2px solid var(--red);
+    display:grid;place-items:center;
+  }
+  .done-view .d-mark svg{width:26px;height:26px;stroke:var(--red);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+  .done-view .d-title{font-size:15px;font-weight:900;color:#fff;}
+  .done-view .d-sub{font-size:11px;color:var(--text-sub);margin-top:6px;}
+  @media (max-width: 1023px){
+    .gnav a .ico{transition:background .25s;}
+  }
+
+  /* ===== ページ別（PC） ===== */
+  @media (min-width:1024px){
+.pc-item .g-side .cta-wrap{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;}
+    .pc-item .g-after .rel-list{grid-template-columns:repeat(3,1fr);padding:10px 0 0;}
+    .pc-item .g-after .sec-title{border-radius:12px 12px 0 0;}
+  }

@@ -24,9 +24,11 @@
         {* メインコンテンツ *}
         {block name="content"}{/block}
 
-        {* 共通フッター *}
+        {* 共通フッター（表示するページのみ show_footer を true。未指定は非表示） *}
         {block name="footer"}
+        {if $show_footer|default:false}
         {include file="layout/footer.tpl"}
+        {/if}
         {/block}
 
         {if $show_reg_banner|default:false}

@@ -37,6 +37,7 @@
         'show_pc_top' => true,          // true: nav_pc.tpl（ホーム追加バナー・速報ティッカー・アンケート帯）
         'show_campaign_modal' => true,  // true: partials/modal.tpl（キャンペーン告知モーダル）
         'show_reg_banner' => true,      // true: 下部ナビ上の無料登録追従バナー（非ログイン向け）
+        'show_footer' => true,          // layout/footer.tpl（非表示時はキーごと省略）
         'member_type' => 'guest',       // ドロワー内アカウント欄: guest | free | subsc
         'is_login' => false,            // false: ヘッダー右「ログイン」／true: 「マイページ」＋/mypage へ
         'user_point' => 7777,           // ヘッダーの保有ポイント表示（未ログイン時は 0 想定）
