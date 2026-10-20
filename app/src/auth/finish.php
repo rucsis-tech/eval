@@ -33,6 +33,10 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    $Smarty->assign([
+        'focus_header_type' => 'auth',              // header_focus.tpl: auth（P11/P12・右「× 閉じる」）| exit（P13/P19・右✕）| static（S2 等・左‹戻る）
+        // 'close_url' => '/path',                  // 任意: 閉じる／戻るの遷移先URL。未指定時は common.js で履歴戻り
+    ]);
 
     $title = "会員登録完了";
     $title_url = $home_url . "auth/finish";

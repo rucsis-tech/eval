@@ -33,10 +33,23 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    // コード送信先メール（未指定時はモック表示用）
+    $email = isset($_GET['email']) ? trim((string) $_GET['email']) : '';
+    if ($email === '') {
+        $email = 'mail@example.com';
+    }
+
+    $Smarty->assign([
+        'focus_header_type' => 'auth',              // header_focus.tpl: auth（P11/P12・右「× 閉じる」）| exit（P13/P19・右✕）| static（S2 等・左‹戻る）
+        'register_email' => $email,                 // コード送信先メール（未指定時はモック表示用）
+        // 'close_url' => '/path',                  // 任意: 閉じる／戻るの遷移先URL。未指定時は common.js で履歴戻り
+    ]);
 
     $title = "会員登録（コード認証）";
     $title_url = $home_url . "auth/register";
     $Smarty->assign('title', $title);
     $Smarty->assign('title_url', $title_url);
+
+    $Smarty->display("auth/register.tpl");  // ※テンプレ確認用に追加。実装後はこの行とregister.tplを削除する
 
 })();
