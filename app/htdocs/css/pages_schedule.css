@@ -1,0 +1,82 @@
+/* ---------------------------------------------------------------------
+   7b. 開催日程 (Race Calendar)
+   --------------------------------------------------------------------- */
+
+  /* ===== ページ見出し ===== */
+  .page-head{padding:14px 14px 4px;}
+  .page-head h1{font-size:17px;font-weight:900;letter-spacing:.02em;}
+  .page-head .en{font-size:9px;color:var(--text-sub);letter-spacing:.16em;font-weight:600;}
+  .page-head .lead{font-size:10.5px;color:var(--text-sub);margin-top:4px;line-height:1.7;}
+  .page-head .lead b{color:var(--text);}
+
+  /* ===== 月切替 ===== */
+  .month-nav{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 14px 2px;
+  }
+  .month-nav a{
+    width:30px;height:30px;border-radius:8px;flex:0 0 auto;
+    background:var(--bg-card);border:1px solid var(--line);color:var(--text-sub);
+    display:grid;place-items:center;font-size:13px;font-weight:900;cursor:pointer;
+    text-decoration:none;-webkit-tap-highlight-color:transparent;
+  }
+  .month-nav .m{font-size:15px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;}
+  .month-nav .today-btn{
+    margin-left:auto;width:auto;padding:0 12px;font-size:10.5px;font-weight:800;color:#5fe8bd;
+    border-color:rgba(0,201,141,.5);
+  }
+
+  /* ===== 週見出し・日リスト ===== */
+  .week-label{
+    padding:12px 14px 6px;font-size:10px;font-weight:900;color:#5b6474;letter-spacing:.1em;
+  }
+  .day-list{list-style:none;padding:0 12px;display:grid;gap:8px;}
+  .day-card{
+    display:flex;gap:12px;border-radius:11px;padding:11px 13px;
+    background:var(--bg-card);border:1px solid var(--line);
+    text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;
+    position:relative;
+  }
+  .day-card.off{opacity:.45;cursor:default;}
+  .day-card.today{border-color:var(--red);background:linear-gradient(150deg,#0f1d17,#15171d 60%);}
+  .day-card .d-date{flex:0 0 44px;text-align:center;}
+  .day-card .d-num{font-size:19px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;line-height:1.2;}
+  .day-card .d-dow{font-size:9.5px;font-weight:800;color:var(--text-sub);}
+  .day-card .d-dow.sat{color:#6ea8ff;}
+  .day-card .d-dow.sun{color:var(--sig-soft);}
+  .day-card .today-mk{
+    position:absolute;top:-8px;left:12px;
+    font-size:8.5px;font-weight:900;color:#fff;background:var(--red);
+    border-radius:8px;padding:1px 8px;
+  }
+  .day-card .d-body{min-width:0;flex:1;}
+  .d-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:2px 0;}
+  .d-tag{
+    flex:0 0 34px;font-size:8.5px;font-weight:900;text-align:center;
+    border-radius:5px;padding:1.5px 0;
+  }
+  .d-tag.jra{background:rgba(0,201,141,.12);border:1px solid rgba(0,201,141,.45);color:#5fe8bd;}
+  .d-tag.loc{background:rgba(110,168,255,.1);border:1px solid rgba(110,168,255,.4);color:#8db4ff;}
+  .d-course{
+    font-size:10.5px;font-weight:800;color:var(--text);
+    background:var(--bg-sunken);border:1px solid var(--line);border-radius:6px;
+    padding:2px 8px;
+  }
+  .d-course.night{border-color:rgba(240,154,30,.45);}
+  .d-course.night::after{content:"🌙";font-size:8px;margin-left:2px;}
+  .d-course .g{font-size:8.5px;color:var(--sig-soft);font-weight:900;margin-left:3px;}
+  .d-none{font-size:10.5px;color:#4d5666;padding:2px 0;}
+  .day-card .d-chev{margin-left:auto;align-self:center;color:#3d4658;font-size:14px;font-weight:800;flex:0 0 auto;}
+  .win5-mk{
+    flex:0 0 auto;font-size:8.5px;font-weight:900;color:#1a2005;background:var(--lime);
+    border-radius:6px;padding:1.5px 7px;
+  }
+  .note{font-size:9.5px;color:var(--text-sub);padding:14px;line-height:1.8;}
+  .note b{color:var(--text);}
+
+  /* ===== ページ別（PC） ===== */
+  @media (min-width:1024px){
+.pc-schedule{max-width:1080px;}
+    .pc-schedule .wk-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;grid-auto-flow:column;column-gap:20px;}
+    .pc-schedule .wk-grid .day-list{padding:0;}
+  }

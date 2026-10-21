@@ -33,6 +33,14 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    $Smarty->assign([
+        'gnav_active' => 'sim',
+        'member_type' => 'guest',
+        'is_login' => false,
+        'user_point' => 7777,
+        'today_hit_count' => 14,
+        'mypage_active' => false,
+    ]);
 
     $title = "WIN5的中確率算出";
     $title_url = $home_url . "simulation/sim_win5";
