@@ -33,6 +33,14 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    $Smarty->assign([
+        'gnav_active' => 'point',
+        'member_type' => 'guest',
+        'is_login' => false,
+        'user_point' => 7777,
+        'today_hit_count' => 14,
+        'mypage_active' => false,
+    ]);
 
     $title = "ポイント購入";
     $title_url = $home_url . "settle/settle_point";

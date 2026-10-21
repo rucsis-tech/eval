@@ -33,6 +33,12 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    $Smarty->assign([
+        'focus_header_type' => 'exit',
+        'member_type' => 'guest',
+        'is_login' => false,
+        'user_point' => 7777,
+    ]);
 
     $title = "サブスク申込";
     $title_url = $home_url . "settle/settle_subsc";

@@ -35,8 +35,8 @@
 
     $Smarty->assign([
         'gnav_active' => 'hit',
-        'member_type' => 'guest',
-        'is_login' => false,
+        'member_type' => 'free',  // マイページの確認用に仮指定
+        'is_login' => true,  // マイページの確認用に仮指定
         'user_point' => 7777,
         'today_hit_count' => 14,
         'mypage_active' => false,
