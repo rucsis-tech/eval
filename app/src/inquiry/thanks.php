@@ -33,6 +33,11 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    $Smarty->assign([
+    'focus_header_type' => 'static',
+    'static_page_layout' => true,
+    'show_footer' => true,
+]);
 
     $title = "お問い合わせ完了";
     $title_url = $home_url . "inquiry/thanks";

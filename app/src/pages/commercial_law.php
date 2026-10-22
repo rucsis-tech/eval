@@ -33,6 +33,11 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    $Smarty->assign([
+        'focus_header_type' => 'static',
+        'static_page_layout' => true,
+        'show_footer' => true,
+    ]);
 
     $title = "特定商取引法に基づく表記";
     $title_url = $home_url . "pages/commercial_law";
