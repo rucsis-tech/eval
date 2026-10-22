@@ -2,7 +2,7 @@
 {extends file="layout/base_focus.tpl"}
 
 {block name="extra_css"}
-    <link rel="stylesheet" href="/css/pages_settle_subsc.css">
+    <link rel="stylesheet" href="/css/settle/settle_subsc.css">
 {/block}
 
 {block name="content"}
@@ -133,5 +133,5 @@
 {/block}
 
 {block name="scripts"}
-    <script src="/js/pages_settle_subsc.js"></script>
+    <script src="/js/settle/settle_subsc.js"></script>
 {/block}

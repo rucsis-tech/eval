@@ -2,7 +2,7 @@
 {extends file="layout/base.tpl"}
 
 {block name="extra_css"}
-    <link rel="stylesheet" href="/css/pages_sim.css">
+    <link rel="stylesheet" href="/css/simulation/sim_top.css">
 {/block}
 
 {block name="content"}
@@ -114,5 +114,5 @@
 {/block}
 
 {block name="scripts"}
-    <script src="/js/pages_sim_top.js"></script>
+    <script src="/js/simulation/sim_top.js"></script>
 {/block}

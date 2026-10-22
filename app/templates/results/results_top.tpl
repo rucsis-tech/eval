@@ -2,7 +2,7 @@
 {extends file="layout/base.tpl"}
 
 {block name="extra_css"}
-    <link rel="stylesheet" href="/css/pages_results.css">
+    <link rel="stylesheet" href="/css/results/results_top.css">
 {/block}
 
 {block name="content"}
@@ -48,5 +48,5 @@
 {/block}
 
 {block name="scripts"}
-    <script src="/js/pages_results_top.js"></script>
+    <script src="/js/results/results_top.js"></script>
 {/block}

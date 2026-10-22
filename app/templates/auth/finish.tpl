@@ -2,7 +2,7 @@
 {extends file="layout/base_focus.tpl"}
 
 {block name="extra_css"}
-    <link rel="stylesheet" href="/css/pages_auth.css">
+    <link rel="stylesheet" href="/css/auth/auth.css">
 {/block}
 
 {block name="content"}
@@ -122,5 +122,5 @@
 {/block}
 
 {block name="scripts"}
-    <script src="/js/pages_auth_finish.js"></script>
+    <script src="/js/auth/finish.js"></script>
 {/block}

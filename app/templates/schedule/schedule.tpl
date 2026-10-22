@@ -2,7 +2,7 @@
 {extends file="layout/base.tpl"}
 
 {block name="extra_css"}
-    <link rel="stylesheet" href="/css/pages_schedule.css">
+    <link rel="stylesheet" href="/css/schedule/schedule.css">
 {/block}
 
 {block name="content"}
@@ -36,5 +36,5 @@
 {/block}
 
 {block name="scripts"}
-    <script src="/js/pages_schedule.js"></script>
+    <script src="/js/schedule/schedule.js"></script>
 {/block}

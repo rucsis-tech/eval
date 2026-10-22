@@ -2,7 +2,7 @@
 {extends file="layout/base.tpl"}
 
 {block name="extra_css"}
-    <link rel="stylesheet" href="/css/pages_tools_detail.css">
+    <link rel="stylesheet" href="/css/tools/tools_detail.css">
 {/block}
 
 {block name="content"}
@@ -83,5 +83,5 @@
 {/block}
 
 {block name="scripts"}
-    <script src="/js/pages_tools_detail.js"></script>
+    <script src="/js/tools/tools_detail.js"></script>
 {/block}

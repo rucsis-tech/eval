@@ -2,7 +2,7 @@
 {extends file="layout/base.tpl"}
 
 {block name="extra_css"}
-    <link rel="stylesheet" href="/css/pages_ranking.css">
+    <link rel="stylesheet" href="/css/ranking/eval_ranking.css">
 {/block}
 
 {block name="content"}
@@ -61,5 +61,5 @@
 {/block}
 
 {block name="scripts"}
-    <script src="/js/pages_eval_ranking.js"></script>
+    <script src="/js/ranking/eval_ranking.js"></script>
 {/block}
