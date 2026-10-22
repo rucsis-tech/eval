@@ -45,6 +45,24 @@
     padding-bottom:96px; /* フローティングナビ＋余白分 */
   }
 
+  /* href="#" のボタン風リンク（FAQ .fq-q と同様。本文リンクは各 .note a 等で別指定） */
+  .mock-ctrl a,
+  .c-tabs a,
+  a.pay-row,
+  a.pack-row,
+  a.camp-card,
+  a.p-proof,
+  a.rk-row,
+  a.sum-row,
+  .btm-btns a,
+  .nav-btns a,
+  .chip,
+  .tabs a,
+  .btn-mode,
+  .view-switch a{
+    text-decoration:none;
+  }
+
 /* ---------------------------------------------------------------------
    2. ヘッダー (Header)
    --------------------------------------------------------------------- */

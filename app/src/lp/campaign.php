@@ -34,6 +34,20 @@
     $Smarty->assign('fourth_url', $fourth_url);
 
 
+    // キャンペーンID　仮でデフォルトevalwにしておく
+    $id = isset($_GET['id']) ? trim((string) $_GET['id']) : '';
+    if ($id === '') {
+        $id = 'evalw';
+    }
+
+    $Smarty->assign([
+        'focus_header_type' => 'exit',
+        'campaign_id' => $id,
+        'member_type' => 'guest',
+        'is_login' => false,
+        'user_point' => 7777,
+    ]);
+
     $title = "キャンペーンLP";
     $title_url = $home_url . "lp/campaign";
     $Smarty->assign('title', $title);

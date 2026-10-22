@@ -106,7 +106,11 @@
                     });
                     const readMore = $('readMore');
                     if (readMore) {
-                        const href = { topics: '/topics/topics_top', flash: '/topics/topics_top', info: '/topics/topics_top' };
+                        const href = {
+                            topics: '/topics/topics_top',
+                            flash: '/topics/topics_top?tab=flash',
+                            info: '/topics/topics_top?tab=info',
+                        };
                         readMore.setAttribute('href', href[key] || '/topics/topics_top');
                     }
                 });

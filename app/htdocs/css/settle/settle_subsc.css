@@ -405,8 +405,11 @@
     display:flex;align-items:center;gap:9px;padding:10px 12px;
     border:1px solid var(--line);border-radius:9px;background:var(--bg-sunken);
     font-size:12px;font-weight:800;color:var(--text);cursor:pointer;
-    -webkit-tap-highlight-color:transparent;
+    text-decoration:none;-webkit-tap-highlight-color:transparent;
   }
+  a.pay-row:hover,
+  a.pay-row:focus,
+  a.pay-row:visited{color:var(--text);text-decoration:none;}
   .pay-row .radio{width:16px;height:16px;border-radius:50%;border:2px solid #4a5468;flex:0 0 auto;position:relative;}
   .pay-row.on{border-color:var(--red);}
   .pay-row.on .radio{border-color:var(--red);}

@@ -1,0 +1,217 @@
+/* ---------------------------------------------------------------------
+   21. アンバサダー (Ambassador)
+   --------------------------------------------------------------------- */
+
+  .icon-menu{width:22px;display:grid;gap:4px;}
+
+  /* ===== ページ見出し＋コンセプト ===== */
+  .page-head{padding:16px 14px 4px;}
+  .page-head h1{font-size:17px;font-weight:900;letter-spacing:.02em;}
+  .page-head .en{font-size:9px;color:var(--text-sub);letter-spacing:.16em;font-weight:600;}
+  .concept{padding:12px 14px 4px;}
+  .concept .lead{font-size:12px;line-height:1.8;color:var(--text);}
+  .concept .lead b{color:#5fe8bd;}
+  /* 積み上げ図：マスターデータ＋上乗せレイヤー */
+  .stack{margin:12px 0 4px;display:grid;gap:5px;}
+  .stack .layer{
+    border-radius:8px;padding:9px 12px;
+    display:flex;align-items:center;gap:8px;
+    border:1px dashed #4a5468;background:var(--bg-sunken);
+  }
+  .stack .layer .l-no{
+    flex:0 0 auto;font-size:8.5px;font-weight:900;color:var(--text-sub);
+    border:1px solid #4a5468;border-radius:10px;padding:1px 8px;letter-spacing:.06em;
+  }
+  .stack .layer .l-txt{font-size:11px;font-weight:800;color:var(--text);}
+  .stack .layer .l-txt small{display:block;font-size:9px;font-weight:600;color:var(--text-sub);margin-top:1px;}
+  .stack .base{
+    border:1px solid var(--red);border-style:solid;
+    background:linear-gradient(135deg,#0a231c,#15171d);
+  }
+  .stack .base .l-no{background:var(--red);color:#fff;border-color:var(--red);}
+  .stack .base .l-txt{color:#fff;}
+  .stack .plus{text-align:center;font-size:12px;color:var(--text-sub);line-height:1;}
+  .concept .note{font-size:10px;color:var(--text-sub);line-height:1.7;margin-top:8px;}
+
+  /* ===== Section common ===== */
+  section{margin-top:14px;}
+  .sec-title{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 12px;background:var(--bg-card);
+    border-top:3px solid var(--red);border-bottom:1px solid var(--line);
+  }
+  .sec-title h2{font-size:14px;font-weight:800;color:#fff;letter-spacing:.02em;}
+  .sec-title .en{font-size:9px;color:var(--text-sub);letter-spacing:.14em;font-weight:600;}
+  .sec-title .cat-desc{margin-left:auto;font-size:9px;color:var(--text-sub);}
+
+  /* ===== 商品カード（フル表示） ===== */
+  .goods{background:var(--bg-card);padding:10px 12px 12px;display:grid;gap:8px;}
+  .goods a{
+    display:flex;align-items:center;gap:10px;
+    border:1px solid var(--line);border-radius:8px;
+    background:var(--bg-sunken);padding:11px 12px;text-decoration:none;
+  }
+  .g-ico{
+    width:34px;height:34px;border-radius:6px;flex:0 0 auto;
+    display:grid;place-items:center;font-size:15px;
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .g-red{background:linear-gradient(135deg,#d7263d,#8f1024);}
+  .g-navy{background:linear-gradient(135deg,#12355f,#1a4d9e);}
+  .g-green{background:linear-gradient(135deg,#0a7f45,#0a5c34);}
+  .g-gray{background:linear-gradient(135deg,#5b6675,#3a4657);}
+  .g-gold{background:linear-gradient(135deg,#b8912a,#8f6f0e);}
+  .g-body{flex:1;min-width:0;}
+  .g-title{display:block;font-size:12.5px;font-weight:800;color:#fff;} /* 2026-09-30：span要素のため説明文が同じ行に流れ込む崩れを修正 */
+  .g-title .new{color:var(--sig);font-size:9px;font-weight:900;margin-left:4px;}
+  .g-desc{display:block;font-size:10px;color:var(--text-sub);margin-top:2px;line-height:1.5;}
+  .g-price{
+    flex:0 0 auto;
+    background:var(--pt);color:#1a1305;font-size:11px;font-weight:900;
+    padding:7px 13px;border-radius:16px;white-space:nowrap;
+  }
+  .g-price.free{background:var(--free);color:#fff;}
+  .g-price.sub{background:var(--subsc);color:#fff;}
+  .g-empty{font-size:10.5px;color:var(--text-sub);text-align:center;padding:14px 0;}
+
+  /* ===== アンバサダー紹介 ===== */
+  .amb-intro{background:var(--bg-card);padding:10px 12px 12px;}
+  .amb-card{
+    display:flex;gap:10px;
+    border:1px solid var(--line);border-radius:8px;
+    background:var(--bg-sunken);padding:12px;
+  }
+  .amb-avatar{
+    width:40px;height:40px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(135deg,#0d2b52,#00c98d);
+    display:grid;place-items:center;font-weight:900;color:#fff;font-size:15px;
+  }
+  .amb-card .body{flex:1;min-width:0;}
+  .amb-card .head{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .amb-card .who{font-size:13px;font-weight:800;color:#fff;}
+  .amb-card .xid{font-size:10.5px;color:var(--text-sub);}
+  .amb-card .badge-a{
+    font-size:8.5px;font-weight:800;color:#fff;background:var(--red);
+    padding:1px 7px;border-radius:2px;
+  }
+  .amb-card .txt{margin-top:5px;font-size:12px;line-height:1.65;color:var(--text);}
+  .amb-card .follow{
+    display:inline-flex;align-items:center;gap:5px;margin-top:9px;
+    background:#fff;color:#0b0c10;font-size:11px;font-weight:900;
+    padding:8px 16px;border-radius:17px;text-decoration:none;
+  }
+
+  /* ===== 共存メッセージ ===== */
+  .coexist{
+    margin:14px 12px 0;padding:14px;
+    border:1px solid var(--line);border-radius:8px;background:var(--bg-card);
+  }
+  .coexist p{font-size:11px;line-height:1.8;color:var(--text-sub);}
+  .coexist p b{color:var(--text);}
+
+  /* ===== ページ別（PC） ===== */
+  @media (min-width:1024px){
+.pc-tools{grid-template-columns:340px minmax(0,1fr);}
+    .pc-tools > .g-left{grid-column:1;position:sticky;top:132px;background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding-bottom:12px;}
+    .pc-tools > .g-main{grid-column:2;}
+    .pc-tools .g-main section{margin-top:0;margin-bottom:16px;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+    .pc-tools .goods{grid-template-columns:1fr 1fr;}
+    .pc-tools .coexist{margin:0;}
+  }
+
+  /* ===== アンバサダー一覧（2026-10-01・コンパクト版：トピックス一覧に近い1行カード）=====
+     ・1人＝左にアイコン／右に「アカウント名（@ID）」→属性タグ（複数可）→説明文（最大2行）
+     ・アカウント名・IDは表示幅を超えたら…で省略。行全体タップでXのプロフィールへ
+     ・データ駆動：AMBASSADORS配列（管理画面で登録：表示名／XのID／アイコン画像URL／属性（複数選択）／説明文／表示順）
+     ・アイコン：正方形画像（推奨400×400）を円形に切り抜き表示。画像が読めない時は頭文字で代替
+     ・SP 1列／PC 2列 */
+  .amb-list-h{display:flex;align-items:baseline;gap:8px;margin:14px 2px 6px;}
+  .amb-list-h b{font-size:12px;font-weight:800;color:#fff;}
+  .amb-list-h span{font-size:10px;color:var(--text-sub);}
+  .amb-list{list-style:none;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg-sunken);}
+  .amb-list li{border-bottom:1px solid var(--line);}
+  .amb-list li:last-child{border-bottom:none;}
+  .amb-row{
+    display:flex;gap:11px;align-items:flex-start;padding:11px 12px;
+    text-decoration:none;color:var(--text);-webkit-tap-highlight-color:transparent;
+  }
+  .amb-row:active{background:rgba(255,255,255,.03);}
+  .amb-av{
+    position:relative;width:48px;height:48px;border-radius:50%;padding:2px;flex:0 0 auto;
+    background:conic-gradient(from 200deg,#00c98d,#c8f31d,#00c98d 70%,#0a7a58,#00c98d);
+  }
+  .amb-av img, .amb-av .ini{
+    display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;
+    border:2px solid var(--bg-sunken);background:#1d222b;
+  }
+  .amb-av .ini{display:grid;place-items:center;font-size:17px;font-weight:900;color:#fff;}
+  .amb-av .x{
+    position:absolute;right:-3px;bottom:-3px;width:17px;height:17px;border-radius:50%;
+    background:#000;border:2px solid var(--bg-sunken);color:#fff;font-size:8.5px;font-weight:900;
+    display:grid;place-items:center;line-height:1;
+  }
+  .amb-row .body{flex:1;min-width:0;}
+  .amb-row .nmline{display:flex;align-items:baseline;gap:6px;min-width:0;}
+  .amb-row .nm{flex:0 1 auto;min-width:0;font-size:13px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .amb-row .id{flex:0 3 auto;min-width:0;font-size:10px;color:var(--text-sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .amb-row .go{margin-left:auto;flex:0 0 auto;padding-left:4px;color:#3d4658;font-size:13px;font-weight:800;}
+  .amb-row .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+  .amb-row .tag{
+    font-size:9px;font-weight:800;color:#5fe8bd;letter-spacing:.02em;line-height:1.6;
+    background:rgba(0,201,141,.08);border:1px solid rgba(0,201,141,.32);border-radius:3px;padding:0 6px;
+  }
+  .amb-row .desc{
+    margin-top:5px;font-size:10.5px;line-height:1.55;color:var(--text-sub);
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  /* 公式カードのアイコンも同じ円形リングに */
+  .amb-card .amb-av img, .amb-card .amb-av .ini{border-color:var(--bg-sunken);}
+  @media (min-width:1024px){
+    .amb-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+    .amb-list li{min-width:0;}
+    .amb-list li:nth-child(odd){border-right:1px solid var(--line);}
+    .amb-list li:nth-last-child(-n+2):nth-child(odd), .amb-list li:last-child{border-bottom:none;}
+    .amb-row:hover{background:rgba(0,201,141,.05);}
+    .amb-intro{padding:14px 16px 16px;}
+  }
+
+  /* ===== アンバサダーページ（P21）===== */
+  .amb-lead{padding:2px 14px 10px;font-size:11px;line-height:1.7;color:var(--text-sub);}
+  .amb-page .amb-intro{padding-top:12px;}
+  .amb-filter{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:none;}
+  .amb-filter::-webkit-scrollbar{display:none;}
+  .amb-filter button{
+    flex:0 0 auto;font:inherit;font-size:10.5px;font-weight:800;color:var(--text-sub);cursor:pointer;
+    background:var(--bg-sunken);border:1px solid var(--line);border-radius:14px;padding:4px 11px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .amb-filter button.on{color:#04241a;background:#00c98d;border-color:#00c98d;}
+  .amb-list li[hidden]{display:none !important;}
+  .amb-list li{scroll-margin-top:16px;}
+  /* TOP等からの遷移：該当者の行を一瞬ハイライト */
+  .amb-list li.amb-hl .amb-row{animation:ambHl 2.4s ease-out 1;}
+  @keyframes ambHl{0%,25%{background:rgba(0,201,141,.22);box-shadow:inset 3px 0 0 #00c98d;}100%{background:transparent;box-shadow:inset 3px 0 0 transparent;}}
+  .amb-note{margin-top:10px;font-size:9.5px;color:var(--text-sub);line-height:1.7;}
+  @media (min-width:1024px){
+    .pc-amb .page-head{padding:4px 0 4px;}
+    .pc-amb .amb-lead{padding:0 0 14px;}
+    .pc-amb .amb-page{border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+    .amb-list li{scroll-margin-top:140px;} /* ヘッダー62＋ナビ帯56＋余白 */
+    .amb-filter{flex-wrap:wrap;overflow:visible;}
+    .amb-filter button:hover{border-color:rgba(0,201,141,.5);color:#fff;}
+  }
+  @media (prefers-reduced-motion:reduce){ .amb-list li.amb-hl .amb-row{animation:none;background:rgba(0,201,141,.14);} }
+
+/* 共通CSSにある指定のうち、このページの元スタイルに無かったものを打ち消す */
+.icon-menu {
+  position: unset;
+  cursor: unset;
+}
+[hidden] {
+  display: unset !important;
+}
+.icon-menu::after {
+  content: unset;
+  position: unset;
+  inset: unset;
+}

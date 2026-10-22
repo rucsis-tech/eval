@@ -33,6 +33,20 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    // お知らせID　仮でデフォルト101にしておく
+    $id = isset($_GET['id']) ? trim((string) $_GET['id']) : '';
+    if ($id === '') {
+        $id = '101';
+    }
+
+    $Smarty->assign([
+        'notice_id' => $id,
+        'is_login' => true,
+        'member_type' => 'free',
+        'user_point' => 7777,
+        'today_hit_count' => 14,
+        'mypage_active' => false,
+    ]);
 
     $title = "お知らせ詳細";
     $title_url = $home_url . "topics/info_detail";

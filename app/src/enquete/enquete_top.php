@@ -33,6 +33,13 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    $Smarty->assign([
+        'is_login' => true,
+        'member_type' => 'free',
+        'user_point' => 7777,
+        'today_hit_count' => 14,
+        'mypage_active' => false,
+    ]);
 
     $title = "アンケート一覧";
     $title_url = $home_url . "enquete/enquete_top";

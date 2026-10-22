@@ -313,7 +313,7 @@
   const MODALS = [
     {id:'cp-spat4',  type:'campaign', priority:80, audience:['guest','free','paid'], visual:'v-tie', lbl:'タイアップ企画',
      title:'SPAT4×Eval MODE<br>連携キャンペーン開催中', desc:'期間中の投票で最大10,000ptプレゼント（〜7/31）',
-     cta:'キャンペーン詳細を見る ▶', href:'/lp/campaign'},
+     cta:'キャンペーン詳細を見る ▶', href:'/lp/campaign?id=cp-spat4'},
     {id:'cp-reg',    type:'campaign', priority:70, audience:['guest'], visual:'v-reg', lbl:'新規登録特典',
      title:'今なら無料登録で<br>100ptプレゼント', desc:'登録は30秒・メールアドレスだけでOK（〜8/31）',
      cta:'無料登録する ▶', href:'/auth/entry'},

@@ -33,6 +33,20 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    // トピックスタブ　仮でデフォルトtopicsにしておく
+    $tab = isset($_GET['tab']) ? trim((string) $_GET['tab']) : 'topics';
+    if (!in_array($tab, ['topics', 'flash', 'info'], true)) {
+        $tab = 'topics';
+    }
+
+    $Smarty->assign([
+        'topics_tab' => $tab,
+        'is_login' => true,
+        'member_type' => 'free',
+        'user_point' => 7777,
+        'today_hit_count' => 14,
+        'mypage_active' => false,
+    ]);
 
     $title = "トピックス一覧";
     $title_url = $home_url . "topics/topics_top";

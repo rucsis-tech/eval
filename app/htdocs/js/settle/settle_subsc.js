@@ -357,4 +357,13 @@ baSlider.addEventListener('input', () => {
 
 render();
 
+try {
+  const codeQ = new URLSearchParams(location.search).get('code');
+  if (codeQ) {
+    const ivInput = document.getElementById('ivInput');
+    if (ivInput) ivInput.value = codeQ.trim();
+    document.getElementById('ivApply')?.click();
+  }
+} catch (e) {}
+
 })();

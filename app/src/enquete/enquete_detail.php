@@ -33,6 +33,20 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    // アンケートID　仮でデフォルト1にしておく
+    $id = isset($_GET['id']) ? trim((string) $_GET['id']) : '';
+    if ($id === '') {
+        $id = '1';
+    }
+
+    $Smarty->assign([
+        'survey_id' => $id,
+        'is_login' => true,
+        'member_type' => 'free',
+        'user_point' => 7777,
+        'today_hit_count' => 14,
+        'mypage_active' => false,
+    ]);
 
     $title = "アンケート詳細（回答）";
     $title_url = $home_url . "enquete/enquete_detail";

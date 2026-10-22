@@ -33,6 +33,27 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    // アンケートID　仮でデフォルト1にしておく
+    $id = isset($_GET['id']) ? trim((string) $_GET['id']) : '';
+    if ($id === '') {
+        $id = '1';
+    }
+
+    // アンケート回答バリエーション　仮でデフォルトsimpleにしておく
+    $variant = isset($_GET['variant']) ? trim((string) $_GET['variant']) : 'simple';
+    if (!in_array($variant, ['simple', 'pr', 'high', 'low'], true)) {
+        $variant = 'simple';
+    }
+
+    $Smarty->assign([
+        'survey_id' => $id,
+        'thanks_variant' => $variant,
+        'is_login' => true,
+        'member_type' => 'free',
+        'user_point' => 7777,
+        'today_hit_count' => 14,
+        'mypage_active' => false,
+    ]);
 
     $title = "アンケート回答後";
     $title_url = $home_url . "enquete/enquete_thanks";

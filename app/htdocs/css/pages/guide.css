@@ -1,0 +1,181 @@
+/* ---------------------------------------------------------------------
+   10. 初めての方ガイド (Beginner Guide)
+   --------------------------------------------------------------------- */
+
+  html{scroll-behavior:smooth;}
+
+  /* ===== ページ見出し ===== */
+  .page-head{padding:14px 14px 4px;}
+  .page-head h1{font-size:17px;font-weight:900;letter-spacing:.02em;}
+  .page-head .en{font-size:9px;color:var(--text-sub);letter-spacing:.16em;font-weight:600;}
+  .page-head .lead{font-size:10.5px;color:var(--text-sub);margin-top:4px;line-height:1.7;}
+  .page-head .lead b{color:var(--text);}
+
+  /* ===== 目次チップ ===== */
+  .toc{
+    display:flex;gap:6px;overflow-x:auto;padding:10px 12px 2px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .toc::-webkit-scrollbar{display:none;}
+  .toc a{
+    flex:0 0 auto;font-size:10.5px;font-weight:800;color:var(--text-sub);
+    background:var(--bg-card);border:1px solid var(--line);border-radius:14px;
+    padding:6px 12px;text-decoration:none;white-space:nowrap;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  /* ===== セクション ===== */
+  .sec-title{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 12px;background:var(--bg-card);
+    border-top:3px solid var(--red);border-bottom:1px solid var(--line);
+    margin-top:16px;scroll-margin-top:56px;
+  }
+  .sec-title .no{
+    width:20px;height:20px;border-radius:50%;flex:0 0 auto;
+    background:var(--red);color:#fff;font-size:11px;font-weight:900;
+    display:grid;place-items:center;
+  }
+  .sec-title h2{font-size:14px;font-weight:800;color:#fff;}
+  .body-txt{padding:12px 14px 0;font-size:11.5px;color:var(--text-sub);line-height:1.9;}
+  .body-txt b{color:var(--text);}
+  .body-txt .g{color:#5fe8bd;font-weight:800;}
+  .body-txt .r{color:var(--sig-soft);font-weight:800;}
+  /* 思想カード */
+  .idea{
+    margin:10px 14px 0;border-radius:10px;padding:12px 14px;
+    background:linear-gradient(150deg,#0f1d17,#15171d 60%);
+    border:1px solid rgba(0,201,141,.4);
+    font-size:11.5px;color:var(--text);line-height:1.9;
+  }
+  .idea b{color:#5fe8bd;}
+
+  /* ===== 注釈付きミニ出馬表 ===== */
+  .demo-wrap{margin:12px 14px 0;position:relative;}
+  .demo-tbl{
+    border-radius:10px;overflow:hidden;border:1px solid var(--line);
+    background:var(--bg-sunken);
+  }
+  .dt-head{display:flex;gap:8px;align-items:flex-end;padding:9px 12px 6px;}
+  .dt-head .hc{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    font-size:8.5px;color:var(--text-sub);font-weight:800;line-height:1.3;white-space:nowrap;
+  }
+  .dt-head .hc.grow{flex:1;align-items:flex-start;}
+  .dt-head .hc.num{flex:0 0 56px;align-items:flex-end;}
+  .dt-head .hc i{
+    font-style:normal;width:14px;height:14px;border-radius:50%;
+    background:var(--pt);color:#1a1305;font-size:9px;font-weight:900;
+    display:grid;place-items:center;
+  }
+  .dt-row{
+    display:flex;align-items:center;gap:8px;padding:8px 12px;
+    border-top:1px solid #1c202a;font-size:11.5px;
+  }
+  .umaban{
+    flex:0 0 auto;width:22px;height:22px;border-radius:5px;
+    display:grid;place-items:center;font-size:11px;font-weight:900;
+  }
+  .mk{
+    flex:0 0 auto;width:20px;height:20px;border-radius:5px;
+    border:1px dashed #3a4150;display:grid;place-items:center;
+    font-size:11px;color:#5fe8bd;font-weight:900;
+  }
+  .dt-row .nm{flex:1;font-weight:800;color:#fff;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .dt-row .pv{margin-left:auto;flex:0 0 56px;text-align:right;font-weight:900;font-variant-numeric:tabular-nums;}
+  /* 2026-09-30：TOPの変更（妙味チップを数値の下に表示・全行同じ高さ）に合わせて図解も統一 */
+  .dt-row{min-height:46px;}
+  .dt-row .ev{
+    flex:0 0 56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    font-weight:900;font-variant-numeric:tabular-nums;
+  }
+  .dt-row .ev.myomi{color:var(--sig-soft);}
+  .dt-row .ev .mchip{
+    font-style:normal;font-size:7.5px;font-weight:900;color:#fff;background:var(--sig);
+    border-radius:4px;padding:1px 4px;line-height:1.5;flex:0 0 auto;
+  }
+  .an-list{list-style:none;margin:10px 14px 0;}
+  .an-list li{
+    display:flex;gap:8px;font-size:10.5px;color:var(--text-sub);
+    padding:4px 0;line-height:1.7;
+  }
+  .an-list .an2{
+    flex:0 0 auto;width:16px;height:16px;border-radius:50%;margin-top:2px;
+    background:var(--pt);color:#1a1305;font-size:9.5px;font-weight:900;
+    display:grid;place-items:center;
+  }
+  .an-list b{color:var(--text);}
+  .an-list .r{color:var(--sig-soft);font-weight:800;}
+
+  /* ===== 用語カード ===== */
+  .term-list{padding:10px 12px 0;display:grid;gap:8px;}
+  .term{
+    border-radius:10px;padding:11px 13px;
+    background:var(--bg-card);border:1px solid var(--line);
+  }
+  .term .t-name{font-size:12px;font-weight:900;color:#fff;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .term .t-name .badge{
+    font-size:8.5px;font-weight:900;border-radius:6px;padding:1px 7px;
+  }
+  .badge.final{background:var(--sig);color:#fff;}
+  .badge.live{border:1px solid rgba(110,198,255,.5);color:var(--live);}
+  .badge.myomi{border:1px solid rgba(230,57,79,.55);color:var(--sig-soft);}
+  .term .t-desc{font-size:10.5px;color:var(--text-sub);line-height:1.8;margin-top:5px;}
+  .term .t-desc b{color:var(--text);}
+
+  /* ===== 1日の流れ（タイムライン） ===== */
+  .tl{list-style:none;margin:12px 14px 0;position:relative;padding-left:24px;}
+  .tl::before{
+    content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;
+    background:linear-gradient(180deg,var(--red),#2a2e38);
+  }
+  .tl li{position:relative;padding:0 0 16px;}
+  .tl li::before{
+    content:"";position:absolute;left:-22px;top:4px;width:12px;height:12px;border-radius:50%;
+    background:var(--bg);border:2.5px solid var(--red);
+  }
+  .tl .tl-time{font-size:10px;font-weight:900;color:#5fe8bd;font-variant-numeric:tabular-nums;}
+  .tl .tl-t{font-size:12px;font-weight:800;color:#fff;margin-top:1px;}
+  .tl .tl-d{font-size:10px;color:var(--text-sub);line-height:1.7;margin-top:2px;}
+  .tl .tl-d b{color:var(--text);}
+
+  /* ===== ステータス表 ===== */
+  .st-wrap{padding:10px 12px 0;overflow-x:auto;}
+  table.st{border-collapse:collapse;width:100%;font-size:9.5px;font-variant-numeric:tabular-nums;}
+  .st th,.st td{border:1px solid var(--line);padding:6px 5px;text-align:center;vertical-align:middle;line-height:1.5;}
+  .st th{background:var(--bg-sunken);color:var(--text-sub);font-weight:800;}
+  .st td.f{text-align:left;color:var(--text-sub);font-weight:700;background:var(--bg-card);}
+  .st .ok{color:var(--red);font-weight:900;font-size:11px;}
+  .st .part{color:var(--pt-soft);font-weight:800;}
+  .st .no{color:#4d5666;}
+  .st th.hl{color:#5fe8bd;}
+
+  /* ===== CTA ===== */
+  .cta-wrap{padding:16px 14px 4px;}
+  .cta-main{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    padding:14px;border-radius:10px;width:100%;
+    background:var(--lime);color:#1a2005;
+    font-size:13.5px;font-weight:900;text-decoration:none;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .cta-sub{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    margin-top:10px;padding:12px;border-radius:10px;
+    border:1px solid rgba(0,201,141,.5);color:#5fe8bd;
+    font-size:12px;font-weight:800;text-decoration:none;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .note{font-size:9.5px;color:var(--text-sub);padding:12px 14px;line-height:1.8;}
+  .note b{color:var(--text);}
+
+  /* ===== ページ別（PC） ===== */
+  @media (min-width:1024px){
+.pc-guide{max-width:1080px;grid-template-columns:220px minmax(0,1fr);}
+    .pc-guide > .g-left{grid-column:1;position:sticky;top:132px;}
+    .pc-guide > .g-main{grid-column:2;max-width:760px;}
+    .pc-guide .g-left .toc{flex-direction:column;overflow:visible;padding:0;gap:6px;}
+    .pc-guide .g-left .toc a{white-space:normal;border-radius:10px;padding:9px 12px;}
+    .pc-guide .g-main > .sec-title:first-child{margin-top:0;}
+    .pc-guide .sec-title{scroll-margin-top:140px;border-radius:10px 10px 0 0;}
+  }
