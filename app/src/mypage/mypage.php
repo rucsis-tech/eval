@@ -33,6 +33,13 @@
     $Smarty->assign('third_url', $third_url);
     $Smarty->assign('fourth_url', $fourth_url);
 
+    $Smarty->assign([
+        'is_login' => true,                         // false: ヘッダー「ログイン」／true: 「マイページ」
+        'mypage_active' => true,                    // true: ヘッダー .icon-mypage に is-active
+        'member_type' => 'free',                    // guest | free | subsc（モックの会員状態トグルは JS 側）
+        'user_point' => 7777,
+        'today_hit_count' => 14,
+    ]);
 
     $title = "マイページ";
     $title_url = $home_url . "mypage/mypage";
