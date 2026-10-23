@@ -22,8 +22,8 @@
         <nav class="d-sec">
             <p class="d-sec-t">読みもの・参加</p>
             <a class="d-item" href="/topics/topics_top">トピックス一覧<span class="chev">›</span></a>
-            <a class="d-item" href="/topics/topics_top">速報一覧<span class="chev">›</span></a>
-            <a class="d-item" href="/topics/topics_top">お知らせ<span class="chev">›</span></a>
+            <a class="d-item" href="/topics/topics_top?tab=flash">速報一覧<span class="chev">›</span></a>
+            <a class="d-item" href="/topics/topics_top?tab=info">お知らせ<span class="chev">›</span></a>
             <a class="d-item" href="/pages/ambassadors">アンバサダー<span class="chev">›</span></a>
             <a class="d-item" href="/enquete/enquete_top">アンケート<span class="em">🎁ptがもらえる</span><span class="chev">›</span></a>
         </nav>

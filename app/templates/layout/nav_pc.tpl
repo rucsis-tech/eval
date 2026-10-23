@@ -16,8 +16,8 @@
         <div class="ticker" id="ticker">
             <a class="show" href="/results/results_top">Eval、日・函館11R 3連複72.4倍<b>【8万6880円】</b>的中！</a>
             <a href="/results/results_top">【WIN5】Eval確率上位で構成、払戻<b>【42万7100円】</b>！</a>
-            <a href="/topics/topics_top">好走確率50%超・Sランク馬、東京9Rで1着→単勝460円</a>
-            <a href="/topics/topics_top">【New】本日の馬具情報を公開しました（ポイント）</a>
+            <a href="/topics/topics_top?tab=flash">好走確率50%超・Sランク馬、東京9Rで1着→単勝460円</a>
+            <a href="/topics/topics_top?tab=flash">【New】本日の馬具情報を公開しました（ポイント）</a>
             <a href="/results/results_top">Eval、大井最終 馬単38.2倍<b>【3万8200円】</b>的中！</a>
         </div>
         <a class="more" href="#" id="flashMore">一覧 ▶</a>

@@ -1,6 +1,6 @@
 {* フッターナビリンク（TOP・静的で共通） *}
 <a href="/pages/company">運営会社</a>
-<a href="/topics/topics_top">お知らせ</a>
+<a href="/topics/topics_top?tab=info">お知らせ</a>
 <a href="/pages/faq">よくある質問・料金プラン</a>
 <a href="/pages/privacy">プライバシーポリシー</a>
 <a href="/pages/rules">利用規約</a>
