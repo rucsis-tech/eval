@@ -117,7 +117,7 @@
     display:flex;align-items:center;justify-content:space-between;
     padding:12px 14px;background:var(--bg-card);border-bottom:1px solid var(--line);
   }
-  .d-title{font-size:14px;font-weight:900;color:#fff;letter-spacing:.04em;}
+  .d-head .d-title{font-size:14px;font-weight:900;color:#fff;letter-spacing:.04em;}
   .d-close{
     width:30px;height:30px;border-radius:50%;
     background:var(--bg-sunken);border:1px solid var(--line);color:#fff;font-size:15px;
