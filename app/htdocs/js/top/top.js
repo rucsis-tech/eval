@@ -1,9 +1,118 @@
+/**
+ * P1 TOP（モック）
+ * probTable / viewResult は JS データから描画（P4 sim_top.js と同形式）
+ */
+const PROB_HORSES = [
+  {num:2,  waku:1, name:'ダノンデサイル',     meta:'牡4／C.ルメール',   win:28.1, fuku:58.4, probHi:true,  diff:'up',   evWin:142, evFuku:'92〜105%',  evHi:true,  hf:'mid', mark:''},
+  {num:5,  waku:3, name:'ジャンタルマンタル', meta:'牡4／川田将雅',     win:21.1, fuku:52.8, probHi:true,  diff:'down', evWin:96,  evFuku:'88〜101%',  evHi:false, hf:'mid', mark:''},
+  {num:1,  waku:1, name:'エンブロイダリー',   meta:'牝3／横山武史',     win:15.7, fuku:41.1, probHi:false, diff:'up',   evWin:163, evFuku:'104〜128%', evHi:true,  hf:'hi',  mark:''},
+  {num:3,  waku:2, name:'カムニャック',       meta:'牝4／M.デムーロ',   win:12.4, fuku:33.2, probHi:false, diff:null,   evWin:88,  evFuku:'85〜97%',   evHi:false, hf:'',    mark:''},
+  {num:4,  waku:2, name:'ウインカーネリアン', meta:'牡7／三浦皇成',     win:8.9,  fuku:26.7, probHi:false, diff:null,   evWin:74,  evFuku:'78〜90%',   evHi:false, hf:'',    mark:''},
+  {num:8,  waku:4, name:'レガレイラ',         meta:'牝4／戸崎圭太',     win:4.2,  fuku:18.5, probHi:false, diff:'up',   evWin:121, evFuku:'96〜115%',  evHi:true,  hf:'mid', mark:''},
+  {num:7,  waku:4, name:'ソールオリエンス',   meta:'牡5／横山和生',     win:2.8,  fuku:14.2, probHi:false, diff:null,   evWin:68,  evFuku:'82〜98%',   evHi:false, hf:'',    mark:''},
+  {num:6,  waku:3, name:'ベラジオオペラ',     meta:'牡5／横山典弘',     win:2.1,  fuku:12.6, probHi:false, diff:null,   evWin:92,  evFuku:'88〜102%',  evHi:false, hf:'mid', mark:''},
+  {num:9,  waku:5, name:'シックスペンス',     meta:'牡4／松山弘平',     win:1.4,  fuku:9.8,  probHi:false, diff:'down', evWin:110, evFuku:'95〜110%',  evHi:true,  hf:'mid', mark:''},
+  {num:10, waku:5, name:'ジューンテイク',     meta:'牡4／岩田望来',     win:0.9,  fuku:7.4,  probHi:false, diff:null,   evWin:55,  evFuku:'70〜84%',   evHi:false, hf:'',    mark:''},
+  {num:11, waku:6, name:'サンライズアース',   meta:'牡4／池添謙一',     win:0.7,  fuku:6.2,  probHi:false, diff:null,   evWin:83,  evFuku:'79〜93%',   evHi:false, hf:'',    mark:''},
+  {num:12, waku:6, name:'メイショウタバル',   meta:'牡4／浜中俊',       win:0.6,  fuku:5.1,  probHi:false, diff:null,   evWin:47,  evFuku:'60〜75%',   evHi:false, hf:'',    mark:''},
+  {num:13, waku:7, name:'コスモキュランダ',   meta:'牡5／丹内祐次',     win:0.4,  fuku:3.9,  probHi:false, diff:null,   evWin:62,  evFuku:'72〜88%',   evHi:false, hf:'',    mark:''},
+  {num:14, waku:7, name:'アーバンシック',     meta:'牡4／武豊',         win:0.3,  fuku:3.2,  probHi:false, diff:null,   evWin:71,  evFuku:'65〜80%',   evHi:false, hf:'',    mark:''},
+  {num:15, waku:8, name:'ダノンエアズロック', meta:'牡4／坂井瑠星',     win:0.2,  fuku:2.4,  probHi:false, diff:null,   evWin:39,  evFuku:'50〜66%',   evHi:false, hf:'',    mark:''},
+  {num:16, waku:8, name:'シュガークン',       meta:'牡4／田辺裕信',     win:0.1,  fuku:1.6,  probHi:false, diff:null,   evWin:28,  evFuku:'42〜58%',   evHi:false, hf:'',    mark:''},
+];
+
+// 結果・払戻しビュー（着順順・モック確定値）
+const RESULT_ROWS = [
+  {chaku:1,  num:1,  waku:1, name:'エンブロイダリー',   ninki:5,  probRank:3,  probRankCls:'p3', evWin:163, evFuku:121, evWinHi:true,  evFukuHi:true},
+  {chaku:2,  num:2,  waku:1, name:'ダノンデサイル',     ninki:1,  probRank:1,  probRankCls:'p1', evWin:142, evFuku:98,  evWinHi:true,  evFukuHi:false},
+  {chaku:3,  num:8,  waku:4, name:'レガレイラ',         ninki:8,  probRank:6,  probRankCls:null, evWin:121, evFuku:108, evWinHi:true,  evFukuHi:true},
+  {chaku:4,  num:5,  waku:3, name:'ジャンタルマンタル', ninki:2,  probRank:2,  probRankCls:'p2', evWin:96,  evFuku:95,  evWinHi:false, evFukuHi:false},
+  {chaku:5,  num:3,  waku:2, name:'カムニャック',       ninki:3,  probRank:4,  probRankCls:'p4', evWin:88,  evFuku:90,  evWinHi:false, evFukuHi:false},
+  {chaku:6,  num:6,  waku:3, name:'ベラジオオペラ',     ninki:6,  probRank:8,  probRankCls:null, evWin:92,  evFuku:93,  evWinHi:false, evFukuHi:false},
+  {chaku:7,  num:4,  waku:2, name:'ウインカーネリアン', ninki:4,  probRank:5,  probRankCls:'p5', evWin:74,  evFuku:84,  evWinHi:false, evFukuHi:false},
+  {chaku:8,  num:9,  waku:5, name:'シックスペンス',     ninki:7,  probRank:9,  probRankCls:null, evWin:110, evFuku:101, evWinHi:true,  evFukuHi:true},
+  {chaku:9,  num:7,  waku:4, name:'ソールオリエンス',   ninki:9,  probRank:7,  probRankCls:null, evWin:68,  evFuku:88,  evWinHi:false, evFukuHi:false},
+  {chaku:10, num:11, waku:6, name:'サンライズアース',   ninki:11, probRank:11, probRankCls:null, evWin:83,  evFuku:86,  evWinHi:false, evFukuHi:false},
+  {chaku:11, num:10, waku:5, name:'ジューンテイク',     ninki:10, probRank:10, probRankCls:null, evWin:55,  evFuku:76,  evWinHi:false, evFukuHi:false},
+  {chaku:12, num:13, waku:7, name:'コスモキュランダ',   ninki:13, probRank:13, probRankCls:null, evWin:62,  evFuku:79,  evWinHi:false, evFukuHi:false},
+  {chaku:13, num:12, waku:6, name:'メイショウタバル',   ninki:12, probRank:12, probRankCls:null, evWin:47,  evFuku:66,  evWinHi:false, evFukuHi:false},
+  {chaku:14, num:14, waku:7, name:'アーバンシック',     ninki:14, probRank:14, probRankCls:null, evWin:71,  evFuku:72,  evWinHi:false, evFukuHi:false},
+  {chaku:15, num:16, waku:8, name:'シュガークン',       ninki:16, probRank:16, probRankCls:null, evWin:28,  evFuku:48,  evWinHi:false, evFukuHi:false},
+  {chaku:16, num:15, waku:8, name:'ダノンエアズロック', ninki:15, probRank:15, probRankCls:null, evWin:39,  evFuku:55,  evWinHi:false, evFukuHi:false},
+];
+const RESULT_PAYOUTS = [
+  {kind:'単勝', combo:'1', yen:'1,630円'},
+  {kind:'複勝', combo:['1','2','8'], yen:['410円','150円','890円']},
+  {kind:'馬連', combo:'1-2', yen:'2,340円'},
+  {kind:'ワイド', combo:['1-2','1-8','2-8'], yen:['780円','3,120円','1,540円']},
+  {kind:'馬単', combo:'1→2', yen:'5,120円'},
+  {kind:'3連複', combo:'1-2-8', yen:'12,480円'},
+  {kind:'3連単', combo:'1→2→8', yen:'68,930円'},
+];
+
+const probTable = document.getElementById('probTable');
+
+function probEsc(s){
+  return String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+}
+
+function renderProbTable(){
+  const tbody = document.getElementById('probTableBody');
+  tbody.innerHTML = PROB_HORSES.map(h => {
+    const diffHtml = h.diff === 'up' ? '<i class="diff up">▲</i>'
+      : h.diff === 'down' ? '<i class="diff down">▼</i>' : '';
+    const probCls = 'rate' + (h.probHi ? ' hi' : '');
+    const evCls = 'rate ev' + (h.evHi ? ' hi' : '');
+    const mark = h.mark || '';
+    const hf = h.hf || '';
+    return `<tr>
+      <td><span class="waku w${h.waku}">${h.num}</span></td>
+      <td class="mark-td"><button type="button" class="mark-btn" data-mark="${mark}">${mark}</button></td>
+      <td class="name">${probEsc(h.name)}<small>${probEsc(h.meta)}</small></td>
+      <td class="${probCls}" data-win="${h.win}%" data-fuku="${h.fuku}%">${h.win}%${diffHtml}</td>
+      <td class="${evCls}" data-win="${h.evWin}%" data-fuku="${h.evFuku}" data-hw="${h.evHi ? '1' : '0'}" data-hf="${hf}">${h.evWin}%</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderResultTable(){
+  const tbody = document.getElementById('resultTableBody');
+  tbody.innerHTML = RESULT_ROWS.map(r => {
+    const chakuCls = r.chaku <= 3 ? `chaku c${r.chaku}` : 'chaku';
+    const prank = r.probRankCls
+      ? `<span class="prank ${r.probRankCls}">${r.probRank}</span>`
+      : String(r.probRank);
+    return `<tr>
+      <td><span class="${chakuCls}">${r.chaku}</span></td>
+      <td><span class="waku w${r.waku}">${r.num}</span></td>
+      <td><span class="r-mark" data-mark="">−</span></td>
+      <td class="name">${probEsc(r.name)}</td>
+      <td>${r.ninki}</td>
+      <td>${prank}</td>
+      <td class="rate${r.evWinHi ? ' hi' : ''}">${r.evWin}%</td>
+      <td class="rate${r.evFukuHi ? ' hi' : ''}">${r.evFuku}%</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPayoutTable(){
+  const tbody = document.getElementById('payoutTableBody');
+  const cell = v => Array.isArray(v) ? v.join('<br>') : v;
+  tbody.innerHTML = RESULT_PAYOUTS.map(p =>
+    `<tr><td class="k">${probEsc(p.kind)}</td><td class="c">${cell(p.combo)}</td><td class="y">${cell(p.yen)}</td></tr>`
+  ).join('');
+}
+
+renderProbTable();
+renderResultTable();
+renderPayoutTable();
+
 // 勝利確率／複勝確率タブの表示切替（モック動作）
   const tabWin  = document.getElementById('tab-win');
   const tabFuku = document.getElementById('tab-fuku');
   const thProb  = document.getElementById('th-prob');
   const thEv    = document.getElementById('th-ev');
-  const cells   = document.querySelectorAll('#probTable tbody td.rate');
+  let cells     = document.querySelectorAll('#probTable tbody td.rate');
 
   // 現在の表示モードとソート状態
   let curMode = 'win';
@@ -172,7 +281,6 @@
   // 暫定＝初期データ／最終＝発走約30分前にオッズ取得→好走確率を補正し期待値を再計算
   const statusBadge = document.getElementById('statusBadge');
   const statusNote  = document.getElementById('statusNote');
-  const probTable   = document.getElementById('probTable');
   // レースは「暫定 → 最終 → 発売締切 → 結果確定」の4状態を持つステートマシン
   // 期待値のLIVE更新（5分毎オッズ取得）は 暫定〜締切前 の間のみ稼働
   // ※モック：確率バッジのタップで4状態をローテーション。実装時はサーバ側状態で固定
