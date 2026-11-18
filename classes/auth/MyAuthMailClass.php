@@ -51,7 +51,7 @@ class MyAuthMailClass extends MyAuthClass {
 
             $work['pass_hash'] = password_hash($password, PASSWORD_DEFAULT);
             $work['checked'] = CryptClass::encrypt($password, $email);
-            $hash = self::saveTmp('entry', $email, $work);
+            $hash = self::saveTmp(MyAuthMailClass::TYPE_ENTRY, $email, $work);
 
             // ------------------------------
             // 仮登録メール送信
@@ -86,7 +86,7 @@ class MyAuthMailClass extends MyAuthClass {
         }
 
         // 照合用ハッシュ保存
-        $hash = $this->saveTmp('reset', $email, $work);
+        $hash = $this->saveTmp(self::TYPE_RESET, $email, $work);
 
         // メール送信処理
 
@@ -129,7 +129,7 @@ class MyAuthMailClass extends MyAuthClass {
 
         // 照合用ハッシュ作成・保存
         $profile = ['email' => $params['old_email'], 'new_email' => $params['email']];
-        $hash = $this->saveTmp('change', $params['old_email'], $profile);
+        $hash = $this->saveTmp(self::TYPE_CHANGE, $params['old_email'], $profile);
 
         // メール送信処理
         $params['url'] = BASE_URL . "auth/register?hash=$hash&email=" . rawurlencode($params['email']);
@@ -137,5 +137,32 @@ class MyAuthMailClass extends MyAuthClass {
         return $params;
     }
 
+    /**
+     * メール送信用の6桁の数字コードを発行
+     * @param $email
+     * @return string
+     * @throws \Random\RandomException
+     */
+    public function verifyMail($email, $id = 0): array {
 
+        // コード発行
+        $verify_code = random_int(100000, 999999);
+        $this->saveTmp(MyAuthClass::TYPE_VERIFY, $email, ['verify_code' => $verify_code, 'retry' => 0]);
+
+        if (empty($email)) throw new Exception("メールアドレスが入力されていません", 1);
+        $base = self::first('email', $email);
+        $work = ['email' => $email, 'to' => $email, 'verify_code' => $verify_code, 'state' => (AuthMailClass::getLoginState($id))];
+        if (empty($base)) {
+            // メールアドレスが存在しない場合、存在しないメール送信
+            $work['res'] = $this->Mail->sendMail('auth/VerifyNone', $work);
+            $work['send'] = 'unknownRePassMailBody';
+            return $work;
+        }
+
+        // メール送信処理
+        $work['res'] = $this->Mail->sendMail('auth/Verify', $work);
+
+        return $work;
+
+    }
 }

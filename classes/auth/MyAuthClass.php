@@ -28,6 +28,8 @@ class MyAuthClass extends DBClass {
     const TYPE_LOGIN_CODE = 'login-code';
     const TYPE_TOKEN = 'token';
     const TYPE_TOW_STEP = 'tow-step';
+    const TYPE_VERIFY = 'verify';
+
     const EXPIRES_IN = 2592000;     // トークン有効期限
     const EXPIRES_REGISTER = 86400; // 登録メール期限
 
@@ -70,7 +72,7 @@ class MyAuthClass extends DBClass {
      */
 
     static
-    protected function saveTmp($type, $email, $work): string {
+    public function saveTmp($type, $email, $work): string {
         $hash = self::makeHash();
         $work['type'] = $type;
         unset($work['email']);
@@ -272,6 +274,66 @@ class MyAuthClass extends DBClass {
         ];
     }
 
+    /**
+     * VerifyCode(6桁数字)からユーザー特定・トークン取得
+     * @param $email
+     * @param $verify_code
+     * @return array
+     * @throws Exception
+     */
+    static
+    public function getAccessTokenFromVerifyCode($email, $verify_code): array {
+
+        if (empty($email)) throw new Exception('no email');
+        if (empty($verify_code)) throw new Exception('no verify_code');
+
+        $Tmp = self::table('auth_tmp')
+            ->where('type', MyAuthClass::TYPE_VERIFY)
+            ->where('created_at', '>', date('Y-m-d H:i:s', time() - 60 * 10))
+            ->where('email', $email)
+            ->first();
+        if (empty($Tmp)) throw new Exception('no verify');
+
+        $work = $Tmp->work();
+        if ($work['retry'] > 5) {
+            self::resetTmp(MyAuthClass::TYPE_VERIFY, $email);
+            throw new Exception('retry over');
+        }
+
+        if ($work['verify_code'] == $verify_code) {
+            // ----------------------------------------------------
+            // 検証成功
+
+            $access_token = self::saveTmp(self::TYPE_TOKEN, $email, []);
+            $Base = self::first('email', $email);
+            if (empty($Base)) throw new Exception('error base');
+
+            return [
+                'access_token' => $access_token,
+                'refresh_token' => $Base->refresh,
+                'expires_in' => self::EXPIRES_IN,
+            ];
+
+        } else {
+            // ----------------------------------------------------
+            // 検証失敗
+
+            self::begin();  // リトライ+1
+            $Tmp = self::forUpdate('hash', $Tmp->hash, 'auth_tmp');
+            $work = $Tmp->work();
+            $work['retry'] = $work['retry'] + 1;
+            self::sql("UPDATE auth_tmp SET work=? WHERE hash=?", [json_encode($work), $Tmp->hash]);
+            self::commit();
+
+            $json = ['error' => "verify_code_error {$verify_code} {$work['retry']}"];
+        }
+
+
+        return $json;
+    }
+
+
+
     static
     public function getAccessTokenFromRefresh($refresh_token): array {
 
@@ -297,7 +359,7 @@ class MyAuthClass extends DBClass {
     public function logon($email) {
         if (!$email) return false;
         // Codeトークン等作成
-        $code = self::saveTmp('login', $email, []);
+        $code = self::saveTmp(self::TYPE_LOGIN_CODE, $email, []);
         return $code;
     }
 

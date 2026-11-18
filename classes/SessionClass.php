@@ -53,12 +53,12 @@ class SessionClass extends DBClass {
         $code = $_GET['code'] ?? '';    // アクセストークンの取得に使用される認可コード
 
         try {
-            if ($state) {
+            if ($state && $code) {
                 // 新規認証遷移による認証
                 $session = self::auth($state, $code);
             }
 
-            $token = $_COOKIE['token'] ?? null;
+            $token = $_COOKIE['token'] ?? ($_POST['token'] ?? null);
             if (empty($session) && $token) {
                 // セッショントークンによる継続
                 $session = self::checkSessionToken($token);
@@ -188,6 +188,7 @@ class SessionClass extends DBClass {
         // $code から アクセストークン取得
         $API = AuthClass::getAuthAPI($states['provider']);
         $tokenData = $API->token($code);
+
         if (!empty($tokenData['error'])) throw new Exception('State Token Error:' . json_encode($tokenData));
 
         $accessToken = $tokenData['access_token'];
