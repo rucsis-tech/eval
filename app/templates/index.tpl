@@ -16,21 +16,23 @@
             </div>
             <div class="prob">
                 <div class="prob-nav"><!-- PC：左のレース選択列（追従） -->
-                <!-- 日付タブ -->
+                <!-- 日付タブ（?rc= でページ遷移） -->
                 <div class="tabs date">
-                    <a href="#">7/12(日)</a><a class="on" href="#">7/14(火)</a><a href="#">7/15(水)</a>
+                {foreach from=$kaisai_date_list item=tab}
+                    <a href="{$tab.href|escape:'html'}"{if $tab.is_current} class="on"{/if}>{$tab.display_date|escape}</a>
+                {/foreach}
                 </div>
-                <!-- 開催場タブ -->
+                <!-- 開催場タブ（?rc= でページ遷移・中央→地方の順） -->
                 <div class="tabs venue">
-                    <a class="on" href="#">東京</a><a href="#">京都</a><a href="#">福島</a>
-                    <a class="local" href="#">門別</a><a class="local" href="#">高知</a><a class="local" href="#">大井</a>
-                    <a class="local" href="#">川崎</a><a class="local" href="#">名古屋</a><a class="local" href="#">佐賀</a>
+                {foreach from=$kaisai_place_list item=venue}
+                    <a href="{$venue.href|escape:'html'}"{if $venue.class} class="{$venue.class|escape}"{/if}>{$venue.label|escape}</a>
+                {/foreach}
                 </div>
-                <!-- レース番号 -->
+                <!-- レース番号（?rc= でページ遷移） -->
                 <div class="tabs race">
-                    <a class="done" href="#">1R</a><a class="done" href="#">2R</a><a class="on" href="#">3R</a><a href="#">4R</a>
-                    <a href="#">5R</a><a href="#">6R</a><a href="#">7R</a><a href="#">8R</a>
-                    <a href="#">9R</a><a href="#">10R</a><a href="#">11R</a><a href="#">12R</a>
+                {foreach from=$race_tab_list item=rtab}
+                    <a href="{$rtab.href|escape:'html'}"{if $rtab.class} class="{$rtab.class|escape}"{/if}>{$rtab.label|escape}</a>
+                {/foreach}
                 </div>
                 <!-- 発走時間の近いレース（スリムバー） -->
                 <div class="nextbar">

@@ -168,7 +168,6 @@ function validateRaceCode( $rc )
         )
     );
 
-    $Smarty->assign('kaisai_date_list', $kaisai_date_list );
     //var_dump($kaisai_date_list);
 
 
@@ -196,6 +195,142 @@ function validateRaceCode( $rc )
 
     //var_dump($race_list);
 
+
+    // 日付タブ用 ?rc=（場・レース番号維持、不可時は先頭有効レース）
+    $current_day_ymd = $current_date !== '' ? substr($current_date, 0, 8) : substr($raceCode, 0, 8);
+    $race_no_suffix = sprintf('%02d', (int)($current_raceNo !== '' ? $current_raceNo : 1));
+    $prefer_jyo = $current_jyo;
+    $load_day_ymd = str_replace('-', '', $day);
+    foreach ($kaisai_date_list as &$date_tab) {
+        $ymd = $date_tab['date_code'];
+        $tab_day = substr($ymd, 0, 4) . '-' . substr($ymd, 4, 2) . '-' . substr($ymd, 6, 2);
+        if ($ymd === $load_day_ymd && !empty($kaisai_list)) {
+            $day_list = $kaisai_list;
+        } else {
+            $day_list = Race::getKaisaiList($tab_day);
+        }
+        $rc = '';
+        if (!empty($day_list)) {
+            $picked_code = null;
+            foreach ($day_list as $kaisai) {
+                if ((string)$kaisai->place === (string)$prefer_jyo) {
+                    $picked_code = $kaisai->kaisai_code;
+                    break;
+                }
+            }
+            if ($picked_code === null) {
+                $first = reset($day_list);
+                $picked_code = $first->kaisai_code;
+            }
+            $races = $day_list[$picked_code]->races ?? [];
+            $race_bango = (int)$race_no_suffix;
+            $picked_race = null;
+            foreach ($races as $race) {
+                $info = is_array($race->info ?? null) ? $race->info : [];
+                $bango = (int)($info['race_bango'] ?? 0);
+                if ($bango === $race_bango) {
+                    $picked_race = $race;
+                    break;
+                }
+                if ($bango === 0 && !empty($race->race_code)
+                    && substr((string)$race->race_code, -2) === $race_no_suffix) {
+                    $picked_race = $race;
+                    break;
+                }
+            }
+            // 基本は開催場タブ同様 kaisai_code＋R番号。race_code は実在・非中止時のみ採用
+            $candidate = $picked_code . $race_no_suffix;
+            $commit = $picked_race !== null
+                ? (int)(is_array($picked_race->info ?? null) ? ($picked_race->info['commit'] ?? 0) : 0)
+                : null;
+            if ($picked_race !== null && $commit !== 9 && !empty($picked_race->race_code)) {
+                $candidate = $picked_race->race_code;
+            } elseif ($picked_race !== null && $commit === 9) {
+                foreach ($races as $race) {
+                    $info = is_array($race->info ?? null) ? $race->info : [];
+                    if ((int)($info['commit'] ?? 0) !== 9) {
+                        $candidate = !empty($race->race_code)
+                            ? $race->race_code
+                            : $picked_code . sprintf('%02d', (int)($info['race_bango'] ?? 1));
+                        break;
+                    }
+                }
+            }
+            $rc = $candidate;
+        }
+        $date_tab['href'] = $rc !== '' ? ('?rc=' . $rc) : '#';
+        $date_tab['is_current'] = ($ymd === $current_day_ymd);
+    }
+    unset($date_tab);
+    $Smarty->assign('kaisai_date_list', $kaisai_date_list);
+
+    // 開催場タブ（表示中日の開催一覧・R 番号はキープ、race の存在は見ない）
+    $venue_tab_day = substr($current_day_ymd, 0, 4) . '-'
+        . substr($current_day_ymd, 4, 2) . '-'
+        . substr($current_day_ymd, 6, 2);
+    if ($current_day_ymd === $load_day_ymd && !empty($kaisai_list)) {
+        $venue_day_list = $kaisai_list;
+    } else {
+        $venue_day_list = Race::getKaisaiList($venue_tab_day);
+    }
+    $kaisai_place_list = [];
+    $venue_rows = !empty($venue_day_list) ? array_values($venue_day_list) : [];
+    usort($venue_rows, static function ($a, $b) {
+        $pla = (int)$a->place;
+        $plb = (int)$b->place;
+        $la = $pla >= 30;
+        $lb = $plb >= 30;
+        if ($la !== $lb) {
+            return $la <=> $lb;
+        }
+        return $pla <=> $plb;
+    });
+    foreach ($venue_rows as $kaisai) {
+        $place = (string)$kaisai->place;
+        $info = is_array($kaisai->info ?? null) ? $kaisai->info : [];
+        $label = $info['keibajo'] ?? (Race::PLACES[$place] ?? $place);
+        $is_local = ((int)$place >= 30);
+        $is_current = ($place === (string)$current_jyo);
+        $class = trim(($is_local ? 'local' : '') . ($is_current ? ' on' : ''));
+        $kaisai_place_list[] = [
+            'label' => trim($label),
+            'href' => '?rc=' . $kaisai->kaisai_code . $race_no_suffix,
+            'is_current' => $is_current,
+            'is_local' => $is_local,
+            'class' => $class,
+        ];
+    }
+    $Smarty->assign('kaisai_place_list', $kaisai_place_list);
+
+    // レース番号タブ（現在の開催・?rc= で遷移）
+    $current_race_bango = (int)$race_no_suffix;
+    $race_tab_list = [];
+    if (!empty($race_list) && is_iterable($race_list)) {
+        foreach ($race_list as $race) {
+            $info = is_array($race->info ?? null) ? $race->info : [];
+            $bango = (int)($info['race_bango'] ?? 0);
+            if ($bango < 1) {
+                continue;
+            }
+            $commit = (int)($info['commit'] ?? 0);
+            $suffix = sprintf('%02d', $bango);
+            $rc = !empty($race->race_code) ? $race->race_code : ($kaisai_code . $suffix);
+            $is_current = ($bango === $current_race_bango);
+            // 発走済みグレーアウト: 結果確定のみ（commit 5–7）
+            $is_done = ($commit >= 5 && $commit <= 7);
+            $class = trim(($is_done ? 'done' : '') . ($is_current ? ' on' : ''));
+            $race_tab_list[] = [
+                'label' => $bango . 'R',
+                'href' => '?rc=' . $rc,
+                'class' => $class,
+                'race_bango' => $bango,
+            ];
+        }
+        usort($race_tab_list, static function ($a, $b) {
+            return $a['race_bango'] <=> $b['race_bango'];
+        });
+    }
+    $Smarty->assign('race_tab_list', $race_tab_list);
 
     // 東西裏の情報を別の変数に
     //どのように取得するか相談
@@ -310,7 +445,7 @@ _999:
 
     $Smarty->assign([
         'show_pc_top' => true,          // true: nav_pc.tpl（ホーム追加バナー・速報ティッカー・アンケート帯）
-        'show_campaign_modal' => true,  // true: partials/modal.tpl（キャンペーン告知モーダル）
+        'show_campaign_modal' => false,  // true: partials/modal.tpl（キャンペーン告知モーダル）
         'show_reg_banner' => true,      // true: 下部ナビ上の無料登録追従バナー（非ログイン向け）
         'show_footer' => true,          // layout/footer.tpl（非表示時はキーごと省略）
         'member_type' => 'guest',       // ドロワー内アカウント欄: guest | free | subsc
