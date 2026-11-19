@@ -70,7 +70,6 @@ function validateRaceCode( $rc )
     $week_days = Race::getWeekDays();
     $kaisai_days = Race::getKaisaiDays();
 
-
     if( empty($_GET['rc']) ){
         //レースコードが無い場合にデフォルトのレースコードを採用する
     }else{
@@ -106,8 +105,71 @@ function validateRaceCode( $rc )
     $kaisai_list = Race::getKaisaiList($day);
     //var_dump($kaisai_list);
 
-    $Smarty->assign('kaisai_list', $kaisai_list );      // 日付、場所のドロップダウンリスト用
+    $Smarty->assign('kaisai_list', $kaisai_list );
 
+
+    // 開催３タブリスト作成
+    //var_dump($week_days);
+    //var_dump($kaisai_days);
+    if ( count($kaisai_days) < 3 ) { //3日開催か？
+        $target_days = $kaisai_days;
+    }else{
+        $first_day = date('Y-m-d', strtotime('-1 day', strtotime($week_days[0])));;
+        $second_day = $kaisai_days[0];
+        $third_day = $kaisai_days[1];
+        $target_days = [$first_day, $second_day, $third_day];
+    }
+    //var_dump($target_days);
+    $week = ['日', '月', '火', '水', '木', '金', '土'];
+    $date01 = new DateTime($target_days[0]);
+    $w01 = $date01->format('w');
+    $display_date01 = $date01->format('n/j') . '(' . $week[$w01] . ')';
+    $date_code01 = $date01->format('Ymd');
+
+    $date02 = new DateTime($target_days[1]);
+    $w02 = $date02->format('w');
+    $display_date02 = $date02->format('n/j') . '(' . $week[$w02] . ')';
+    $date_code02 = $date02->format('Ymd');
+
+    $date03 = new DateTime($target_days[2]);
+    $w03 = $date03->format('w');
+    $display_date03 = $date03->format('n/j') . '(' . $week[$w03] . ')';
+    $date_code03 = $date03->format('Ymd');
+
+    $kaisai_date_list = array(
+        array (
+            "display_date" => $display_date01,
+            "date_code" => $date_code01
+        ),
+        array (
+            "display_date" => $display_date02,
+            "date_code" => $date_code02
+        ),
+        array (
+            "display_date" => $display_date03,
+            "date_code" => $date_code03
+        )
+    );
+
+
+    //テスト用ベタ置き（仮）
+    $kaisai_date_list = array(
+        array (
+            "display_date" => "11/8(日)",
+            "date_code" => "20261108"
+        ),
+        array (
+            "display_date" => "11/14(土)",
+            "date_code" => "20261114"
+        ),
+        array (
+            "display_date" => "11/15(日)",
+            "date_code" => "20261115"
+        )
+    );
+
+    $Smarty->assign('kaisai_date_list', $kaisai_date_list );
+    //var_dump($kaisai_date_list);
 
 
     $kaisai_code = "";
