@@ -371,21 +371,89 @@ function validateRaceCode( $rc )
 
 
 
-    if( empty( $race_list[$current_raceNo+0]) || $race_list[$current_raceNo+0]->info['commit'] == 9 ){
+    $race_joho = [];
+    $current_race = null;
+    $race_bango_int = (int)$current_raceNo;
+    foreach ($race_list as $race) {
+        $rinfo = is_array($race->info ?? null) ? $race->info : [];
+        if ((int)($rinfo['race_bango'] ?? 0) === $race_bango_int) {
+            $current_race = $race;
+            break;
+        }
+    }
+    if ($current_race === null && !empty($race_list[$current_raceNo + 0])) {
+        $current_race = $race_list[$current_raceNo + 0];
+    }
+
+    if ($current_race === null || empty($current_race->info) || (int)($current_race->info['commit'] ?? 0) === 9) {
         $error_code = ERROR_NO_BACHU_DATA;
         //競争中止や該当するレース番号がなかった場合の対応
         goto _999;
     }
 
+    $ri = $current_race->info;
+    $kaisai_info = is_array($kaisai_list[$kaisai_code]->info ?? null)
+        ? $kaisai_list[$kaisai_code]->info
+        : [];
+    $jyo_name = trim($ri['keibajo'] ?? $kaisai_info['keibajo'] ?? (Race::PLACES[$current_jyo] ?? ''));
+    $race_bango = (int)($ri['race_bango'] ?? $race_bango_int);
+    $track = (string)($ri['track'] ?? '');
+    $kyori = (int)($ri['kyori'] ?? 0);
+    $course_label = $track . ($kyori > 0 ? $kyori . 'm' : '');
+    $baba_labels = ['情報なし', '良', '稍重', '重', '不良'];
+    $baba_code = (int)($ri['baba_code'] ?? 0);
+    if ($baba_code === 0) {
+        $baba_text = trim((string)($ri['baba'] ?? ''));
+        if ($baba_text !== '') {
+            $flip = array_flip($baba_labels);
+            $baba_code = $flip[$baba_text] ?? 0;
+        }
+    }
+    if ($baba_code === 0) {
+        if ($track === '芝' && isset($kaisai_info['baba_shiba_code'])) {
+            $baba_code = (int)$kaisai_info['baba_shiba_code'];
+        } elseif (str_contains($track, 'ダ') && isset($kaisai_info['baba_dirt_code'])) {
+            $baba_code = (int)$kaisai_info['baba_dirt_code'];
+        } elseif ($track === '芝' && !empty($kaisai_info['baba_shiba'])) {
+            $flip = array_flip($baba_labels);
+            $baba_code = $flip[trim($kaisai_info['baba_shiba'])] ?? 0;
+        } elseif (str_contains($track, 'ダ') && !empty($kaisai_info['baba_dirt'])) {
+            $flip = array_flip($baba_labels);
+            $baba_code = $flip[trim($kaisai_info['baba_dirt'])] ?? 0;
+        }
+    }
+    $going = $baba_labels[$baba_code] ?? $baba_labels[0];
+    $hasso = trim((string)($ri['hasso_jikoku'] ?? ''));
+    if ($hasso !== '' && strlen($hasso) === 4 && ctype_digit($hasso)) {
+        $hasso = substr($hasso, 0, 2) . ':' . substr($hasso, 2, 2);
+    }
+    $race_joho = [
+        'jyo_name' => $jyo_name,
+        'race_bango' => $race_bango,
+        'kyosomei' => trim((string)($ri['kyosomei'] ?? '')),
+        'course_label' => $course_label,
+        'going' => $going,
+        'hasso' => $hasso,
+    ];
+
 
     //出走馬情報取得
 
     //var_dump($current_raceCode);
-    $race_uma_list = "";
     $race_uma_list = Race::getUmaList($current_raceCode);
-    //var_dump($race_uma_list);
+    if (!is_array($race_uma_list)) {
+        $race_uma_list = [];
+    }
+  //var_dump($race_uma_list);
 
-    $Smarty->assign('race_uma_list', $race_uma_list );
+    // 結果ビュー用（中身は生の info 配列・着順で並べ替えのみ）
+    $race_uma_list_by_chakujun = $race_uma_list;
+    usort($race_uma_list_by_chakujun, static function ($a, $b) {
+        return (int)($a['chakujun'] ?? 0) <=> (int)($b['chakujun'] ?? 0);
+    });
+
+    $Smarty->assign('race_uma_list', $race_uma_list);
+    $Smarty->assign('race_uma_list_by_chakujun', $race_uma_list_by_chakujun);
 
 
 
@@ -417,6 +485,17 @@ function validateRaceCode( $rc )
 //データない時は、nullを返します。
 _999:
 
+    if (!isset($race_joho)) {
+        $race_joho = [];
+    }
+    $Smarty->assign('race_joho', $race_joho);
+
+    if (!isset($race_uma_list)) {
+        $Smarty->assign('race_uma_list', []);
+    }
+    if (!isset($race_uma_list_by_chakujun)) {
+        $Smarty->assign('race_uma_list_by_chakujun', []);
+    }
 
     // フルパス記述用トップURL取得
     $protocol = (empty($_SERVER['HTTPS']) ? 'https://' : 'https://'); //取得できていないので必ずhttpsにする

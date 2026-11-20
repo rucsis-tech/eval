@@ -19,19 +19,19 @@
                 <!-- 日付タブ（?rc= でページ遷移） -->
                 <div class="tabs date">
                 {foreach from=$kaisai_date_list item=tab}
-                    <a href="{$tab.href|escape:'html'}"{if $tab.is_current} class="on"{/if}>{$tab.display_date|escape}</a>
+                    <a href="{$tab['href']|escape:'html'}"{if $tab['is_current']} class="on"{/if}>{$tab['display_date']|escape}</a>
                 {/foreach}
                 </div>
                 <!-- 開催場タブ（?rc= でページ遷移・中央→地方の順） -->
                 <div class="tabs venue">
                 {foreach from=$kaisai_place_list item=venue}
-                    <a href="{$venue.href|escape:'html'}"{if $venue.class} class="{$venue.class|escape}"{/if}>{$venue.label|escape}</a>
+                    <a href="{$venue['href']|escape:'html'}"{if $venue['class']} class="{$venue['class']|escape}"{/if}>{$venue['label']|escape}</a>
                 {/foreach}
                 </div>
                 <!-- レース番号（?rc= でページ遷移） -->
                 <div class="tabs race">
                 {foreach from=$race_tab_list item=rtab}
-                    <a href="{$rtab.href|escape:'html'}"{if $rtab.class} class="{$rtab.class|escape}"{/if}>{$rtab.label|escape}</a>
+                    <a href="{$rtab['href']|escape:'html'}"{if $rtab['class']} class="{$rtab['class']|escape}"{/if}>{$rtab['label']|escape}</a>
                 {/foreach}
                 </div>
                 <!-- 発走時間の近いレース（スリムバー） -->
@@ -54,8 +54,19 @@
                 </div>
 
                 <div class="race-info">
-                    <b>東京3R</b> <b>3歳未勝利</b> ダ1400m <span class="going">重</span>
-                    <span class="time">発走 11:10</span>
+                    {if $race_joho['jyo_name']}
+                        <b>{$race_joho['jyo_name']|escape}{$race_joho['race_bango']|escape}R</b>
+                    {else}
+                        <b>{$race_joho['race_bango']|escape}R</b>
+                    {/if}
+                    <b>{$race_joho['kyosomei']|escape}</b>
+                    {$race_joho['course_label']|escape}
+                    {if $race_joho['going']}
+                        <span class="going">{$race_joho['going']|escape}</span>
+                    {/if}
+                    {if $race_joho['hasso']}
+                        <span class="time">発走 {$race_joho['hasso']|escape}</span>
+                    {/if}
                 </div>
                 <div class="race-info status-row" style="padding-top:0;">
                     <span class="status-badge final" id="statusBadge">確率 最終</span>
@@ -76,7 +87,26 @@
                             <th style="width:78px" id="th-ev">単勝期待値<span class="sort idle">▼</span><span class="th-live"><span class="live-dot"></span>LIVE</span></th>
                         </tr>
                     </thead>
-                    <tbody id="probTableBody"></tbody>
+                    <tbody id="probTableBody">
+                        {foreach from=$race_uma_list item=uma}
+                            {if $uma['umaban']|default:0 > 0}
+                                {assign var=win_v value=$uma['win']|default:''} {* 勝利確率タブ > 勝利確率 *}
+                                {assign var=ev_win_v value=$uma['evWin']|default:''} {* 勝利確率タブ > 単勝期待値 *}
+                                {assign var=fuku_v value=$uma['fuku']|default:''}  {* 複勝確率タブ > 複勝確率 *}
+                                {assign var=ev_fuku_v value=$uma['evFuku']|default:''} {* 複勝確率タブ > 複勝期待値 *}
+                                {assign var=mark_v value=$uma['mark']|default:''} {* 印 *}
+                                {assign var=hf_v value=''}
+                                {if $uma['hf']|default:'' == 'mid' || $uma['hf']|default:'' == 'hi'}{assign var=hf_v value=$uma['hf']}{/if} {* hi:妙味アイコン, mid:黄文字 *}
+                                <tr>
+                                    <td><span class="waku w{$uma['wakuban']|default:0|escape}">{$uma['umaban']|escape}</span></td>
+                                    <td class="mark-td"><button type="button" class="mark-btn" data-mark="{$mark_v|escape:'html'}">{$mark_v|escape}</button></td>
+                                    <td class="name">{$uma['bamei']|default:''|escape}<small>{$uma['seibetsu']|default:''|escape}{$uma['barei']|default:''|escape}{if $uma['kishumei_ryakusho']|default:''}／{$uma['kishumei_ryakusho']|escape}{/if}</small></td>
+                                    <td class="rate{if $uma['probHi']|default:false} hi{/if}" data-win="{if $win_v === ''}−{else}{$win_v|escape}%{/if}" data-fuku="{if $fuku_v === ''}−{else}{$fuku_v|escape}%{/if}">{if $win_v === ''}−{else}{$win_v|escape}%{/if}{if $uma['diff']|default:'' == 'up'}<i class="diff up">▲</i>{elseif $uma['diff']|default:'' == 'down'}<i class="diff down">▼</i>{/if}</td>
+                                    <td class="rate ev{if $uma['evHi']|default:false} hi{/if}" data-win="{if $ev_win_v === ''}−{else}{$ev_win_v|escape}%{/if}" data-fuku="{if $ev_fuku_v === ''}−{else}{$ev_fuku_v|escape}{/if}" data-hw="{if $uma['evHi']|default:false}1{else}0{/if}" data-hf="{$hf_v|escape}">{if $ev_win_v === ''}−{else}{$ev_win_v|escape}%{/if}</td>
+                                </tr>
+                            {/if}
+                        {/foreach}
+                    </tbody>
                 </table>
                 <p class="prob-note">※ 好走確率は前日公開の値から、<b style="color:var(--text)">発走約30分前にオッズを取り込んで最終補正され確定</b>します（「最終」横の時刻＝確定時刻／▲▼は公開時の値からの変動）。的中実績・ランキングの集計は最終（確定）の値を使用。期待値は発走まで5分毎に更新。複勝期待値は複勝オッズの変動幅に対応したレンジ表示（赤＝下限でも100%超／橙＝上限で100%超）。印＝あなたの予想印（タップで順送り・長押しで一覧から選択）。</p>
 
@@ -98,14 +128,43 @@
                             <th style="width:52px">複勝<br>期待値</th>
                         </tr>
                     </thead>
-                    <tbody id="resultTableBody"></tbody>
+                    <tbody id="resultTableBody">
+                    {foreach from=$race_uma_list_by_chakujun item=uma}
+                        {if $uma['chakujun']|default:'00' != '00' && $uma['chakujun']|default:'' != ''}
+
+                            {math equation="x" x=$uma['chakujun']|default:0 assign=cj}
+                            {assign var=pr_raw value=$uma['probRank']|default:''} {* 確率順位 *}
+                            {math equation="x" x=$pr_raw|default:0 assign=pr_num}
+                            {assign var=ev_win_v value=$uma['evWin']|default:''} {* 単勝期待値 *}
+                            {assign var=ev_fuku_v value=$uma['evFuku']|default:''} {* 複勝期待値 *}
+                                <tr>
+                                    <td><span class="chaku{if $cj > 0 && $cj <= 3} c{$cj|escape}{/if}">{$cj|escape}</span></td>
+                                    <td><span class="waku w{$uma['wakuban']|default:0|escape}">{$uma['umaban']|escape}</span></td>
+                                    <td><span class="r-mark" data-mark="">−</span></td>
+                                    <td class="name">{$uma['bamei']|default:''|escape}</td>
+                                    <td>{math equation="x" x=$uma['ninki']|default:0 assign=nk}{if $nk > 0}{$nk|escape}{else}−{/if}</td>
+                                    <td>{if $pr_raw === ''}−{elseif $pr_num >= 1 && $pr_num <= 5}<span class="prank p{$pr_num|escape}">{$pr_num|escape}</span>{elseif $pr_num > 0}{$pr_num|escape}{else}−{/if}</td>
+                                    <td class="rate{if $uma['evWinHi']|default:false} hi{/if}">{if $ev_win_v === ''}−{else}{$ev_win_v|escape}%{/if}</td>
+                                    <td class="rate{if $uma['evFukuHi']|default:false} hi{/if}">{if $ev_fuku_v === ''}−{else}{$ev_fuku_v|escape}%{/if}</td>
+                                </tr>
+                        {/if}
+                    {/foreach}
+                    </tbody>
                 </table>
                 <p class="prob-note">※ 人気＝最終単勝人気／確率順位＝Eval好走確率の順位／印＝出馬表で入力したあなたの予想印。期待値は確定オッズに基づく最終値。</p>
 
                 <div class="payout">
                     <div class="p-head">配当</div>
                     <table>
-                        <tbody id="payoutTableBody"></tbody>
+                        <tbody id="payoutTableBody">
+                        <tr><td class="k">単勝</td><td class="c">1</td><td class="y">1,630円</td></tr>
+                        <tr><td class="k">複勝</td><td class="c">1<br>2<br>8</td><td class="y">410円<br>150円<br>890円</td></tr>
+                        <tr><td class="k">馬連</td><td class="c">1-2</td><td class="y">2,340円</td></tr>
+                        <tr><td class="k">ワイド</td><td class="c">1-2<br>1-8<br>2-8</td><td class="y">780円<br>3,120円<br>1,540円</td></tr>
+                        <tr><td class="k">馬単</td><td class="c">1→2</td><td class="y">5,120円</td></tr>
+                        <tr><td class="k">3連複</td><td class="c">1-2-8</td><td class="y">12,480円</td></tr>
+                        <tr><td class="k">3連単</td><td class="c">1→2→8</td><td class="y">68,930円</td></tr>
+                        </tbody>
                     </table>
                 </div>
 
