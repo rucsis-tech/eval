@@ -67,11 +67,12 @@ function validateRaceCode( $rc )
     $bachu_uma_joho = [];   // 馬柱の馬情報
     $chakujun_list = [];    // 結果・払戻の着順リスト
 
-    $week_days = Race::getWeekDays();
-    $kaisai_days = Race::getKaisaiDays();
 
     if( empty($_GET['rc']) ){
         //レースコードが無い場合にデフォルトのレースコードを採用する
+        $kaisai_days_base = Race::getKaisaiDays();
+        $kaisai_list_base = Race::getKaisaiList($kaisai_days_base[0]);
+        $raceCode = array_key_first($kaisai_list_base) . "01";
     }else{
         $raceCode = $_GET['rc'];
         $error_code =  validateRaceCode( $raceCode );
@@ -84,6 +85,8 @@ function validateRaceCode( $rc )
         $current_date = substr($raceCode, 0, 8 );
         $current_jyo = substr($raceCode, 8, 2 );
         $current_raceNo = substr($raceCode, 14, 2 );
+        $day = $current_date;
+        $kaisai_days = Race::getKaisaiDays(strtotime($day));
     }
 
     $tab_mode = TAB_MODE_AUTO;      // 0:自動、1:出馬表
@@ -98,23 +101,16 @@ function validateRaceCode( $rc )
         }
     }
 
-
     // 開催リスト取得
-    //$day = $kaisai_days[0];
-    $day = "2026-11-14"; //デバッグ用ダミー
     $kaisai_list = Race::getKaisaiList($day);
+    $Smarty->assign('kaisai_list', $kaisai_list );
     //var_dump($kaisai_list);
 
-    $Smarty->assign('kaisai_list', $kaisai_list );
-
-
     // 開催３タブリスト作成
-    //var_dump($week_days);
-    //var_dump($kaisai_days);
-    if ( count($kaisai_days) < 3 ) { //3日開催か？
+    if ( count($kaisai_days) >= 3 ) { //3日開催か？
         $target_days = $kaisai_days;
     }else{
-        $first_day = date('Y-m-d', strtotime('-1 day', strtotime($week_days[0])));;
+        $first_day = date('Y-m-d', strtotime('-7 day', strtotime($kaisai_days[1])));;
         $second_day = $kaisai_days[0];
         $third_day = $kaisai_days[1];
         $target_days = [$first_day, $second_day, $third_day];
@@ -153,6 +149,7 @@ function validateRaceCode( $rc )
 
 
     //テスト用ベタ置き（仮）
+    /*
     $kaisai_date_list = array(
         array (
             "display_date" => "11/8(日)",
@@ -167,6 +164,7 @@ function validateRaceCode( $rc )
             "date_code" => "20261115"
         )
     );
+    */
 
     //var_dump($kaisai_date_list);
 
@@ -316,7 +314,7 @@ function validateRaceCode( $rc )
             $suffix = sprintf('%02d', $bango);
             $rc = !empty($race->race_code) ? $race->race_code : ($kaisai_code . $suffix);
             $is_current = ($bango === $current_race_bango);
-            // 発走済みグレーアウト: 結果確定のみ（commit 5–7）
+            // 発走済みグレーアウト: 結果確定のみ（commit 5-7）
             $is_done = ($commit >= 5 && $commit <= 7);
             $class = trim(($is_done ? 'done' : '') . ($is_current ? ' on' : ''));
             $race_tab_list[] = [
