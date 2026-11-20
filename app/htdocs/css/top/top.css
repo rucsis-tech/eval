@@ -156,7 +156,11 @@
   .view-switch a.on{background:var(--bg-card);color:var(--red);border-bottom:2px solid var(--red);}
   /* 結果・払戻し：結果取得前は無効 */
   /* 取得前：押せないことを明示（沈み表示＋理由注記） */
-  .view-switch a.disabled{color:#3d4452;background:#0c0e13;} /* 実装時は pointer-events:none を付与（モックでは確認用にタップ可） */
+  .view-switch a:not(.disabled){cursor:pointer;}
+  .view-switch a.disabled{
+    color:#3d4452;background:#0c0e13;
+    cursor:default; /* 未取得時はリンクの指カーソルを出さない */
+  }
   .view-switch a .t-note{display:block;font-size:8px;font-weight:600;color:#3d4452;line-height:1.2;margin-top:1px;}
   .view-switch a .t-note[hidden]{display:none;} /* 結果取得後は注記を完全に消し、1行を縦中央に */
   .view-switch a.disabled .t-note{color:#333a47;}

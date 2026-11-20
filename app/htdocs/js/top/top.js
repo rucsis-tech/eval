@@ -179,6 +179,7 @@ const probTable = document.getElementById('probTable');
   //   実装時は結果取得前タップ不可（disabled）のまま
   tabResult.addEventListener('click', e => {
     e.preventDefault();
+    if (tabResult.classList.contains('disabled')) return;
     stateIdx = 3; applyState(stateIdx);
     showView('result');
   });
@@ -253,10 +254,24 @@ const probTable = document.getElementById('probTable');
     // 更新ボタンは期待値LIVE中（補正前〜最終）のみ表示。締切・結果確定後は凍結のため非表示
     document.getElementById('evRefresh').style.display = (st.ev.cls === 'live') ? '' : 'none';
   }
+  const topPage = window.TOP_PAGE || {};
+  const serverResultOpen = !!topPage.resultOpen;
+  const tabMode = Number(topPage.tabMode) || 0;
+  const TAB_SHUTUBA = 1;
+
+  if (serverResultOpen) {
+    stateIdx = 3;
+  }
   applyState(stateIdx);
+  if (serverResultOpen && tabMode !== TAB_SHUTUBA) {
+    showView('result');
+  }
 
   // 初期表示：馬番順（1→16・▼）で並べる ※probTable定義後に実行すること
   headerHTML(); sortRows();
+  if (serverResultOpen && tabMode !== TAB_SHUTUBA) {
+    syncResultMarks();
+  }
 
   statusBadge.addEventListener('click', () => {
     stateIdx = (stateIdx + 1) % states.length;

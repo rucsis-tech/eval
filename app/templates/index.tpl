@@ -45,9 +45,13 @@
                 </div><!-- /prob-nav -->
                 <div class="prob-body">
                 <!-- 表示切替（1行：出馬表／結果・払戻し＋モードボタン） -->
+                {assign var=initial_result_view value=false}
+                {if $result_open|default:false && $tab_mode|default:0 != 1}
+                    {assign var=initial_result_view value=true}
+                {/if}
                 <div class="view-switch">
-                    <a class="on" href="#" id="tab-shutsuba">出馬表</a>
-                    <a class="disabled" href="#" id="tab-result">結果・払戻し<span class="t-note" id="resultNote">レース後に反映</span></a>
+                    <a href="#" id="tab-shutsuba"{if !$initial_result_view} class="on"{/if}>出馬表</a>
+                    <a href="#" id="tab-result"{if $initial_result_view} class="on ready"{elseif !$result_open|default:false} class="disabled"{elseif $result_open|default:false} class="ready"{/if}>結果・払戻し<span class="t-note" id="resultNote"{if $result_open|default:false} hidden{/if}>レース後に反映</span></a>
                     <span class="mode-btns" id="subTabs">
                         <a class="btn-mode on" href="#" id="tab-win">勝利確率</a><a class="btn-mode" href="#" id="tab-fuku">複勝確率</a>
                     </span>
@@ -76,7 +80,7 @@
                     <button class="rf-btn avail" id="evRefresh" title="最新のオッズ・期待値に更新"><svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
                 </div>
 
-                <div id="viewShutsuba">
+                <div id="viewShutsuba"{if $initial_result_view} hidden{/if}>
                 <table class="prob-t" id="probTable">
                     <thead>
                         <tr>
@@ -114,7 +118,7 @@
                 </div><!-- /viewShutsuba -->
 
                 <!-- ===== 結果・払戻しビュー（結果取得後のみ機能） ===== -->
-                <div id="viewResult" hidden>
+                <div id="viewResult"{if !$initial_result_view} hidden{/if}>
                 <table class="prob-t result-t">
                     <thead>
                         <tr>
@@ -157,13 +161,13 @@
                     <div class="p-head">配当</div>
                     <table>
                         <tbody id="payoutTableBody">
-                        <tr><td class="k">単勝</td><td class="c">1</td><td class="y">1,630円</td></tr>
-                        <tr><td class="k">複勝</td><td class="c">1<br>2<br>8</td><td class="y">410円<br>150円<br>890円</td></tr>
-                        <tr><td class="k">馬連</td><td class="c">1-2</td><td class="y">2,340円</td></tr>
-                        <tr><td class="k">ワイド</td><td class="c">1-2<br>1-8<br>2-8</td><td class="y">780円<br>3,120円<br>1,540円</td></tr>
-                        <tr><td class="k">馬単</td><td class="c">1→2</td><td class="y">5,120円</td></tr>
-                        <tr><td class="k">3連複</td><td class="c">1-2-8</td><td class="y">12,480円</td></tr>
-                        <tr><td class="k">3連単</td><td class="c">1→2→8</td><td class="y">68,930円</td></tr>
+                        {foreach from=$payout_rows item=prow}
+                        <tr>
+                            <td class="k">{$prow.kind|escape}</td>
+                            <td class="c">{foreach from=$prow.combo_lines item=cline name=pc}{$cline|escape}{if !$smarty.foreach.pc.last}<br>{/if}{/foreach}</td>
+                            <td class="y">{foreach from=$prow.yen_lines item=yline name=py}{$yline|escape}{if !$smarty.foreach.py.last}<br>{/if}{/foreach}</td>
+                        </tr>
+                        {/foreach}
                         </tbody>
                     </table>
                 </div>
@@ -262,5 +266,11 @@
 {/block}
 
 {block name="scripts"}
+    <script>
+    window.TOP_PAGE = {
+      resultOpen: {if $result_open|default:false}true{else}false{/if},
+      tabMode: {$tab_mode|default:0}
+    };
+    </script>
     <script src="/js/top/top.js"></script>
 {/block}

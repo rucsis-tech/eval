@@ -456,28 +456,74 @@ function validateRaceCode( $rc )
 
 
 
-    // 結果・払戻データで使用する着順のデータを作成
-    /*一旦保留
+    // 結果・払戻（commit 5〜7＝レース確定。haraimodoshi は race_info.result 内）
     $result_open = 0;
-    $raceNo = $bachu_race_joho['race_bango'];
-    $Smarty->assign('current_raceNo', $raceNo );
-    $race_num =(int)$raceNo;
-    if( !empty($race_list[$race_num]) ){
-        if( $race_list[$race_num]['commit'] >= 5 && $race_list[$race_num]['commit'] <= 7 ){
-            $chakujun_list = $bachu_uma_joho;
-            usort($chakujun_list, function ($a, $b) {
-              return intval($a['chakujun']) - intval($b['chakujun']);
-            });
-            $result_open = 1;
+    $payout_rows = [];
+    $race_result = [];
+    if (!empty($current_race->result)) {
+        if (is_string($current_race->result)) {
+            $decoded = json_decode($current_race->result, true);
+            $race_result = is_array($decoded) ? $decoded : [];
+        } elseif (is_array($current_race->result)) {
+            $race_result = $current_race->result;
         }
     }
-    if( $result_open == 0 ) $tab_mode = TAB_MODE_SHUTUBA;
-    else if( $tab_mode == TAB_MODE_AUTO && $result_open == 1  ) $tab_mode = TAB_MODE_KEKKA;
-
-    $Smarty->assign('tab_mode', $tab_mode );
-    $Smarty->assign('result_open', $result_open );
-    $Smarty->assign('chakujun_list', $chakujun_list);
-    */
+    $commit = (int)($race_result['commit'] ?? $ri['commit'] ?? 0);
+    if ($commit >= 5 && $commit <= 7) {
+        $result_open = 1;
+    }
+    if ($result_open === 1) {
+        $haraimodoshi = $race_result['haraimodoshi'] ?? [];
+        if (!is_array($haraimodoshi)) {
+            $haraimodoshi = [];
+        }
+        $payout_kind_map = [
+            'tansho' => '単勝',
+            'fukusho' => '複勝',
+            'umaren' => '馬連',
+            'wide' => 'ワイド',
+            'umatan' => '馬単',
+            'sanrenpuku' => '3連複',
+            'sanrentan' => '3連単',
+        ];
+        $payout_arrow_keys = ['umatan', 'sanrentan'];
+        foreach ($payout_kind_map as $pkey => $plabel) {
+            $items = $haraimodoshi[$pkey] ?? [];
+            if (!is_array($items) || $items === []) {
+                continue;
+            }
+            $combo_lines = [];
+            $yen_lines = [];
+            foreach ($items as $pitem) {
+                if (!is_array($pitem)) {
+                    continue;
+                }
+                $umaban = trim((string)($pitem['umaban'] ?? ''));
+                if ($umaban !== '' && in_array($pkey, $payout_arrow_keys, true)) {
+                    $umaban = str_replace('-', '→', $umaban);
+                }
+                $combo_lines[] = $umaban !== '' ? $umaban : '−';
+                $kingaku = trim((string)($pitem['kingaku'] ?? ''));
+                $yen_lines[] = $kingaku !== '' ? $kingaku . '円' : '−';
+            }
+            if ($combo_lines === []) {
+                continue;
+            }
+            $payout_rows[] = [
+                'kind' => $plabel,
+                'combo_lines' => $combo_lines,
+                'yen_lines' => $yen_lines,
+            ];
+        }
+    }
+    if ($result_open === 0) {
+        $tab_mode = TAB_MODE_SHUTUBA;
+    } elseif ($tab_mode === TAB_MODE_AUTO && $result_open === 1) {
+        $tab_mode = TAB_MODE_KEKKA;
+    }
+    $Smarty->assign('result_open', $result_open);
+    $Smarty->assign('payout_rows', $payout_rows);
+    $Smarty->assign('tab_mode', $tab_mode);
 
 
 //データない時は、nullを返します。
@@ -493,6 +539,15 @@ _999:
     }
     if (!isset($race_uma_list_by_chakujun)) {
         $Smarty->assign('race_uma_list_by_chakujun', []);
+    }
+    if (!isset($result_open)) {
+        $Smarty->assign('result_open', 0);
+    }
+    if (!isset($payout_rows)) {
+        $Smarty->assign('payout_rows', []);
+    }
+    if (!isset($tab_mode)) {
+        $Smarty->assign('tab_mode', TAB_MODE_SHUTUBA);
     }
 
     // フルパス記述用トップURL取得
