@@ -1,0 +1,144 @@
+/*light*/
+/* @import url(//fonts.googleapis.com/earlyaccess/notosansjapanese.css); */
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    font-family: 'Noto Sans Japanese';
+}
+
+hr {
+    border-top: solid 1px #DDD;
+    border-bottom: solid 0 #DDD;
+    margin: 0.5rem 0.2rem;
+}
+
+#app {
+    text-align: left;
+    height: 100%;
+}
+
+.contents {
+    text-align: left;
+    padding: 5px;
+}
+
+.top {
+    border-bottom: solid 1px #ccc;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+h3 {
+    margin: 0.2rem;
+    color: #2b3a50;
+    font-size: 20px;
+}
+
+.h-border {
+    height: 5px;
+    border-bottom: solid 1px #ddd;
+    width: 80%;
+}
+
+.header-row {
+    height: 40px;
+}
+
+.content-row {
+    height: 30px;
+    line-height: 30px;
+}
+
+.right-border {
+    border-right: solid 1px #ccc;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+
+.left-border {
+    border-left: solid 1px #ccc;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.bottom-border {
+    border-bottom: solid 1px #ccc;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 5px;
+}
+
+.el-pagination li {
+    width: 50px;
+    height: 30px;
+}
+
+.el-pagination button {
+    width: 50px;
+    height: 30px;
+}
+
+.condition-row {
+    margin: 0 0 0 0;
+    padding: 6px 4px 0 6px;
+    border-bottom: solid 1px #bbb;
+}
+
+.condition-target {
+    margin: 0 0 0 0;
+    padding: 6px 4px 0 6px;
+    border-bottom: solid 1px #bbb;
+    background-color: #fff;
+}
+
+.condition-item {
+    margin-bottom: 6px;
+}
+
+.r-white {
+    background-color: white;
+    border-radius: 8px;
+    margin-right: 5px;
+    padding: 8px 8px 16px 8px;
+}
+
+.r-blue {
+    border-radius: 8px;
+    padding: 4px;
+    background-color: #e0e8f8;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.bg-gray {
+    background-color: #eee;
+}
+
+.color_red {
+    color: red;
+}
+
+
+.el-radio-button__inner {
+    background-color: #ddd;
+    --el-radio-button-checked-bg-color: #fff;
+    --el-radio-button-checked-text-color: #000;
+}
+
+.el-message-box {
+    --el-messagebox-width: 800px;
+}
+
+.el-date-table th {
+    text-align: center;
+}

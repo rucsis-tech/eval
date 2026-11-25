@@ -82,7 +82,7 @@ class SmartyClass extends Smarty {
                     Member::conditionAt($this->Member->uid, member::CONDITION_ACCESSED_AT);
                 }
                 //サブスク
-                $this->Subscription = SubscriptionEx::currentQuery($this->Member->uid, SubscriptionEx::KIND_YOSO)->first();
+                $this->Subscription = SubscriptionEx::currentQuery($this->Member->uid, SubscriptionEx::KIND_CENTER)->first();
                 $this->Member->subscription_id = $this->Subscription->id ?? ($this->Member->subscription_id == -1 ? -1 : 0);
             }
 

@@ -59,6 +59,8 @@ class User extends Model {
     static
     public function create($guid, $provider, $email = ''): User {
 
+
+
         // 新規 user_master レコード
         for ($i = 0; $i < 100; $i++) {
             $uid = self::makeCode();
