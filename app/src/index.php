@@ -107,13 +107,18 @@ function validateRaceCode( $rc )
     //var_dump($kaisai_list);
 
     // 開催３タブリスト作成
-    if ( count($kaisai_days) >= 3 ) { //3日開催か？
-        $target_days = $kaisai_days;
-    }else{
+    if ( count($kaisai_days) >= 3 ) { //3日開催か？※3日開催が2週続く場合は未対応
         $first_day = date('Y-m-d', strtotime('-7 day', strtotime($kaisai_days[1])));;
         $second_day = $kaisai_days[0];
         $third_day = $kaisai_days[1];
-        $target_days = [$first_day, $second_day, $third_day];
+        $fourth_day = $kaisai_days[2];
+        $target_days = [$first_day, $second_day, $third_day, $fourth_day];
+    }else{
+        $first_day = date('Y-m-d', strtotime('-8 day', strtotime($kaisai_days[1])));;
+        $second_day = date('Y-m-d', strtotime('-7 day', strtotime($kaisai_days[1])));;
+        $third_day = $kaisai_days[0];
+        $fourth_day = $kaisai_days[1];
+        $target_days = [$first_day, $second_day, $third_day, $fourth_day];
     }
     //var_dump($target_days);
     $week = ['日', '月', '火', '水', '木', '金', '土'];
@@ -132,6 +137,11 @@ function validateRaceCode( $rc )
     $display_date03 = $date03->format('n/j') . '(' . $week[$w03] . ')';
     $date_code03 = $date03->format('Ymd');
 
+    $date04 = new DateTime($target_days[3]);
+    $w04 = $date04->format('w');
+    $display_date04 = $date04->format('n/j') . '(' . $week[$w04] . ')';
+    $date_code04 = $date04->format('Ymd');
+
     $kaisai_date_list = array(
         array (
             "display_date" => $display_date01,
@@ -144,6 +154,10 @@ function validateRaceCode( $rc )
         array (
             "display_date" => $display_date03,
             "date_code" => $date_code03
+        ),
+        array (
+            "display_date" => $display_date04,
+            "date_code" => $date_code04
         )
     );
 
