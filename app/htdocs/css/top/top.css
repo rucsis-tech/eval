@@ -118,6 +118,17 @@
     padding:12px 0;text-decoration:none;border-right:1px solid var(--line);
   }
   .tabs.date a.on{color:var(--red);border-bottom:2px solid var(--red);}
+  .tabs.date.d4 a{flex:1 0 25%;padding:8px 0 7px;line-height:1.3;position:relative;}
+  .tabs.date.d4 a .st{display:block;font-size:8px;font-weight:800;letter-spacing:.02em;margin-top:2px;color:#5a6373;}
+  .tabs.date.d4 a .st.s-entry{color:#f0b46a;}
+  .tabs.date.d4 a .st.s-card{color:#c3c9d4;}
+  .tabs.date.d4 a .st.s-prob{color:#5fe8bd;}
+  .tabs.date.d4 a .st.s-live{color:#ff6b7d;}
+  .tabs.date.d4 a .st.s-live::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#ff6b7d;margin-right:3px;vertical-align:1px;animation:pulse 1.6s ease-in-out infinite;}
+  .tabs.date.d4 a .st.s-done{color:#8a94a6;}
+  .tabs.date.d4 a.next{background:rgba(255,255,255,.015);}
+  .tabs.date.d4 a.next::before{content:"翌週";position:absolute;top:2px;left:4px;font-size:7px;font-weight:900;color:#4d5666;letter-spacing:.04em;}
+  .tabs.date.d4 a.on .st{color:inherit;}
   .tabs.venue{padding:6px 10px;gap:8px;}
   .tabs.venue a{
     flex:0 0 auto;font-size:11.5px;font-weight:700;color:var(--text);
@@ -489,7 +500,7 @@
   .card .body{flex:1;min-width:0;}
   .card h3{
     font-size:13px;font-weight:800;line-height:1.45;color:#fff;
-    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   }
   .meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:10px;color:var(--text-sub);flex-wrap:wrap;}
   .badge{font-size:9px;font-weight:800;color:#fff;padding:1px 7px;border-radius:2px;letter-spacing:.05em;}
@@ -691,6 +702,8 @@
     .prob-nav{padding-bottom:12px;align-self:start;position:sticky;top:130px;} /* ヘッダー62＋ナビ帯56＋余白 */
     .prob-body{min-width:0;border-left:1px solid var(--line);min-height:100%;}
     .tabs.venue{flex-wrap:wrap;overflow:visible;padding:10px;}
+    .tabs.date.d4 a{font-size:10px;padding-top:11px;}
+    .tabs.date.d4 a.next::before{top:1px;}
     .tabs.race{grid-template-columns:repeat(4,1fr);padding:0 10px 10px;}
     .nextbar{flex-direction:column;align-items:stretch;height:auto;padding:10px;gap:8px;}
     .nextbar .lbl{align-self:flex-start;}

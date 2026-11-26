@@ -16,10 +16,19 @@
             </div>
             <div class="prob">
                 <div class="prob-nav"><!-- PC：左のレース選択列（追従） -->
-                <!-- 日付タブ（?rc= でページ遷移） -->
-                <div class="tabs date">
+                <!-- 日付タブ（?rc= でページ遷移・4日表示） -->
+                <div class="tabs date d4">
                 {foreach from=$kaisai_date_list item=tab}
-                    <a href="{$tab['href']|escape:'html'}"{if $tab['is_current']} class="on"{/if}>{$tab['display_date']|escape}</a>
+                    <a href="{$tab['href']|escape:'html'}"
+                     class="
+                     {if $tab['is_current']}on{/if}
+                     {if $tab['is_current'] && ($tab['is_next_week']|default:false)} {/if}
+                     {if $tab['is_next_week']|default:false}next{/if}
+                     ">
+                     {$tab['display_date']|escape}
+                     <span class="st s-{$tab['status_key']|default:'none'|escape}"> {*  *}
+                         {$tab['status_label']|default:''|escape}ステータス  {* ステータス表示 *}
+                     </span></a>
                 {/foreach}
                 </div>
                 <!-- 開催場タブ（?rc= でページ遷移・中央→地方の順） -->
