@@ -1,5 +1,5 @@
 {if $template_type=='body'}
-    <h3>トピックス設定</h3>
+    <h3>速報 設定</h3>
     <div style="position:absolute;right:1rem;top:0;">
         <a href="index">
             <button class="btn btn-secondary">戻る</button>
@@ -16,20 +16,9 @@
                 </tr>
 
                 <tr>
-                    <th style="max-width: 100px;">カテゴリー</th>
+                    <th>タイトル</th>
                     <td style="min-width:100px;">
-                        <select name="category" form="edit_submit">
-                            {foreach Info::TOPIC_CATEGORIES as $value}
-                                <option value="{$value}" {if $Topic->category == $value }selected{/if}>{$value}</option>
-                            {/foreach}
-                        </select>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>トピックタイトル</th>
-                    <td style="min-width:100px;">
-                        <input type="text" name="title" value="{$Topic->title}" form="edit_submit">
+                        <input type="text" name="title" value="{$Topic->title}" form="edit_submit" class="rem-20">
                     </td>
                 </tr>
 
@@ -44,7 +33,7 @@
                 <tr>
                     <th>遷移先URL</th>
                     <td style="min-width:100px;">
-                        <input type="text" name="link_url" value="{$Topic->link_url}" form="edit_submit">
+                        <input type="text" name="link_url" value="{$Topic->link_url}" form="edit_submit" class="rem-20">
                     </td>
                 </tr>
 
@@ -72,10 +61,11 @@
                     </td>
                 </tr>
 
+
             </table>
 
 
-            <form action="/cms/topic/edit" id="edit_submit" method="POST" class="d-flex justify-content-center">
+            <form action="/cms/news/edit" id="edit_submit" method="POST" class="d-flex justify-content-center">
                 <input type="hidden" name="id" value="{$Topic->id}">
                 <input type="hidden" name="priority" value="{$Topic->priority}">
                 <button class="btn btn-primary m-4 rem-10" type="button" onclick="submit()">更新</button>
@@ -87,6 +77,7 @@
         <div class="side_column">
             {include file="common/quick_url.tpl"}
         </div>
+
 
     </div>
 {/if}

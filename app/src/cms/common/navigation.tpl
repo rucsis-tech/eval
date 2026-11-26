@@ -40,7 +40,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/cms/eval_basedata/">Evalベースデータ</a></li>
+                        <li><a class="dropdown-item" href="/cms/basedata/">Evalベースデータ</a></li>
                     </ul>
                 </li>
 

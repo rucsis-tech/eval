@@ -3,17 +3,17 @@
 use classes\DBQueryClass;
 use trait\KaimeTrait;
 
-class WindexLocal extends Model {
+class BaseData extends Model {
 
     use KaimeTrait;
     static $CANCEL_ENABLE = false;    // キャンセル馬の扱い
 
-    protected static string $tableName = 'windex_local_race';
+    protected static string $tableName = 'basedata_race';
     public static string $TargetYYYYMMDD = '';
 
-    public const TABLE_DAY = 'windex_local_day';
-    public const TABLE_RACE = 'windex_local_race';
-    public const TABLE_UMA = 'windex_local_uma';
+    public const TABLE_DAY = 'basedata_day';
+    public const TABLE_RACE = 'basedata_race';
+    public const TABLE_UMA = 'basedata_uma';
 
 
     /**
@@ -42,9 +42,9 @@ class WindexLocal extends Model {
         $YYYYMMDD = self::toYYYYMMDD($day);
 
         // レース一覧
-        $query = WindexLocal::select(['windex_local_race.*'])
-            ->where('windex_local_race.race_code', 'LIKE', "{$YYYYMMDD}%")
-            ->orderBy('windex_local_race.race_code');
+        $query = BaseData::select(['basedata_race.*'])
+            ->where('basedata_race.race_code', 'LIKE', "{$YYYYMMDD}%")
+            ->orderBy('basedata_race.race_code');
 
         if ($place) $query->where('race_info.place', $place);
         if ($uid) {
@@ -71,14 +71,14 @@ class WindexLocal extends Model {
 
     static
     public function getWindexDay($target_day): self {
-        $Day = self::table(WindexLocal::TABLE_DAY)->where('day', $target_day)->first();
+        $Day = self::table(BaseData::TABLE_DAY)->where('day', $target_day)->first();
         if (empty($Day)) {
             $start_at = self::date(strtotime($target_day) - 3600 * 6);
-            self::table(WindexLocal::TABLE_DAY)->insert([
+            self::table(BaseData::TABLE_DAY)->insert([
                 'day' => $target_day,
                 'start_at' => $start_at,
             ]);
-            $Day = self::table(WindexLocal::TABLE_DAY)->where('day', $target_day)->first();
+            $Day = self::table(BaseData::TABLE_DAY)->where('day', $target_day)->first();
         }
         return $Day;
     }
@@ -177,21 +177,21 @@ class WindexLocal extends Model {
         $list = [];
         $write_ids = [];
         // CSVデータの展開
-        $data = self::extract($csv, ['race_code', 'wakuban', 'umaban', 'name', 'age', 'weight', 'jockey', 'trainer', 'chakujun', 'status']);
+        $data = self::extract($csv, ['race_code', 'wakuban', 'umaban', 'tansho', 'rentai', 'fukusho', 'tan_kitai', 'fuku_kitai']);
         foreach ($data as $datum) {
             $works = [
-                'name' => $datum['name'],
-                'age' => $datum['age'],
-                'weight' => $datum['weight'],
-                'jockey' => $datum['jockey'],
-                'trainer' => $datum['trainer'],
             ];
             $cols = [
                 'race_code' => $datum['race_code'],
                 'wakuban' => $datum['wakuban'],
                 'umaban' => $datum['umaban'],
-                'chakujun' => $datum['chakujun'],
-                'status' => $datum['status'],
+
+                'tansho' => $datum['tansho'],
+                'rentai' => $datum['rentai'],
+                'fukusho' => $datum['fukusho'],
+                'tan_kitai' => $datum['tan_kitai'],
+                'fuku_kitai' => $datum['fuku_kitai'],
+
                 'work' => json_encode($works, JSON_UNESCAPED_UNICODE),
             ];
 
@@ -205,6 +205,7 @@ class WindexLocal extends Model {
                     // 新規
                     self::insert($cols, $TABLE);
                 }
+
             }
             $list[] = $datum;
         }

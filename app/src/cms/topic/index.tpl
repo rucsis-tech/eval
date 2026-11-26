@@ -18,6 +18,7 @@
         <tr>
             <th>ID</th>
             <th>サムネイル画像</th>
+            <th>カテゴリ</th>
             <th>トピック文章</th>
             <th>表示開始</th>
             <th>表示終了</th>
@@ -35,6 +36,7 @@
                         <img src="{$Item->image_path|s3}" width="100px">
                     {/if}
                 </td>
+                <td style="max-width:400px;">{$Item->category}</td>
                 <td style="max-width:400px;">{$Item->content}</td>
                 <td style="min-width:100px;">{$Item->start_at}</td>
                 <td style="min-width:100px;">{$Item->end_at}</td>

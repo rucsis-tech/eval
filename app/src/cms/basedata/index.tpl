@@ -1,7 +1,7 @@
 {if $template_type=='body'}
     <!-- BODY ------------------------------------------------------------------------------------------------------->
     <!-- BODY ------------------------------------------------------------------------------------------------------->
-    <h3>Windex 地方ベータ版</h3>
+    <h3>Evalベースデータ</h3>
     <div style="">
         <!-- 開催日タブを押して表示を切り替えたい -->
         <div class="tab_block flex">
@@ -33,15 +33,8 @@
                     <input type="hidden" name="target_day" value="{$target_day}">
 
                     <div style="margin-right: 10px;">
-                        <b>レース情報</b><br>
-                        <input type="file" name="local_race" multiple style="width:80%;margin-bottom: 6px;"><br>
-
-                        <b>出走馬情報</b><br>
-                        <input type="file" name="local_uma" multiple style="width:80%;margin-bottom: 6px;"><br>
-
-                        <b>WINDEX指数</b><br>
-                        <input type="file" name="local_windex" multiple style="width:80%;margin-bottom: 6px;"><br>
-
+                        <b>ベースデータ</b><br>
+                        <input type="file" name="basedata_uma" multiple style="width:80%;margin-bottom: 6px;"><br>
                     </div>
 
                     <input type="submit" class="btn btn-primary submit" value="アップロード">
@@ -71,8 +64,8 @@
                     <th>場所</th>
                     <th>レースコード</th>
                     <th>レース名</th>
-                    <th>中止</th>
-                    <th>ポイント</th>
+                    <!--th>中止</th-->
+                    <!--th>ポイント</th-->
                     <th style="text-align: center;">会員利用</th>
                     <th></th>
                 </tr>
@@ -84,8 +77,8 @@
                         <td><a href="race?race_code={$WindexRace->race_code}">{$WindexRace->race_code}</a></td>
                         <td>{$WindexRace->race_name}</td>
 
-                        <td><input id="s{$WindexRace->race_code}" type="checkbox" value="1" {$WindexRace->status?'checked':''} onchange="onChange(this)" style="scale: 180%;margin-top: 6px;"></td>
-                        <td><input id="p{$WindexRace->race_code}" type="number" value="{$WindexRace->need_points}" onchange="onChange(this)" onkeydown="onChange(this)" class="text-end"></td>
+                        <!--td><input id="s{$WindexRace->race_code}" type="checkbox" value="1" {$WindexRace->status?'checked':''} onchange="onChange(this)" style="scale: 180%;margin-top: 6px;"></td-->
+                        <!--td><input id="p{$WindexRace->race_code}" type="number" value="{$WindexRace->need_points}" onchange="onChange(this)" onkeydown="onChange(this)" class="text-end"></td-->
                         <td style="text-align: center;">
                             {if $WindexRace->point_count}
                                 <a href="race?race_code={$WindexRace->race_code}#point">有</a>

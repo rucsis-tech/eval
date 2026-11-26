@@ -1,7 +1,7 @@
 {if $template_type=='body'}
     <!-- BODY ------------------------------------------------------------------------------------------------------->
     <!-- BODY ------------------------------------------------------------------------------------------------------->
-    <h3>Windex地方版</h3>
+    <h3></h3>Evalレースデータ</h3>
     <div style="">
         <div class="tab_block">
             <h4>
@@ -17,11 +17,11 @@
                     <th>枠番</th>
                     <th>馬名</th>
 
-                    <th>基礎能力</th>
-                    <th>血統</th>
-                    <th>展開</th>
-                    <th>走破</th>
-                    <th>騎手</th>
+                    <th>単勝確率</th>
+                    <th>連対確率</th>
+                    <th>複勝確率</th>
+                    <th>単勝期待値</th>
+                    <th>複勝期待値</th>
 
                     <th>着順</th>
                     <th>異常</th>
@@ -34,11 +34,11 @@
                         <td>{$WindexUma->wakuban}</td>
                         <td class="text-start">{$WindexUma->name}</td>
 
-                        <td>{$WindexUma->basic_ability}</td>
-                        <td>{$WindexUma->pedigree}</td>
-                        <td>{$WindexUma->running_style_and_development}</td>
-                        <td>{$WindexUma->final_time}</td>
-                        <td>{$WindexUma->jockeys_and_trainers}</td>
+                        <td>{$WindexUma->tansho}</td>
+                        <td>{$WindexUma->rentai}</td>
+                        <td>{$WindexUma->fukusho}</td>
+                        <td>{$WindexUma->tan_kitai}</td>
+                        <td>{$WindexUma->fuku_kitai}</td>
 
                         <td>{$WindexUma->chakujun}</td>
                         <td>{$WindexUma->status}</td>

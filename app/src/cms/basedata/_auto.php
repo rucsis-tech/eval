@@ -31,16 +31,16 @@ foreach ($files as $key => $file) {
         $csv = file_get_contents($file['tmp_name']);
 
         if (str_contains($csv, 'レース名')) {
-            WindexLocal::convToRace($csv, false); // 事前チェック
-            WindexLocal::convToRace($csv, true); // 更新
+            BaseData::convToRace($csv, false); // 事前チェック
+            BaseData::convToRace($csv, true); // 更新
             $response = 'OK';
         } else if (str_contains($csv, '着順')) {
-            WindexLocal::convToUma($csv, false); // 事前チェック
-            WindexLocal::convToUma($csv, true); // 更新
+            BaseData::convToUma($csv, false); // 事前チェック
+            BaseData::convToUma($csv, true); // 更新
             $response = 'OK';
         } else if (str_contains($csv, '基礎')) {
-            WindexLocal::convToWindex($csv, false); // 事前チェック
-            WindexLocal::convToWindex($csv, true); // 更新
+            BaseData::convToWindex($csv, false); // 事前チェック
+            BaseData::convToWindex($csv, true); // 更新
             $response = 'OK';
         } else {
             $response = "[{$name}] 判別できませんでした";
@@ -53,9 +53,9 @@ foreach ($files as $key => $file) {
         }
 
         // windex_local_day 作成
-        if (!empty(WindexLocal::$TargetYYYYMMDD)) {
-            $target_day = WindexLocal::toDay(WindexLocal::$TargetYYYYMMDD);
-            WindexLocal::getWindexDay($target_day);
+        if (!empty(BaseData::$TargetYYYYMMDD)) {
+            $target_day = BaseData::toDay(BaseData::$TargetYYYYMMDD);
+            BaseData::getWindexDay($target_day);
         }
 
 

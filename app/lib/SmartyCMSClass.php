@@ -150,4 +150,12 @@ class SmartyCMSClass extends Smarty {
         $operation = array_merge(['action' => $action], $_REQUEST, $_FILES);
         $this->Admin->authLog($auth, $operation);
     }
+
+    /**
+     * @param $function
+     * @return mixed
+     */
+    public function action($function): mixed {
+        return $function($this);
+    }
 }

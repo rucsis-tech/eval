@@ -1,26 +1,29 @@
 <?php
 
 $Smarty = new SmartyCMSClass();
-// --------------------------------------------------
-// 対象アイテム
-$id = $_REQUEST['id'] ?? 0;
-$Topic = Info::where('type', Info::TYPE_NEWS)
-    ->where('id', $id)
-    ->first();
-if (empty($Topic)) $Smarty->location('index');
+$Smarty->action(function ($Smarty) {
+
+    // --------------------------------------------------
+    // 対象アイテム
+    $id = $_REQUEST['id'] ?? 0;
+    $Topic = Info::where('type', Info::TYPE_NEWS)
+        ->where('id', $id)
+        ->first();
+    if (empty($Topic)) $Smarty->location('index');
 
 
-// --------------------------------------------------
-// 更新
-if (isset($_POST['id'])) {
-    $Smarty->auth('CmsMod','topic');
-    $Topic->storeTopic($_POST);
-    $Smarty->location('/cms/topic/index');
-}
+    // --------------------------------------------------
+    // 更新
+    if (isset($_POST['id'])) {
+        $Smarty->auth('CmsMod', 'news');
+        $Topic->store($_POST);
+        $Smarty->location('/cms/news/index');
+    }
 
-// --------------------------------------------------
-// 表示
-$Topic->datalizeTopic();
-$Smarty->assign('Topic', $Topic);
-$Smarty->displayCMS("news/edit.tpl");
+    // --------------------------------------------------
+    // 表示
+    $Topic->datalize();
+    $Smarty->assign('Topic', $Topic);
+    $Smarty->displayCMS("news/edit.tpl");
 
+});

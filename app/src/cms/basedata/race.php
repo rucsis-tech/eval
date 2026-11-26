@@ -8,14 +8,14 @@ $Smarty->auth('WindexList', 'windex');
 $race_code = $_REQUEST['race_code'] ?? '';
 
 
-$WindexRace = WindexLocal::where('race_code', $race_code)->first();
+$WindexRace = BaseData::where('race_code', $race_code)->first();
 $place = substr($WindexRace->race_code,8,2);
 $Smarty->assign('WindexRace', $WindexRace);
 $Smarty->assign('PLACES', Race::PLACES);
 $Smarty->assign('place', $place);
 //pre($WindexRace);
 
-$WindexUmas = WindexLocal::table(WindexLocal::TABLE_UMA)
+$WindexUmas = BaseData::table(BaseData::TABLE_UMA)
     ->where('race_code', $race_code)
     ->orderBy('umaban')
     ->all();
@@ -47,5 +47,5 @@ $Smarty->assign('origin_id', $origin_id ?? 0);
 
 
 
-$Smarty->displayCMS("windex_local/race.tpl");
+$Smarty->displayCMS("basedata/race.tpl");
 

@@ -91,6 +91,8 @@ class Point extends Model {
 
     // 管理表示の補助用文字列
     const LICENSE_IDENTIFIERS = [
+   /*
+
         ContentCondition::LICENSE_PAGE_ALL => '記事まとめ',
         ContentCondition::LICENSE_KENKAI => '見解単品',
         ContentCondition::LICENSE_KAIME => '買い目単品',
@@ -100,6 +102,7 @@ class Point extends Model {
         UmaComment::CATEGORY_CHAT_COMMENT => 'チャットコメント単品',
         PointPack::LICENSE_START => '早割',
         PointPack::LICENSE_PUBLISH => '通常',
+   */
     ];
 
 

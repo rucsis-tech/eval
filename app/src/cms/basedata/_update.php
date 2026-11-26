@@ -18,7 +18,7 @@ use classes\SessionClass;
         $status = $request['status'];
         $point = $request['point'];
 
-        $WindexRace = WindexLocal::where('race_code', $race_code)->first();
+        $WindexRace = BaseData::where('race_code', $race_code)->first();
         $WindexRace->save(['status' => $status, 'need_points' => $point]);
     }
 

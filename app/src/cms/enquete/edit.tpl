@@ -61,7 +61,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr style="display:none">
                         <th style="max-width: 300px;">全回答時獲得スコア</th>
                         <td style="min-width:100px;">
                             <input v-model="Enquete.score" type="number" name="vote_score" class="form-control rem-8">

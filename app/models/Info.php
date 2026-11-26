@@ -40,7 +40,6 @@ class Info extends Model {
         ]);
 
         $this->save([
-            'category' => trim($post['category']),
             'title' => trim($post['title']),
             'start_at' => empty($post['start_at']) ? null : $post['start_at'],
             'end_at' => empty($post['end_at']) ? null : $post['end_at'],
@@ -94,6 +93,7 @@ class Info extends Model {
         ]);
 
         $this->save([
+            'category' => trim($post['category']),
             'title' => trim($post['title']),
             'start_at' => empty($post['start_at']) ? null : $post['start_at'],
             'end_at' => empty($post['end_at']) ? null : $post['end_at'],
